@@ -12,17 +12,19 @@ Clone this repository into any folder on your SolveIt instance:
 git clone https://github.com/ExploringML/bpl-study-sessions.git
 ```
 
-Open any Study Session dialogue from the cloned folder. Keep `CRAFT.ipynb`, `CRAFT.js` and `CRAFT.css` together alongside the sessions. SolveIt loads them automatically for the folder and its subfolders. On first use the Craft installs BPL **0.1.55** if necessary and registers `%%bpl`. An internet connection is required for package installation and documentation links.
+Open any Study Session dialogue from the cloned folder. Keep `CRAFT.ipynb`, `CRAFT.js` and `CRAFT.css` together alongside the sessions. SolveIt loads them automatically for the folder and its subfolders. On first use the Craft installs BPL **0.1.61** if necessary and registers `%%bpl`. The version setting and installation command live in CRAFT.ipynb; no requirements file is needed. An internet connection is required for package installation and documentation links.
+
+Run check_bpl_versions() in a Python cell to list installed and available releases without changing anything. Plain pip install basedpl installs the latest compatible release on a fresh setup; --upgrade is needed to update an existing installation. Craft keeps the tested version because its keyboard patches and generated catalogue depend on it. To adopt another release, update BPL_VERSION in Craft, check the keyboard patches, run rebuild_bpl_browser(), and test in a new dialogue.
 
 The toolbar works in Code, Note, Prompt and Raw. No template or hidden helper folder is required. Duplicate Session 6 in the same folder to begin Session 7; its new kernel inherits the same Craft setup.
 
 ## Glyph Coverage
 
-Checked against **BPL 0.1.55 installed in SolveIt**: **150 insertable entries** cover all 98 entries in `symbols` and every additional insertion from `layout.json`, including the original toolbar's menu combinations. The loader reads both sources from the installed package.
+Checked against **BPL 0.1.61 installed in SolveIt**: **151 insertable entries** cover all 99 entries in `symbols` and every additional insertion from `layout.json`, including the original toolbar's menu combinations. The loader reads both sources from the installed package.
 
 | Group | Entries | Includes |
 |---|---:|---|
-| Core symbols | 98 | Functions, operators and other catalogue symbols |
+| Core symbols | 99 | Functions, operators and other catalogue symbols |
 | Superscripts | 23 | `⁰`–`⁹`, `⁻`, `ᵀ`, `ᵘ`, and `⁻⁰`–`⁻⁹` |
 | Subscripts | 25 | `₀`–`₉`, `₋`, `ₓ`, `ⱼ`, `ₑ`, `ᵣ`, and `₋₀`–`₋₉` |
 | Other characters | 4 | `∆`, `⍙`, `^` and `_` |
@@ -47,7 +49,7 @@ Open the glyph browser with the book icon, then search by character, name or mea
 
 Filters start with **All**, **Core symbols**, **Additional characters**, **Favourites** and **Recently used**. These are followed by **Numbers**, **Compare**, **Range & index**, **Arrays**, **Functions**, **Writing code**, **Superscripts**, **Subscripts** and **Other characters**. Categories overlap: `²` appears under Numbers and Functions, while `₋₁` appears under Range & index and Arrays. Each setup starts on Core symbols.
 
-Search applies within the selected filter. The header shows `All entries · 150`, a category and count, or the match count. Clear search and choose All to restore the complete list.
+Search applies within the selected filter. The header shows `All entries · 151`, a category and count, or the match count. Clear search and choose All to restore the complete list.
 
 In **All**, the main strip shows the core glyphs plus three menus: **² Superscripts**, **₂ Subscripts** and **∆ Other characters**. Additional characters shows just those menus. They open upwards when there is room; selecting an entry inserts it and closes the menu. Escape returns focus to its menu button. Click elsewhere to dismiss it.
 
@@ -92,7 +94,7 @@ Existing text is retained; adding `%%bpl` makes that cell run as BPL. The cursor
 
 Use **8 on the number row**, not the numeric keypad. The toggle uses the physical key, regardless of the character Shift produces, and works in every message type. The BPL button's tooltip shows the shortcut.
 
-Tab moves through controls; Enter or Space activates a button. Focusing a Browse glyph previews help unless a selection is pinned. Existing backtick completion and direct glyph shortcuts remain available: for example, Windows Alt+M inserts `×`; Alt+Minus followed by Space inserts `¯`.
+Tab moves through controls; Enter or Space activates a button. Focusing a Browse glyph previews help unless a selection is pinned. Existing backtick completion and direct glyph shortcuts remain available: for example, In a Code cell beginning with %%bpl, Windows Alt+M inserts `×`; Alt+Minus followed by Space inserts `¯`.
 
 ## Customisation and Craft Files
 
@@ -133,8 +135,8 @@ Other users can update their copy with `git pull --ff-only` when their working t
 
 ## Validation and Credits
 
-Migration checks covered all six session kernels using BPL 0.1.55, a sum evaluating to 6, automatic toolbar loading, all 150 entries, Code-only magic insertion, plain insertion in Note, Windows Alt+M, backtick `noteq` completion and Ctrl+Shift+8. Lesson cells and their saved outputs were compared against the pre-migration backup. The course's entire collection of exploratory examples was not rerun. Mac hardware testing remains outstanding.
+Migration checks covered all six session kernels using BPL 0.1.61, a sum evaluating to 6, automatic toolbar loading, all 151 entries, Code-only magic insertion, plain insertion in Note, Windows Alt+M, backtick `noteq` completion and Ctrl+Shift+8. Lesson cells and their saved outputs were compared against the pre-migration backup. Upgrade checks also ran all 104 %%bpl cells from Sessions 3-6 in isolated processes without exceptions. Sessions 1-2 have no %%bpl cells. Saved lesson outputs were preserved; these checks do not assert every numerical result or rerun every Python/APL cell. All six isolated dialogue copies loaded the updated toolbar and Browse panel without browser errors. The 34 custom practice examples also ran without exceptions. Mac hardware testing remains outstanding.
 
-BasedPL is developed by Answer.AI and contributors under Apache-2.0. The keyboard integration adapts its browser input code and the APL language bar by Nikolay G. Nikolov and Adam Brudzevski; see `THIRD_PARTY_NOTICES.md` and `licenses/`. The study material follows Jeremy Howard's linked course; it is not an official course distribution.
+BasedPL is developed by Answer.AI and contributors under Apache-2.0. The keyboard integration adapts its browser input code and the APL language bar by Nikolay G. Nikolov and Adam Brudzevski; full attribution and licence texts are retained in the opening comment of CRAFT.js. The study material follows Jeremy Howard's linked course; it is not an official course distribution.
 
 An annotator, snippet library and separate playground remain future ideas.
