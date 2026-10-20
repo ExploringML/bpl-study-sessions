@@ -1,0 +1,9 @@
+# Temporary notebooks and local state
+_Craft Checks*.ipynb
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+.env
+.env.*
+*.log
+.DS_Store
