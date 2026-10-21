@@ -1,6 +1,6 @@
 # BPL Study Sessions for SolveIt
 
-Six study dialogues following [Jeremy Howard's APL study group](https://www.youtube.com/playlist?list=PLfYUBJiXbdtSgU6S_3l6pX-4hQYKNJZFU), adapted while learning [BasedPL](https://answerdotai.github.io/basedpl/), with a shared glyph toolbar for SolveIt's editor.
+Seven study dialogues following [Jeremy Howard's APL study group](https://www.youtube.com/playlist?list=PLfYUBJiXbdtSgU6S_3l6pX-4hQYKNJZFU), adapted while learning [BasedPL](https://answerdotai.github.io/basedpl/), with a shared glyph toolbar for SolveIt's editor.
 
 These are learning notebooks: examples include experiments and comparisons between APL and BPL. Run them in lesson order; some cells deliberately redefine functions or demonstrate different behaviour.
 
@@ -16,7 +16,7 @@ Open any Study Session dialogue from the cloned folder. Keep `CRAFT.ipynb`, `CRA
 
 Run check_bpl_versions() in a Python cell to list installed and available releases without changing anything. Plain pip install basedpl installs the latest compatible release on a fresh setup; --upgrade is needed to update an existing installation. Craft keeps the tested version because its keyboard patches and generated catalogue depend on it. To adopt another release, update BPL_VERSION in Craft, check the keyboard patches, run rebuild_bpl_browser(), and test in a new dialogue.
 
-The toolbar works in Code, Note, Prompt and Raw. No template or hidden helper folder is required. Duplicate Session 6 in the same folder to begin Session 7; its new kernel inherits the same Craft setup.
+The toolbar works in Code, Note, Prompt and Raw. No template or hidden helper folder is required. Duplicate Session 7 in the same folder to begin Session 8; its new kernel inherits the same Craft setup.
 
 ## Glyph Coverage
 
@@ -124,8 +124,8 @@ From the repository folder's terminal, review and publish your changes:
 
 ```bash
 git status
-git add "Study Session 7.ipynb"
-git commit -m "Add study session 7"
+git add "Study Session 8.ipynb"
+git commit -m "Add study session 8"
 git push
 ```
 
