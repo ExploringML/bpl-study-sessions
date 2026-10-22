@@ -1,6 +1,8 @@
 # BPL Study Sessions for SolveIt
 
-Eight study dialogues following [Jeremy Howard's APL study group](https://www.youtube.com/playlist?list=PLfYUBJiXbdtSgU6S_3l6pX-4hQYKNJZFU), adapted while learning [BasedPL](https://answerdotai.github.io/basedpl/), with a shared glyph toolbar for SolveIt's editor.
+Nine study dialogues following [Jeremy Howard's APL study group](https://www.youtube.com/playlist?list=PLfYUBJiXbdtSgU6S_3l6pX-4hQYKNJZFU), adapted while learning [BasedPL](https://answerdotai.github.io/basedpl/), with a shared glyph toolbar for SolveIt's editor.
+
+The [Scratchpad](Scratchpad.ipynb) contains additional BPL experiments and a walkthrough of means with the Under operator.
 
 These are learning notebooks: examples include experiments and comparisons between APL and BPL. Run them in lesson order; some cells deliberately redefine functions or demonstrate different behaviour.
 
@@ -12,11 +14,11 @@ Clone this repository into any folder on your SolveIt instance:
 git clone https://github.com/ExploringML/bpl-study-sessions.git
 ```
 
-Open any Study Session dialogue from the cloned folder. Keep `CRAFT.ipynb`, `CRAFT.js` and `CRAFT.css` together alongside the sessions. SolveIt loads them automatically for the folder and its subfolders. On first use the Craft installs BPL **0.1.61** if necessary and registers `%%bpl`. The version setting and installation command live in CRAFT.ipynb; no requirements file is needed. An internet connection is required for package installation and documentation links.
+Open any Study Session dialogue from the cloned folder. Keep the three CRAFT files together alongside the sessions. SolveIt loads them automatically for the folder and its subfolders. On each new kernel startup, CRAFT.ipynb checks PyPI and upgrades basedpl to the latest compatible stable release with pip install --upgrade. No release number is pinned. The update helper and package setup live in CRAFT.ipynb; no requirements file is needed. An internet connection is required for the update check.
 
-Run check_bpl_versions() in a Python cell to list installed and available releases without changing anything. Plain pip install basedpl installs the latest compatible release on a fresh setup; --upgrade is needed to update an existing installation. Craft keeps the tested version because its keyboard patches and generated catalogue depend on it. To adopt another release, update BPL_VERSION in Craft, check the keyboard patches, run rebuild_bpl_browser(), and test in a new dialogue.
+Run check_bpl_versions() in a Python cell to list installed and available releases without changing packages, or ensure_latest_bpl() to check and install updates. If an upgrade changes a package already loaded in a kernel, restart that dialogue kernel and rerun: reinstalling a native library does not replace the loaded code. Session 9 reports both running and installed versions. Craft regenerates the keyboard and browser bootstrap from the installed package on startup. If an upstream browser API changes, the keyboard integration reports which patch needs updating.
 
-The toolbar works in Code, Note, Prompt and Raw. No template or hidden helper folder is required. Duplicate Session 8 in the same folder to begin Session 9; its new kernel inherits the same Craft setup.
+The toolbar works in Code, Note, Prompt and Raw. No template or hidden helper folder is required. Duplicate Session 9 in the same folder to begin Session 10; its new kernel inherits the same Craft setup.
 
 ## Glyph Coverage
 
@@ -124,8 +126,8 @@ From the repository folder's terminal, review and publish your changes:
 
 ```bash
 git status
-git add "Study Session 9.ipynb"
-git commit -m "Add study session 9"
+git add "Study Session 10.ipynb"
+git commit -m "Add study session 10"
 git push
 ```
 
@@ -140,3 +142,7 @@ Migration checks covered all six session kernels using BPL 0.1.61, a sum evaluat
 BasedPL is developed by Answer.AI and contributors under Apache-2.0. The keyboard integration adapts its browser input code and the APL language bar by Nikolay G. Nikolov and Adam Brudzevski; full attribution and licence texts are retained in the opening comment of CRAFT.js. The study material follows Jeremy Howard's linked course; it is not an official course distribution.
 
 An annotator, snippet library and separate playground remain future ideas.
+
+Latest-release update checks (22 October 2026): Craft startup, its keyboard patches and browser bootstrap generation passed in a fresh BPL 0.1.67 process. Sum, geometric mean and axis-catenate checks passed. The installer checks for the newest compatible stable release rather than retaining that test version.
+
+Publication checks (22 October 2026): all 11 notebooks passed format validation. All 44 BPL cells in Session 9 and 13 in Scratchpad ran successfully in isolated BPL 0.1.67 processes; the Craft Python cells compiled.
