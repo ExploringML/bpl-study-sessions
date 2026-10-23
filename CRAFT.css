@@ -49,3 +49,20 @@ body:has(#bpl-palette){padding-top:0!important}
     #bpl-palette .bp-status{padding:4px 10px;font-size:11px;color:#56677c;border-top:1px solid var(--bp-line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     @media(max-width:650px){#bpl-palette .bp-body{grid-template-columns:1fr;grid-template-rows:80px minmax(0,1fr)}#bpl-palette .bp-help{border-left:0;border-top:1px solid var(--bp-line)}}
     @media(prefers-color-scheme:dark){#bpl-palette{--bp-line:#465266;--bp-bg:#202a38;--bp-ink:#e4eaf2;--bp-accent:#83b5ff}#bpl-palette .bp-search,#bpl-palette .bp-results button,#bpl-palette .bp-menu-grid button,#bpl-palette .bp-help{background:#18202c;color:#e4eaf2}#bpl-palette .bp-family{background:#28384d}#bpl-palette button:hover,#bpl-palette button[aria-pressed=true]{background:#304665}#bpl-palette .bp-help a{color:#a4c8ff}#bpl-palette .bp-status{color:#b9c7da}}
+
+/* BEGIN BPL OUTPUT SCROLLING */
+/* Preserve the spaces and lines in BPL box drawings; scroll wide results. */
+.card-out .msg-content > pre.bpl_out {
+  white-space: pre !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  overflow-x: auto !important;
+  overflow-y: hidden;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding-bottom: 12px;
+  scrollbar-width: auto;
+}
+/* END BPL OUTPUT SCROLLING */

@@ -141,8 +141,56 @@ Migration checks covered all six session kernels using BPL 0.1.61, a sum evaluat
 
 BasedPL is developed by Answer.AI and contributors under Apache-2.0. The keyboard integration adapts its browser input code and the APL language bar by Nikolay G. Nikolov and Adam Brudzevski; full attribution and licence texts are retained in the opening comment of CRAFT.js. The study material follows Jeremy Howard's linked course; it is not an official course distribution.
 
-An annotator, snippet library and separate playground remain future ideas.
+A snippet library and separate playground remain future ideas.
 
 Latest-release update checks (22 October 2026): Craft startup, its keyboard patches and browser bootstrap generation passed in a fresh BPL 0.1.67 process. Sum, geometric mean and axis-catenate checks passed. The installer checks for the newest compatible stable release rather than retaining that test version.
 
 Publication checks (22 October 2026): all 11 notebooks passed format validation. All 44 BPL cells in Session 9 and 13 in Scratchpad ran successfully in isolated BPL 0.1.67 processes; the Craft Python cells compiled.
+
+## Expression Explorer
+
+Click **↳** beside a `%%bpl` code cell to explore it. If the cell contains several
+expressions, choose one from the dropdown.
+
+- **Parts:** select a coloured glyph or its annotation to read what it does.
+  Use the small arrows to see further annotations in longer expressions.
+- **Grouping:** match the coloured source to the groups below, including the
+  name and assignment arrow. **Source** and **Highlight groups** only change the
+  display.
+- **Walk Through:** use **Next step** to follow the values. Run the cell after
+  defining its inputs so the inspector can record them.
+
+The Craft starts the inspector automatically. To refresh it in an open dialogue,
+run:
+
+```python
+setup_bpl()
+await setup_bpl_explorer()
+```
+
+Then rerun the BPL cell you want to explore. Refreshing clears recorded inputs.
+Try the DNA difference function, `,⌸ a`, `{≢ ⍵}⌸ a` with `a` set to `"banana"`, or
+`+/ c =⊗ a`.
+
+Parts uses BPL's native parser. Supported grouping views use BPL's assembled
+function tree, with source spans checked against it. Walkthroughs recompute
+selected pure BPL operations from inputs recorded for that cell and source; they
+are not complete evaluator traces. Opening the panel does not rerun the notebook
+cell. Unsupported expressions explicitly say which view is unavailable. No LLM
+is involved.
+
+The implementation targets the installed BasedPL 0.1.72 interfaces, including
+private function-inspection APIs. A newer release may require compatibility
+updates. Recordings stay in the current kernel and are cleared on restart.
+
+All explorer code lives in the Craft files: its Python setup is a marked cell in
+`CRAFT.ipynb`, and its interface and scoped styles are a marked block in
+`CRAFT.js`. There are no additional explorer source files to install.
+
+To remove it, delete the cell marked `BEGIN BPL EXPRESSION EXPLORER SETUP` and the
+complete JavaScript block between `BEGIN BPL EXPRESSION EXPLORER V2` and its
+matching `END` marker. Remove any `setup_bpl_explorer()` calls, then restart the
+dialogue kernel and reload the page. The palette and output scrolling remain
+separate.
+
+Run `python tests/test_expression_explorer.py` to check the explorer implementation extracted directly from `CRAFT.ipynb`. All 12 regression tests passed with BPL 0.1.72 on 23 October 2026.

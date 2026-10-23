@@ -571,6 +571,326 @@ window.bplCraftPalette = // SolveIt BPL palette. Uses the merged BPL catalogue a
   window.solveitBplPalette={dispose(){controller.abort();observer.disconnect();resizeObserver.disconnect();cancelAnimationFrame(frame);const toggle=d.getElementById('bpl-symbol-toggle');if(toggle){toggle.onclick=null;toggle.removeAttribute('aria-keyshortcuts');toggle.title='Show or hide BPL symbols';}root.remove();}};
 });
 
+// BEGIN BPL EXPRESSION EXPLORER V2
+// Isolated Expression Explorer. Remove this block and its Python service to uninstall.
+// Parsing and grouping come from the installed BPL runtime, never from an LLM.
+(() => {
+  'use strict';
+  window.bplExpressionExplorer?.destroy();
+  const VERSION = '2.0.0';
+  const CSS = String.raw`.bplex-v2{--be-paper:light-dark(#ffffff,#171c24);--be-ink:light-dark(#243345,#e5ecf5);--be-muted:light-dark(#6a7788,#a5b2c4);--be-line:light-dark(#e4e9f0,#343e4d);--be-soft:light-dark(#f7f9fc,#202733);--be-blue:light-dark(#326dbd,#91baff);--be-blue-bg:light-dark(#eaf2ff,#253b57);--be-green:light-dark(#1c7b67,#7ed5b8);--be-green-bg:light-dark(#e6f5ef,#203d37);--be-purple:light-dark(#8557a7,#d1a9f1);--be-purple-bg:light-dark(#f2eafa,#3b2e4a);--be-orange:light-dark(#a96c21,#ebbf7b);--be-orange-bg:light-dark(#fff1dc,#443624);padding:16px 8px}
+.bplex-v2>section{min-height:530px;padding:8px 0 20px}
+.bplex-v2 .be-app{background:var(--be-paper);color:var(--be-ink);border:1px solid var(--be-line);border-radius:16px;box-shadow:0 6px 24px light-dark(#2639500a,#00000030);max-width:700px;margin:auto;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow:hidden}
+.bplex-v2 button{font:inherit;color:inherit}.bplex-v2 header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 22px;border-bottom:1px solid var(--be-line)}
+.bplex-v2 .be-brand{font-weight:600;display:flex;align-items:center;gap:10px}.bplex-v2 .be-emblem{color:var(--be-blue);font-size:23px;font-weight:500}.bplex-v2 .be-caption{font-size:11px;color:var(--be-muted);letter-spacing:.03em}
+.bplex-v2 .be-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:17px 22px 0}.bplex-v2 .be-section{font-weight:600}.bplex-v2 .be-muted{font-size:12px;color:var(--be-muted)}
+.bplex-v2 .be-sum{--part:var(--be-blue);--wash:var(--be-blue-bg)}.bplex-v2 .be-equal{--part:var(--be-green);--wash:var(--be-green-bg)}.bplex-v2 .be-not{--part:var(--be-purple);--wash:var(--be-purple-bg)}.bplex-v2 .be-atop{--part:var(--be-orange);--wash:var(--be-orange-bg)}
+.bplex-v2 .be-annotation{height:242px;position:relative;margin:4px 22px 0}
+.bplex-v2 .be-connectors{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.bplex-v2 .be-label{position:absolute;background:var(--be-paper);border:0;padding:6px 9px;border-radius:7px;text-align:left;font-weight:600;min-width:135px;z-index:1}
+.bplex-v2 .be-label small{display:block;font-size:12px;color:var(--be-muted);font-weight:400;padding-left:15px;margin-top:2px}.bplex-v2 .be-dot{display:inline-block;background:var(--part);width:7px;height:7px;border-radius:50%;margin-right:6px}
+.bplex-v2 .be-top-a{left:9%;top:16px}.bplex-v2 .be-top-b{right:6%;top:16px}.bplex-v2 .be-bottom-a{left:9%;bottom:12px}.bplex-v2 .be-bottom-b{right:6%;bottom:12px}
+.bplex-v2 .be-expression{position:absolute;top:99px;left:50%;transform:translateX(-50%);white-space:nowrap;display:flex;align-items:center;gap:3px;font:28px/1.4 "DejaVu Sans Mono",Consolas,monospace}
+.bplex-v2 .be-assign{font-size:22px;color:var(--be-muted);padding-right:12px}
+.bplex-v2 .be-token{font:inherit;border:1px solid transparent;background:var(--wash);border-radius:6px;padding:4px 8px;min-width:37px;transition:background .15s}
+.bplex-v2 .be-token[aria-pressed=true]{border-color:var(--part);box-shadow:0 0 0 2px var(--wash)}.bplex-v2 .be-label[aria-pressed=true]{background:var(--wash)}
+.bplex-v2 .be-detail{margin:8px 22px 22px;padding:15px 18px;background:var(--be-soft);border-radius:10px;min-height:104px}
+.bplex-v2 .be-detail-label{font-size:10px;letter-spacing:.09em;font-weight:600;color:var(--be-muted);margin-bottom:5px}.bplex-v2 .be-detail-title{font-weight:600;font-size:15px}.bplex-v2 .be-detail p{font-size:13px;color:var(--be-muted);margin:5px 0 0;max-width:60ch}
+.bplex-v2 footer{display:flex;align-items:center;gap:20px;padding:12px 22px;border-top:1px solid var(--be-line);font-size:12px;color:var(--be-muted)}.bplex-v2 footer span:first-child:not(.be-footnote){color:inherit}.bplex-v2 .be-current{color:var(--be-ink);font-weight:600}.bplex-v2 .be-footnote{margin-left:auto;font-size:11px}
+.bplex-v2 .be-switch{display:flex;padding:3px;background:var(--be-soft);border-radius:7px}.bplex-v2 .be-switch button{border:0;border-radius:5px;padding:5px 10px;background:transparent;font-size:12px}.bplex-v2 .be-switch button[aria-pressed=true]{background:var(--be-paper);box-shadow:0 1px 4px light-dark(#26395018,#00000044);font-weight:600}
+.bplex-v2 .be-group-stage{padding:24px 22px 4px;min-height:242px}.bplex-v2 .be-group-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:18px}.bplex-v2 code{font-family:"DejaVu Sans Mono",Consolas,monospace;color:inherit;background:none}.bplex-v2 .be-group-header code{font-size:22px}.bplex-v2 .be-group-kind{font-size:12px;color:var(--be-muted)}
+.bplex-v2 .be-bands{display:flex;gap:10px;align-items:stretch;padding:12px;background:var(--be-soft);border-radius:12px}
+.bplex-v2 .be-name{--part:light-dark(#556c89,#b4c7df);--wash:light-dark(#e9eef5,#2c3a4c)}.bplex-v2 .be-assignment{--part:var(--be-orange);--wash:var(--be-orange-bg)}
+.bplex-v2 [data-code]{display:flex;align-items:center;gap:3px;white-space:pre;flex-wrap:wrap}.bplex-v2 .be-source-part{font:inherit;border:1px solid transparent;border-radius:5px;padding:2px 5px;background:var(--wash);color:var(--be-ink)}.bplex-v2 [data-role][aria-pressed=true]{outline:2px solid var(--part);outline-offset:2px}
+.bplex-v2 .be-assignment-band{display:flex;gap:8px;align-items:center;margin-bottom:10px}.bplex-v2 .be-assignment-band button{background:var(--wash);border:0;border-radius:7px;padding:8px 12px;display:flex;align-items:center;gap:9px}.bplex-v2 .be-assignment-band code{font-size:20px}.bplex-v2 .be-assignment-band small{font-size:11px}.bplex-v2 .be-assignment-band>span{font-size:11px;color:var(--be-muted);margin-left:auto}
+.bplex-v2 .be-source-composite{padding:3px;background:light-dark(#edf0f6,#2b3341);border-radius:7px;display:inline-flex;align-items:center;gap:2px}.bplex-v2 .be-group-header{flex-wrap:wrap}.bplex-v2 .be-band{color:var(--be-ink)}
+.bplex-v2 .be-band{display:flex;flex:1;flex-direction:column;justify-content:center;align-items:center;background:var(--wash);border:0;border-radius:8px;padding:12px 6px;min-width:0}
+.bplex-v2 .be-band code{font-size:27px}.bplex-v2 .be-band small{font-size:11px;margin-top:5px}.bplex-v2 .be-nested{display:flex;gap:5px;align-items:center;justify-content:center}.bplex-v2 .be-nested span{border-radius:5px;padding:4px 10px;background:var(--wash);font:25px monospace}.bplex-v2 .be-composite{background:light-dark(#edf0f6,#2b3341);flex:2}.bplex-v2 .be-group-read{font-size:12px;color:var(--be-muted);text-align:center;padding:14px 0 4px}
+.bplex-v2 .be-walk-stage{padding:20px 22px 4px;min-height:242px}.bplex-v2 .be-walk-source{display:flex;justify-content:space-between;align-items:center}.bplex-v2 .be-walk-source code{font-size:22px}.bplex-v2 .be-step-count{font-size:12px;color:var(--be-muted)}
+.bplex-v2 .be-steps{display:flex;align-items:center;gap:8px;margin:18px 0}.bplex-v2 .be-steps i{font-style:normal;color:var(--be-muted)}.bplex-v2 .be-steps button{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:8px;border:0;border-radius:7px;background:var(--be-soft);font-size:12px}.bplex-v2 .be-steps button[aria-pressed=true]{background:var(--wash);box-shadow:inset 0 -2px var(--part)}.bplex-v2 .be-steps button span{font-size:11px;color:var(--part)}
+.bplex-v2 .be-data{display:grid;gap:5px;padding:8px 0}.bplex-v2 .be-data-row{display:grid;grid-template-columns:46px repeat(17,1fr);gap:3px;align-items:center}.bplex-v2 .be-data-row .be-row-label{font:11px sans-serif;color:var(--be-muted)}.bplex-v2 .be-data-row span{font:14px/1.8 monospace;text-align:center;border-radius:3px}.bplex-v2 .be-mark{background:var(--be-green-bg);color:var(--be-green)}.bplex-v2 .be-flip-mark{background:var(--be-purple-bg);color:var(--be-purple)}
+.bplex-v2 .be-total{display:flex;align-items:center;gap:14px;padding:5px 0}.bplex-v2 .be-total strong{font-size:36px;font-weight:500;color:var(--be-blue)}.bplex-v2 .be-total span{font-size:13px;color:var(--be-muted)}
+.bplex-v2 .be-step-controls{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}.bplex-v2 .be-step-controls button{border:1px solid var(--be-line);border-radius:6px;background:var(--be-paper);padding:5px 10px;font-size:12px}.bplex-v2 .be-step-controls button:disabled{opacity:.4}
+@media(max-width:480px){.bplex-v2{padding:8px 0}.bplex-v2>section{min-height:580px}.bplex-v2 header,.bplex-v2 .be-bar{padding-left:14px;padding-right:14px}.bplex-v2 .be-caption{display:none}.bplex-v2 .be-annotation{margin-left:10px;margin-right:10px;height:250px}.bplex-v2 .be-label small{max-width:120px}.bplex-v2 .be-top-a,.bplex-v2 .be-bottom-a{left:0}.bplex-v2 .be-top-b,.bplex-v2 .be-bottom-b{right:0}.bplex-v2 .be-label{min-width:110px;font-size:13px}.bplex-v2 .be-label small{font-size:11px}.bplex-v2 .be-token{padding:4px 6px;min-width:31px}.bplex-v2 .be-expression{font-size:24px}.bplex-v2 .be-assign{font-size:18px;padding-right:5px}.bplex-v2 .be-detail{margin:8px 14px 18px;padding:13px}.bplex-v2 footer{gap:15px;padding:12px 14px}.bplex-v2 .be-footnote{display:none}.bplex-v2 .be-group-stage,.bplex-v2 .be-walk-stage{padding-left:14px;padding-right:14px}.bplex-v2 .be-data-row{grid-template-columns:35px repeat(17,1fr);gap:1px}.bplex-v2 .be-data-row span{font-size:11px}.bplex-v2 .be-data-row .be-row-label{font-size:10px}.bplex-v2 .be-band code{font-size:23px}.bplex-v2 .be-bands{gap:6px;padding:8px}.bplex-v2 .be-band small{font-size:10px}.bplex-v2 .be-steps{gap:4px}.bplex-v2 .be-steps button{gap:4px;padding:8px 5px}}
+@media(prefers-reduced-motion:reduce){.bplex-v2 *{transition:none!important}}
+.bplex-v2{padding:0!important;margin:14px 0;max-width:100%;color-scheme:light dark}
+.bplex-v2 .be-app{max-width:700px}.bplex-v2 button{cursor:pointer}.bplex-v2 button:focus-visible,.bplex-v2 select:focus-visible{outline:2px solid var(--be-blue);outline-offset:3px}
+.bplex-v2 header{flex-wrap:wrap}.bplex-v2 .be-header-actions{display:flex;align-items:center;gap:10px;margin-left:auto}.bplex-v2 .be-close{border:0;background:transparent;color:var(--be-muted);font-size:22px;line-height:1;padding:3px 5px;border-radius:5px}
+.bplex-v2 .be-line-picker{display:flex;align-items:center;gap:8px;padding:10px 22px 0;font-size:11px;color:var(--be-muted)}.bplex-v2 .be-line-picker[hidden]{display:none}.bplex-v2 .be-line-picker select{min-width:0;flex:1;font:12px/1.6 "DejaVu Sans Mono",Consolas,monospace;padding:5px 8px;border:1px solid var(--be-line);border-radius:6px;color:var(--be-ink);background:var(--be-paper)}
+.bplex-v2 footer button{border:0;padding:0;background:transparent;color:inherit;font-size:12px;white-space:nowrap}.bplex-v2 footer button[aria-selected=true]{color:var(--be-ink);font-weight:600}
+.bplex-trigger-v2{border:0;background:transparent;color:inherit;cursor:pointer;padding:4px 7px;border-radius:5px;font:inherit}.bplex-trigger-v2:hover,.bplex-trigger-v2[aria-expanded=true]{background:#eaf2ff;color:#326dbd}
+.bplex-v2 .be-status{padding:34px 22px;min-height:180px;color:var(--be-muted);font-size:13px}.bplex-v2 .be-status strong{display:block;color:var(--be-ink);font-size:15px;margin-bottom:7px}.bplex-v2 .be-status p{margin:0 0 16px;max-width:54ch}.bplex-v2 .be-action{border:1px solid var(--be-line);border-radius:6px;background:var(--be-paper);padding:6px 12px;color:var(--be-ink);font-size:12px}
+.bplex-v2 .be-page-controls{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--be-muted)}.bplex-v2 .be-page-controls button{border:1px solid var(--be-line);background:var(--be-paper);border-radius:5px;padding:1px 7px}.bplex-v2 .be-page-controls button:disabled{opacity:.35;cursor:default}
+.bplex-v2 .be-expression-viewport{position:absolute;left:0;right:0;top:89px;overflow-x:auto;padding:9px 2px 12px;scrollbar-width:thin}.bplex-v2 .be-expression-viewport .be-expression{position:relative;top:auto;left:auto;transform:none;width:max-content;min-width:100%;justify-content:center;gap:0}.bplex-v2 .be-expression .be-token{margin:0 1px;flex-shrink:0;white-space:pre;font-family:"DejaVu Sans Mono",Consolas,monospace}.bplex-v2 .be-expression .be-plain{white-space:pre;font-size:22px;color:var(--be-muted)}
+.bplex-v2 .be-label{max-width:44%;min-width:0}.bplex-v2 .be-label small{max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bplex-v2 .be-label-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline-block;max-width:calc(100% - 18px);vertical-align:middle}
+.bplex-v2 .be-detail-title{overflow-wrap:anywhere}.bplex-v2 .be-detail p{white-space:pre-line}.bplex-v2 .be-source-part{white-space:pre;max-width:100%;overflow-wrap:anywhere}.bplex-v2 [data-code]{overflow-wrap:anywhere;font-size:22px;display:block;white-space:pre-wrap;line-height:1.85}.bplex-v2 .be-source-composite{display:inline-flex;flex-wrap:wrap}.bplex-v2 .be-band code{overflow-wrap:anywhere;white-space:pre-wrap;text-align:center;font-size:27px}.bplex-v2 .be-band small{text-align:center}.bplex-v2 .be-composite .be-nested{flex-wrap:wrap}.bplex-v2 .be-band-label{font-size:11px;margin-top:6px}.bplex-v2 .be-assignment-band{flex-wrap:wrap}.bplex-v2 .be-assignment-band>span{margin-left:auto}.bplex-v2 .be-group-read{white-space:pre-line}.bplex-v2 .be-bands{flex-wrap:wrap}.bplex-v2 .be-bands>.be-band{min-width:90px}
+.bplex-v2 .be-source-composite .be-source-part{font-size:inherit}.bplex-v2 .be-nested .be-source-part{font-size:25px}.bplex-v2 .be-step-count{white-space:nowrap}.bplex-v2 .be-walk-source{gap:12px}.bplex-v2 .be-walk-source code{overflow-wrap:anywhere;white-space:pre-wrap}.bplex-v2 .be-steps{overflow-x:auto;scrollbar-width:thin;padding-bottom:3px}.bplex-v2 .be-steps button{flex-shrink:0;min-width:70px}.bplex-v2 .be-data{overflow-x:auto;scrollbar-width:thin}.bplex-v2 .be-data-row{grid-template-columns:46px repeat(var(--be-count,17),minmax(18px,1fr));min-width:max-content}.bplex-v2 .be-data-row span{white-space:pre;padding:0 2px}.bplex-v2 .be-data-row .be-row-label{padding-right:6px}.bplex-v2 .be-total strong{overflow-wrap:anywhere}.bplex-v2 .be-error-detail{color:var(--be-muted);font:12px/1.5 monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+@media(max-width:480px){.bplex-v2 .be-line-picker{padding-left:14px;padding-right:14px}.bplex-v2 .be-expression-viewport .be-expression{font-size:24px}.bplex-v2 .be-data-row{grid-template-columns:35px repeat(var(--be-count,17),minmax(16px,1fr))}.bplex-v2 footer{gap:15px}.bplex-v2 .be-caption{display:block;font-size:10px}.bplex-v2 .be-footnote{display:none}}
+`;
+  const definitions = {
+    '+': ['Plus', 'Identity / add', 'With one argument, return it unchanged. With two arguments, add corresponding values.'],
+    '+/': ['Sum', 'Add the results', '/ combines with + to make one derived function. With one argument, it sums along the last axis.'],
+    '/': ['Reduce', 'Build a reduction', 'This operator uses the function on its left to combine items along the last axis.'],
+    '⌿': ['Reduce First', 'Reduce the first axis', 'This operator uses the function on its left to combine items along the first axis.'],
+    '~': ['Not / Without', 'Depends on its arguments', 'With one argument, flip Boolean values. With two arguments, keep items of the left argument that do not occur in the right.'],
+    '=': ['Equal', 'Compare both inputs', 'Compare corresponding values. Equal items produce true; unequal items produce false.'],
+    '≠': ['Not Equal / Unique Mask', 'Compare or mark first occurrences', 'With two arguments, test corresponding items for inequality. With one argument, mark the first occurrence of each distinct item.'],
+    '≢': ['Tally / Not Match', 'Count or compare whole arrays', 'With one argument, count leading-axis items. With two arguments, test whether the complete values differ, including their shapes.'],
+    '≡': ['Depth / Match', 'Inspect or compare whole arrays', 'With two arguments, test whether the complete values match, including their shapes.'],
+    '∘': ['Atop', 'Compose functions', 'Connect functions so that the result of the function on the right is passed to the function on the left.'],
+    '⍤': ['Rank / Atop', 'An operator', 'The meaning depends on its operands. The Grouping view shows the structure returned by this BPL runtime.'],
+    '⍥': ['Over', 'Transform inputs first', 'Apply the right operand function to the arguments before calling the left operand function.'],
+    '@': ['Under', 'Transform, operate, undo', 'For invertible transforms, apply the right function, then the left function, then the inverse of the right function.'],
+    '#': ['Replicate', 'Repeat or filter items', 'The left argument gives repeat counts for corresponding items in the right argument. A true/false mask keeps or removes items.'],
+    '←': ['Assign', 'Give the result a name', 'Associate the name on the left with the value or function on the right.'],
+    ',': ['Ravel / Catenate', 'Flatten or join arrays', 'With one argument, flatten the array to a vector. With two arguments, join along the last axis by default.'],
+    '⍪': ['Table / Catenate First', 'Make a table or join', 'With one argument, make a matrix by keeping the first dimension and combining the remaining dimensions. With two arguments, join along the first axis.'],
+    '÷': ['Reciprocal / Divide', 'Invert or divide values', 'With one argument, calculate 1 divided by the value. With two arguments, divide the left value by the right.'],
+    '-': ['Negate / Subtract', 'Change sign or subtract', 'With one argument, negate the value. With two arguments, subtract the right value from the left.'],
+    '×': ['Sign / Multiply', 'Find signs or multiply', 'With one argument, give the sign. With two arguments, multiply corresponding values.'],
+    '*': ['Exponential / Power', 'Raise to a power', 'With one argument, calculate the exponential. With two arguments, raise the left value to the right value.'],
+    '⌸': ['Key', 'Group corresponding values', 'An operator that calls its operand once per distinct key. Each call receives a key and its group of associated values or positions.'],
+    '⊗': ['Outer Product', 'Apply to every pair', 'An operator that applies its operand function to every pairing of an item from each input.'],
+    '⍵': ['Right Argument', 'The input on the right', 'Inside a function body, this name refers to the right argument supplied to that call.'],
+    '⍺': ['Left Argument', 'The input on the left', 'Inside a function body, this name refers to the left argument supplied to that call.'],
+    '(': ['Open Group', 'Start an explicit group', 'Parentheses explicitly group the expression they enclose.'],
+    ')': ['Close Group', 'End an explicit group', 'This closes the corresponding parenthesised expression.'],
+    '{': ['Function Body', 'Start a function definition', 'The braces enclose a function body. Its argument names refer to values supplied when the function is called.'],
+    '}': ['End Function Body', 'Close the definition', 'This closes the function body.'],
+    '[': ['Open Bracket', 'Start a bracketed expression', 'This bracket is part of the syntax reported by the installed BPL parser. Its use depends on the surrounding expression.'],
+    ']': ['Close Bracket', 'Close the bracketed expression', 'This closes the matching bracket.'],
+    '⎕': ['Quad', 'Input or output', 'Used for input and output. An assignment to Quad displays its right-hand value.']
+  };
+  const make = (tag, cls, text) => {const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=String(text);return e;};
+  const button = (cls,text,action) => {const e=make('button',cls,text);e.type='button';if(action)e.onclick=action;return e;};
+  const style=make('style');style.dataset.bplex='v2';style.textContent=CSS;document.head.append(style);
+  const mounted=new Map(),pending=new Map();
+  let alive=true,scanTimer,socket,connection,channelName,sequence=0,bridgeEpoch,runtimeVersion;
+  const hashText=async text=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text))),x=>x.toString(16).padStart(2,'0')).join('');
+  const normaliseName=() => {const e=document.querySelector('#dlg-name');return (e?.value||e?.textContent||'').trim().replace(/^\/+|\.ipynb$/g,'');};
+  const detailsFor = item => {
+    const known=definitions[String(item.text||'').trim()], kind=String(item.kind||'').toLowerCase();
+    const fallback=kind.includes('name')||kind.includes('ident')?['Name','A named value or function','This name is resolved in the current dialogue workspace.']:
+      kind.includes('string')||kind.includes('char')?['Text','A literal text value','The characters inside the quotation marks form a text value.']:
+      kind.includes('number')||kind.includes('integer')||kind.includes('float')?['Number','A numeric value','A numeric literal used as an argument or operand.']:
+      ['Syntax','From the BPL parser','This part is identified by the installed BPL parser.'];
+    const info=known||fallback;
+    const suppliedSummary=String(item.summary||'');
+    const compactSummary=item.annotation?.summary||(known?known[1]:(suppliedSummary.length>0&&suppliedSummary.length<=42?suppliedSummary:fallback[1]));
+    return {title:item.annotation?.title||item.title||item.label||info[0],summary:compactSummary,description:item.annotation?.description||item.description||info[2]};
+  };
+  const tone = (item,index=0) => {
+    const glyph=String(item.text||'').trim();
+    if(glyph==='←')return 'be-assignment';
+    if(['=','≠','≢','≡'].includes(glyph))return 'be-equal';
+    if(glyph==='~')return 'be-not';
+    if(['∘','@','⊗','⌸','⍤','⍥'].includes(glyph))return 'be-atop';
+    if(['+','+/','/','⌿'].includes(glyph))return 'be-sum';
+    const requested={blue:'sum',purple:'not',green:'equal',orange:'atop',slate:'name',sum:'sum',not:'not',equal:'equal',atop:'atop',name:'name',assignment:'assignment'}[item.tone||item.role];
+    if(requested)return 'be-'+requested;
+    if(/name|ident/i.test(item.kind||''))return 'be-name';
+    return ['be-sum','be-not','be-equal','be-atop'][index%4];
+  };
+  const flatten=nodes=>(nodes||[]).flatMap(n=>[n,...flatten(n.children)]);
+  const span=item=>item.span||[item.start,item.end];
+  const validSpan=(item,length)=>{const [a,b]=span(item);return Number.isInteger(a)&&Number.isInteger(b)&&a>=0&&b>a&&b<=length;};
+  function normaliseLine(raw,index) {
+    const line={...raw,source:raw.source||'',index:raw.index??index};
+    line.tokens=(raw.tokens||[]).map((x,i)=>({...x,id:x.id||`token-${i}`}));
+    const g=raw.grouping||{};
+    const normaliseNodes=(nodes,prefix='group')=>(nodes||[]).map((x,i)=>({...x,id:x.id||`${prefix}-${i}`,span:span(x),children:normaliseNodes(x.children,`${prefix}-${i}`)}));
+    line.grouping={...g,status:g.status==='verified'?'exact':g.status,nodes:normaliseNodes(g.nodes||g.segments)};
+    line.walkthrough={...(raw.walkthrough||{}),status:raw.walkthrough?.status==='available'?'exact':raw.walkthrough?.status};
+    return line;
+  }
+  function rejectPending(message) {for(const p of pending.values()){clearTimeout(p.timer);p.reject(new Error(message));}pending.clear();}
+  async function connect() {
+    if(!alive)throw new Error('The explorer has closed.');
+    const name=normaliseName();if(!name)throw new Error('The dialogue name is not available yet. Try again once the dialogue has loaded.');
+    const hash=await hashText(name);if(!alive)throw new Error('The explorer has closed.');
+    const chan='bpl-explorer-v2-'+hash.slice(0,24);
+    if(channelName===chan&&socket?.readyState===WebSocket.OPEN)return socket;
+    if(channelName===chan&&connection)return connection;
+    socket?.close();channelName=chan;
+    connection=new Promise((resolve,reject)=>{
+      const current=new WebSocket(`${location.protocol==='https:'?'wss:':'ws:'}//${location.host}/wsx?chan=${encodeURIComponent(chan)}`);socket=current;
+      const timeout=setTimeout(()=>{current.close();reject(new Error('The explorer could not connect. Run the dialogue setup, then try again.'));},12000);
+      current.onopen=()=>{if(!alive){current.close();return;}current.send(JSON.stringify({op:'hello',request_id:`hello-${Date.now()}-${++sequence}`}));};
+      current.onerror=()=>{clearTimeout(timeout);reject(new Error('The explorer connection is unavailable. Run the dialogue setup, then try again.'));};
+      current.onclose=()=>{clearTimeout(timeout);if(socket===current){connection=null;rejectPending('The explorer connection closed. Please try again.');}};
+      current.onmessage=event=>{
+        let packet;try{packet=JSON.parse(event.data);}catch{return;}
+        if(packet.op==='ready'){
+          if(socket!==current)return;
+          if(bridgeEpoch&&packet.epoch&&bridgeEpoch!==packet.epoch)rejectPending('The BPL runtime restarted. Please inspect the current expression again.');
+          bridgeEpoch=packet.epoch;runtimeVersion=packet.version;clearTimeout(timeout);resolve(current);return;
+        }
+        if(packet.op!=='inspection')return;
+        const p=pending.get(packet.request_id);if(!p)return;
+        clearTimeout(p.timer);pending.delete(packet.request_id);
+        if(packet.error)p.reject(new Error(typeof packet.error==='string'?packet.error:'The BPL inspector could not read this expression.'));
+        else if(p.epoch&&p.epoch!==packet.epoch)p.reject(new Error('This inspection belongs to an earlier BPL session. Please try again.'));
+        else if(packet.result?.request_source_hash!==p.sourceHash)p.reject(new Error('The expression changed during inspection. Please reopen the explorer.'));
+        else if(packet.result?.version&&p.version&&packet.result.version!==p.version)p.reject(new Error('The BPL version changed during inspection. Please try again.'));
+        else p.resolve(packet.result||{});
+      };
+    });
+    try{return await connection;}catch(e){connection=null;throw e;}
+  }
+  async function inspect(source,cellId) {
+    const sourceHash=await hashText(source);if(!alive)throw new Error('The explorer has closed.');
+    const s=await connect();if(!alive)throw new Error('The explorer has closed.');
+    const request_id=`bplex-${Date.now()}-${++sequence}`;
+    return new Promise((resolve,reject)=>{
+      const timer=setTimeout(()=>{pending.delete(request_id);reject(new Error('The BPL inspector has not replied. Run the dialogue setup to start it, then choose Try again.'));},15000);
+      pending.set(request_id,{resolve,reject,timer,epoch:bridgeEpoch,version:runtimeVersion,sourceHash});
+      try{s.send(JSON.stringify({op:'inspect',request_id,source,cell_id:cellId,source_hash:sourceHash,epoch:bridgeEpoch}));}catch(e){clearTimeout(timer);pending.delete(request_id);reject(e);}
+    });
+  }
+  function detail(label='SELECTED PART') {
+    const box=make('div','be-detail'),eyebrow=make('div','be-detail-label',label),title=make('div','be-detail-title'),text=make('p');box.append(eyebrow,title,text);
+    return {box,set(t,d,l){title.textContent=t||'';text.textContent=d||'';if(l)eyebrow.textContent=l;}};
+  }
+  function renderUnavailable(view,title,message,source) {
+    const stage=make('div','be-group-stage');
+    if(source){const header=make('div','be-group-header');header.append(make('code','',source));stage.append(header);}
+    const box=make('div','be-detail');box.append(make('div','be-detail-label','INSPECTION LIMIT'),make('div','be-detail-title',title),make('p','',message));stage.append(box);view.append(stage);
+  }
+  function mount(cell,code,nav) {
+    const trigger=button('bplex-trigger-v2','↳');trigger.title='Explore BPL expression';trigger.setAttribute('aria-label',trigger.title);trigger.setAttribute('aria-expanded','false');nav.prepend(trigger);
+    let panel,resize,result,selectedLine=0,mode='Parts',currentSource='',requestRevision=0,cleanupView=()=>{};
+    function close(){requestRevision++;resize?.disconnect();cleanupView();panel?.remove();panel=null;trigger.setAttribute('aria-expanded','false');}
+    function open(){
+      if(panel){close();return;}
+      const liveCode=cell.querySelector('.msg-content pre code');if(!liveCode)return;
+      currentSource=liveCode.textContent;result=null;panel=make('section','bplex-v2');panel.setAttribute('aria-label','BPL expression explorer');
+      const app=make('div','be-app'),header=make('header'),brand=make('div','be-brand');brand.append(make('span','be-emblem','↳'),make('span','','Expression explorer'));
+      const actions=make('div','be-header-actions'),caption=make('span','be-caption','Connecting to BPL');actions.append(caption,button('be-close','×',close));actions.lastChild.setAttribute('aria-label','Close expression explorer');header.append(brand,actions);
+      const picker=make('div','be-line-picker'),select=make('select');select.setAttribute('aria-label','Choose expression line');picker.append(make('span','','Expression'),select);picker.hidden=true;
+      const view=make('div'),footer=make('footer');footer.setAttribute('role','tablist');footer.setAttribute('aria-label','Explorer views');
+      const tabButtons=['Parts','Grouping','Walk Through'].map(name=>{const b=button('',name,()=>{mode=name;render();});b.setAttribute('role','tab');footer.append(b);return b;});
+      const footnote=make('span','be-footnote');footer.append(footnote);app.append(header,picker,view,footer);panel.append(app);cell.querySelector('.msg-body').append(panel);trigger.setAttribute('aria-expanded','true');
+      footer.onkeydown=e=>{const from=tabButtons.indexOf(document.activeElement);if(from<0)return;let next;if(e.key==='ArrowRight')next=(from+1)%3;else if(e.key==='ArrowLeft')next=(from+2)%3;else if(e.key==='Home')next=0;else if(e.key==='End')next=2;else return;e.preventDefault();tabButtons[next].click();tabButtons[next].focus();};
+      select.onchange=()=>{selectedLine=Number(select.value);render();};
+      async function load(){
+        const revision=++requestRevision;resize?.disconnect();cleanupView();view.replaceChildren();
+        const status=make('div','be-status');status.setAttribute('role','status');status.append(make('strong','','Reading the expression'),make('p','','Asking the installed BPL runtime for its syntax and function structure.'));view.append(status);caption.textContent='Connecting to BPL';
+        try{
+          const inspected=await inspect(currentSource,cell.id.replace(/^_/,'').replace(/-i$/,''));if(!panel||revision!==requestRevision||cell.querySelector('.msg-content pre code')?.textContent!==currentSource)return;
+          if(inspected.status==='error'&&!inspected.lines?.length)throw new Error(inspected.message||'BPL could not inspect this cell.');
+          result={...inspected,lines:(inspected.lines||[]).map(normaliseLine)};
+          caption.textContent=result.version?`BPL ${result.version}`:'BPL runtime';
+          select.replaceChildren();result.lines.forEach((line,i)=>{const o=make('option','',line.source);o.value=String(i);select.append(o);});
+          selectedLine=Math.min(selectedLine,Math.max(0,result.lines.length-1));select.value=String(selectedLine);picker.hidden=result.lines.length<2;render();
+        }catch(error){if(!panel||revision!==requestRevision)return;caption.textContent='Not connected';view.replaceChildren();const box=make('div','be-status');box.setAttribute('role','status');box.append(make('strong','','Start the BPL inspector'),make('p','',error.message),button('be-action','Try again',load));view.append(box);}
+      }
+      function render(){
+        if(!panel||!result)return;resize?.disconnect();cleanupView();cleanupView=()=>{};view.replaceChildren();
+        tabButtons.forEach(b=>{const active=b.textContent===mode;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});
+        const line=result.lines[selectedLine];if(!line){renderUnavailable(view,'No expression to inspect',result.message||'This cell does not contain a BPL expression.');return;}
+        footnote.textContent=mode==='Parts'?'BPL syntax':mode==='Grouping'?(line.grouping.status==='exact'?'BPL function structure':'Syntax only'):(line.walkthrough.status==='exact'?'Verified walkthrough':'');
+        const bar=make('div','be-bar');bar.append(make('span','be-section',mode==='Parts'?'Understand the parts':mode==='Grouping'?'See how it groups':'Follow the values'));view.append(bar);
+        if(mode==='Parts')renderParts(line,bar,view);
+        else if(mode==='Grouping')renderGrouping(line,bar,view);
+        else renderWalk(line,bar,view);
+      }
+      function renderParts(line,bar,view){
+        const chars=Array.from(line.source),semantic=flatten(line.grouping.status==='exact'?line.grouping.nodes:[]).filter(n=>!n.children?.length&&validSpan(n,chars.length)&&definitions[String(n.text||'').trim()]);
+        const merged=[],covered=new Set(),overlays=new Map();
+        for(const n of semantic){
+          const [a,b]=span(n),inside=line.tokens.filter(t=>t.start>=a&&t.end<=b);
+          if(inside.length>1){const info=definitions[n.text.trim()];merged.push({...n,start:a,end:b,kind:'Function',title:info[0],summary:info[1]});inside.forEach(t=>covered.add(t.id));}
+          else if(inside.length===1){const t=inside[0];overlays.set(t.id,{...t,annotation:n.annotation,description:n.annotation?.description||n.description||t.description});}
+        }
+        const assignmentSpans=line.grouping.assignment?[line.grouping.assignment.span,line.grouping.assignment.arrow_span].filter(Boolean):[];
+        // Keep a parser-confirmed assignment prefix quiet in Parts, as in the
+        // approved preview. Grouping gives its name and arrow their own colours.
+        // This also covers value assignments, whose function grouping is absent.
+        if(!assignmentSpans.length){
+          const syntaxTokens=line.tokens.filter(t=>validSpan(t,chars.length)).sort((a,b)=>span(a)[0]-span(b)[0]);
+          if(syntaxTokens[0]?.kind==='Name'&&['Assign','Assignment'].includes(syntaxTokens[1]?.kind))assignmentSpans.push(span(syntaxTokens[0]),span(syntaxTokens[1]));
+        }
+        const tokens=[...line.tokens.filter(t=>!covered.has(t.id)).map(t=>overlays.get(t.id)||t),...merged].filter(t=>validSpan(t,chars.length)&&!assignmentSpans.some(([a,b])=>span(t)[0]>=a&&span(t)[1]<=b)).sort((a,b)=>span(a)[0]-span(b)[0]);
+        if(!tokens.length){renderUnavailable(view,'No parts returned',line.message||'The BPL parser did not return source spans for this expression.',line.source);return;}
+        let page=0,active=0;
+        const controls=make('div','be-page-controls'),prev=button('','‹',()=>showPage(page-1)),pageLabel=make('span'),next=button('','›',()=>showPage(page+1));prev.setAttribute('aria-label','Previous annotations');next.setAttribute('aria-label','Next annotations');controls.append(prev,pageLabel,next);bar.append(tokens.length>4?controls:make('span','be-muted','Select a highlighted part'));
+        const stage=make('div','be-annotation'),svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.classList.add('be-connectors');svg.setAttribute('aria-hidden','true');
+        const viewport=make('div','be-expression-viewport'),expression=make('div','be-expression');viewport.append(expression);stage.append(svg,viewport);view.append(stage);
+        const selected=detail();view.append(selected.box);const tokenButtons=[],labels=[];let cursor=0;
+        tokens.forEach((token,i)=>{const [a,b]=span(token);if(a<cursor)return;if(a>cursor)expression.append(make('span','be-plain',chars.slice(cursor,a).join('')));const info=detailsFor(token);const t=button('be-token '+tone(token,i),chars.slice(a,b).join(''),()=>selectPart(i));t.setAttribute('aria-label',`${token.text}: ${info.title}`);t.dataset.part=String(i);expression.append(t);tokenButtons[i]=t;cursor=b;});
+        if(cursor<chars.length)expression.append(make('span','be-plain',chars.slice(cursor).join('')));
+        function draw(){
+          const box=stage.getBoundingClientRect();if(!box.width)return;svg.setAttribute('viewBox',`0 0 ${box.width} ${box.height}`);svg.replaceChildren();
+          labels.forEach(({index,label})=>{const t=tokenButtons[index];if(!t)return;const a=t.getBoundingClientRect(),b=label.getBoundingClientRect(),vp=viewport.getBoundingClientRect();if(a.right<vp.left||a.left>vp.right)return;const upper=b.top<a.top,x=a.left+a.width/2-box.left,y=(upper?a.top:a.bottom)-box.top,x2=b.left+b.width/2-box.left,y2=(upper?b.bottom:b.top)-box.top;const path=document.createElementNS(svg.namespaceURI,'path');path.setAttribute('d',`M ${x} ${y} L ${x} ${(y+y2)/2} L ${x2} ${(y+y2)/2} L ${x2} ${y2}`);path.setAttribute('stroke',getComputedStyle(label).getPropertyValue('--part'));path.setAttribute('stroke-width',index===active?'2':'1');path.setAttribute('opacity',index===active?'1':'.3');path.setAttribute('fill','none');svg.append(path);});
+        }
+        function selectPart(index){active=index;const desired=Math.floor(index/4);if(desired!==page)showPage(desired);tokenButtons.forEach((b,i)=>b?.setAttribute('aria-pressed',String(i===active)));labels.forEach(({index,label})=>label.setAttribute('aria-pressed',String(index===active)));const info=detailsFor(tokens[index]);selected.set(`${tokens[index].text} · ${info.title}`,info.description);const token=tokenButtons[index];if(token){const t=token.getBoundingClientRect(),v=viewport.getBoundingClientRect();if(t.left<v.left)viewport.scrollLeft-=v.left-t.left+6;else if(t.right>v.right)viewport.scrollLeft+=t.right-v.right+6;}draw();}
+        function showPage(value){page=Math.max(0,Math.min(Math.ceil(tokens.length/4)-1,value));labels.splice(0).forEach(x=>x.label.remove());const positions=['be-top-a','be-bottom-a','be-bottom-b','be-top-b'];tokens.slice(page*4,page*4+4).forEach((token,j)=>{const index=page*4+j,info=detailsFor(token),label=button(`be-label ${tone(token,index)} ${positions[j]}`,'',()=>selectPart(index));label.append(make('span','be-dot'),make('span','be-label-title',info.title),make('small','',info.summary));stage.append(label);labels.push({index,label});});prev.disabled=page===0;next.disabled=(page+1)*4>=tokens.length;pageLabel.textContent=`${page*4+1}–${Math.min(tokens.length,(page+1)*4)} of ${tokens.length}`;if(active<page*4||active>=page*4+4)active=page*4;selectPart(active);}
+        viewport.addEventListener('scroll',draw,{passive:true});resize=new ResizeObserver(draw);resize.observe(stage);showPage(0);cleanupView=()=>viewport.removeEventListener('scroll',draw);
+      }
+      function renderGrouping(line,bar,view){
+        const g=line.grouping,chars=Array.from(line.source);
+        if(g.status!=='exact'||!g.nodes?.length){renderUnavailable(view,'Grouping is not available for this expression',g.message||g.explanation||'The parser has identified its syntax, but the runtime has not provided a verified function grouping. The Parts view is still available.',line.source);return;}
+        const control=make('div','be-switch');control.setAttribute('aria-label','Grouping display');let highlighted=true;const no=button('','Source',()=>{highlighted=false;paintSource();}),yes=button('','Highlight groups',()=>{highlighted=true;paintSource();});control.append(no,yes);bar.append(control);
+        const stage=make('div','be-group-stage'),head=make('div','be-group-header'),source=make('code');source.dataset.code='';const kind=make('span','be-group-kind',g.title||g.kind||'Function structure');head.append(source,kind);stage.append(head);
+        const chosen=detail(),items=[];let nodes=g.nodes.map((n,i)=>({...n,id:n.id||`group-${i}`}));
+        const assignment=g.assignment;
+        if(assignment){
+          const name={id:'assignment-name',text:assignment.name,span:assignment.span,role:'name',label:'Function name',description:'The name on the left of the arrow refers to the complete value or function on its right.'};
+          const arrow={id:'assignment-arrow',text:'←',span:assignment.arrow_span,role:'assignment',label:'Assign',description:`The assignment arrow associates ${assignment.name} with the complete expression on its right.`};
+          items.push(name,arrow);const row=make('div','be-assignment-band');[name,arrow].forEach(n=>{const b=button(tone(n),'',()=>focus(n));b.dataset.role=n.id;b.append(make('code','',n.text),make('small','',n.label));row.append(b);});row.append(make('span','','Names the whole function below'));stage.append(row);
+        }
+        const bands=make('div','be-bands');nodes.forEach((node,i)=>bands.append(band(node,i)));stage.append(bands,make('div','be-group-read',g.summary||g.explanation||''));view.append(stage,chosen.box);items.push(...flatten(nodes));
+        function focus(node){stage.querySelectorAll('[data-role]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.role===node.id)));const info=detailsFor(node);chosen.set(`${node.text||node.label} · ${node.title||node.label||info.title}`,node.description||info.description);}
+        function chip(node){const b=button('be-source-part '+tone(node),node.text,()=>focus(node));b.dataset.role=node.id;return b;}
+        function band(node,i){
+          const b=make('div','be-band '+(node.children?.length?'be-composite':tone(node,i)));
+          if(node.children?.length){const nested=make('div','be-nested');node.children.forEach(child=>nested.append(chip(child)));b.append(nested,make('small','',node.label||'Composed function'));b.tabIndex=0;b.setAttribute('role','button');b.onclick=e=>{if(e.target===b||e.target.tagName==='SMALL')focus(node);};b.onkeydown=e=>{if(e.target===b&&(e.key==='Enter'||e.key===' ')){e.preventDefault();focus(node);}};}
+          else{b.setAttribute('role','button');b.tabIndex=0;b.append(make('code','',node.text),make('small','',node.label||detailsFor(node).title));b.onclick=()=>focus(node);b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();focus(node);}};}
+          b.dataset.role=node.id;return b;
+        }
+        function sourceNode(node){
+          if(!node.children?.length)return chip(node);
+          const wrap=make('span','be-source-composite');
+          const [a,b]=span(node);let at=a;node.children.filter(x=>validSpan(x,chars.length)).sort((x,y)=>span(x)[0]-span(y)[0]).forEach(child=>{const [ca,cb]=span(child);if(ca>at)wrap.append(document.createTextNode(chars.slice(at,ca).join('')));wrap.append(sourceNode(child));at=cb;});if(at<b)wrap.append(document.createTextNode(chars.slice(at,b).join('')));return wrap;
+        }
+        function paintSource(){
+          no.setAttribute('aria-pressed',String(!highlighted));yes.setAttribute('aria-pressed',String(highlighted));source.replaceChildren();if(!highlighted){source.textContent=line.source;return;}let at=0;
+          const top=[...items.filter(n=>n.role==='name'||n.role==='assignment'),...nodes].filter(n=>validSpan(n,chars.length)).sort((a,b)=>span(a)[0]-span(b)[0]);
+          top.forEach(node=>{const [a,b]=span(node);if(a<at)return;if(a>at)source.append(document.createTextNode(chars.slice(at,a).join('')));source.append(sourceNode(node));at=b;});if(at<chars.length)source.append(document.createTextNode(chars.slice(at).join('')));
+        }
+        paintSource();chosen.set(g.title||g.kind||'BPL function structure',g.description||g.explanation||'Select a highlighted part to connect it with its role in the function.','HOW BPL GROUPS THIS EXPRESSION');
+      }
+      function renderWalk(line,bar,view){
+        const walk=line.walkthrough;
+        if(walk.status!=='exact'||!walk.steps?.length){renderUnavailable(view,'A value walkthrough is not available here',walk.message||'This expression has no verified value trace. The explorer will not invent intermediate results. Use Parts or Grouping to inspect the available structure.',line.source);return;}
+        bar.append(make('span','be-muted',walk.label||'Captured inputs · verified steps'));let step=0;
+        const stage=make('div','be-walk-stage'),head=make('div','be-walk-source'),count=make('span','be-step-count');head.append(make('code','',line.source),count);const steps=make('div','be-steps');steps.setAttribute('aria-label','Evaluation steps');const data=make('div','be-data');data.setAttribute('aria-live','polite');stage.append(head,steps,data);view.append(stage);const selected=detail('CURRENT OPERATION');selected.box.classList.add('be-walk-detail');const controls=make('div','be-step-controls'),back=button('','Previous',()=>show(step-1)),next=button('','Next step →',()=>show(step+1));controls.append(back,next);selected.box.append(controls);view.append(selected.box);
+        const buttons=walk.steps.map((s,i)=>{if(i)steps.append(make('i','','→'));const b=button(tone(s,i),'',()=>show(i));b.append(make('span','',i+1),document.createTextNode(s.label||s.title||`Step ${i+1}`));steps.append(b);return b;});
+        const value=v=>typeof v==='boolean'?(v?'1':'0'):v===null?'':typeof v==='object'?JSON.stringify(v):String(v);
+        function show(n){step=Math.max(0,Math.min(walk.steps.length-1,n));const current=walk.steps[step];count.textContent=`Step ${step+1} of ${walk.steps.length}`;buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===step)));data.replaceChildren();
+          for(const r of current.rows||[]){const values=Array.isArray(r.values)?r.values:Array.from(String(r.values??'')),row=make('div','be-data-row');row.style.setProperty('--be-count',String(Math.max(1,values.length)));row.append(make('span','be-row-label',r.label||''));values.forEach((v,i)=>{const s=make('span','',value(v));if(r.highlight?.[i])s.className=(current.tone==='purple'||current.tone==='not')?'be-flip-mark':'be-mark';row.append(s);});data.append(row);}
+          if(current.result!==undefined){const total=make('div','be-total');total.append(make('strong','',value(current.result)),make('span','',current.result_label||''));data.append(total);}
+          selected.set(current.title||current.label,current.description);back.disabled=step===0;next.disabled=step===walk.steps.length-1;
+        }
+        show(0);
+      }
+      load();
+    }
+    trigger.onclick=e=>{e.preventDefault();e.stopPropagation();open();};
+    return {trigger,close,source:()=>currentSource,hasPanel:()=>!!panel};
+  }
+  function scan(){
+    if(!alive)return;
+    for(const [cell,state] of mounted){const code=cell.querySelector('.msg-content pre code');if(!cell.isConnected||!cell.contains(state.trigger)||!code||!/^\s*%%bpl\b/.test(code.textContent)){state.close();state.trigger.remove();mounted.delete(cell);}else if(state.hasPanel()&&state.source()!==code.textContent)state.close();}
+    document.querySelectorAll('.card-in[data-mtype="code"]').forEach(cell=>{if(mounted.has(cell))return;const code=cell.querySelector('.msg-content pre code'),nav=cell.querySelector('nav');if(code&&nav&&/^\s*%%bpl\b/.test(code.textContent))mounted.set(cell,mount(cell,code,nav));});
+  }
+  const observer=new MutationObserver(records=>{if(records.every(r=>r.target.closest?.('.bplex-v2,.bplex-trigger-v2')))return;clearTimeout(scanTimer);scanTimer=setTimeout(scan,120);});
+  observer.observe(document.body,{childList:true,subtree:true,characterData:true});
+  const settled=()=>{clearTimeout(scanTimer);scanTimer=setTimeout(scan,120);};document.addEventListener('htmx:afterSettle',settled);window.addEventListener('popstate',settled);scan();
+  window.bplExpressionExplorer={version:VERSION,destroy(){alive=false;observer.disconnect();clearTimeout(scanTimer);document.removeEventListener('htmx:afterSettle',settled);window.removeEventListener('popstate',settled);for(const state of mounted.values()){state.close();state.trigger.remove();}mounted.clear();socket?.close();rejectPending('The explorer has closed.');style.remove();delete window.bplExpressionExplorer;}};
+})();
+// END BPL EXPRESSION EXPLORER V2
+
 // BEGIN GENERATED BPL BOOTSTRAP
 (() => {
 const start=()=>{
