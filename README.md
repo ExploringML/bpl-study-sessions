@@ -1,6 +1,6 @@
 # BPL Study Sessions for SolveIt
 
-Nine study dialogues following [Jeremy Howard's APL study group](https://www.youtube.com/playlist?list=PLfYUBJiXbdtSgU6S_3l6pX-4hQYKNJZFU), adapted while learning [BasedPL](https://answerdotai.github.io/basedpl/), with a shared glyph toolbar for SolveIt's editor.
+Ten study dialogues following [Jeremy Howard's APL study group](https://www.youtube.com/playlist?list=PLfYUBJiXbdtSgU6S_3l6pX-4hQYKNJZFU), adapted while learning [BasedPL](https://answerdotai.github.io/basedpl/), with a shared glyph toolbar for SolveIt's editor.
 
 The [Scratchpad](Scratchpad.ipynb) contains additional BPL experiments and a walkthrough of means with the Under operator.
 
@@ -18,7 +18,7 @@ Open any Study Session dialogue from the cloned folder. Keep the three CRAFT fil
 
 Run check_bpl_versions() in a Python cell to list installed and available releases without changing packages, or ensure_latest_bpl() to check and install updates. If an upgrade changes a package already loaded in a kernel, restart that dialogue kernel and rerun: reinstalling a native library does not replace the loaded code. Session 9 reports both running and installed versions. Craft regenerates the keyboard and browser bootstrap from the installed package on startup. If an upstream browser API changes, the keyboard integration reports which patch needs updating.
 
-The toolbar works in Code, Note, Prompt and Raw. No template or hidden helper folder is required. Duplicate Session 9 in the same folder to begin Session 10; its new kernel inherits the same Craft setup.
+The toolbar works in Code, Note, Prompt and Raw. No template or hidden helper folder is required. Duplicate a completed session in the same folder to begin the next lesson; its new kernel inherits the same Craft setup.
 
 ## Glyph Coverage
 
