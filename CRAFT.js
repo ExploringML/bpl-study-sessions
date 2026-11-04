@@ -577,58 +577,10 @@ window.bplCraftPalette = // SolveIt BPL palette. Uses the merged BPL catalogue a
 (() => {
   'use strict';
   window.bplExpressionExplorer?.destroy();
-  const VERSION = '2.0.0';
-  const CSS = String.raw`.bplex-v2{--be-paper:light-dark(#ffffff,#171c24);--be-ink:light-dark(#243345,#e5ecf5);--be-muted:light-dark(#6a7788,#a5b2c4);--be-line:light-dark(#e4e9f0,#343e4d);--be-soft:light-dark(#f7f9fc,#202733);--be-blue:light-dark(#326dbd,#91baff);--be-blue-bg:light-dark(#eaf2ff,#253b57);--be-green:light-dark(#1c7b67,#7ed5b8);--be-green-bg:light-dark(#e6f5ef,#203d37);--be-purple:light-dark(#8557a7,#d1a9f1);--be-purple-bg:light-dark(#f2eafa,#3b2e4a);--be-orange:light-dark(#a96c21,#ebbf7b);--be-orange-bg:light-dark(#fff1dc,#443624);padding:16px 8px}
-.bplex-v2>section{min-height:530px;padding:8px 0 20px}
-.bplex-v2 .be-app{background:var(--be-paper);color:var(--be-ink);border:1px solid var(--be-line);border-radius:16px;box-shadow:0 6px 24px light-dark(#2639500a,#00000030);max-width:700px;margin:auto;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow:hidden}
-.bplex-v2 button{font:inherit;color:inherit}.bplex-v2 header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 22px;border-bottom:1px solid var(--be-line)}
-.bplex-v2 .be-brand{font-weight:600;display:flex;align-items:center;gap:10px}.bplex-v2 .be-emblem{color:var(--be-blue);font-size:23px;font-weight:500}.bplex-v2 .be-caption{font-size:11px;color:var(--be-muted);letter-spacing:.03em}
-.bplex-v2 .be-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:17px 22px 0}.bplex-v2 .be-section{font-weight:600}.bplex-v2 .be-muted{font-size:12px;color:var(--be-muted)}
-.bplex-v2 .be-sum{--part:var(--be-blue);--wash:var(--be-blue-bg)}.bplex-v2 .be-equal{--part:var(--be-green);--wash:var(--be-green-bg)}.bplex-v2 .be-not{--part:var(--be-purple);--wash:var(--be-purple-bg)}.bplex-v2 .be-atop{--part:var(--be-orange);--wash:var(--be-orange-bg)}
-.bplex-v2 .be-annotation{height:242px;position:relative;margin:4px 22px 0}
-.bplex-v2 .be-connectors{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
-.bplex-v2 .be-label{position:absolute;background:var(--be-paper);border:0;padding:6px 9px;border-radius:7px;text-align:left;font-weight:600;min-width:135px;z-index:1}
-.bplex-v2 .be-label small{display:block;font-size:12px;color:var(--be-muted);font-weight:400;padding-left:15px;margin-top:2px}.bplex-v2 .be-dot{display:inline-block;background:var(--part);width:7px;height:7px;border-radius:50%;margin-right:6px}
-.bplex-v2 .be-top-a{left:9%;top:16px}.bplex-v2 .be-top-b{right:6%;top:16px}.bplex-v2 .be-bottom-a{left:9%;bottom:12px}.bplex-v2 .be-bottom-b{right:6%;bottom:12px}
-.bplex-v2 .be-expression{position:absolute;top:99px;left:50%;transform:translateX(-50%);white-space:nowrap;display:flex;align-items:center;gap:3px;font:28px/1.4 "DejaVu Sans Mono",Consolas,monospace}
-.bplex-v2 .be-assign{font-size:22px;color:var(--be-muted);padding-right:12px}
-.bplex-v2 .be-token{font:inherit;border:1px solid transparent;background:var(--wash);border-radius:6px;padding:4px 8px;min-width:37px;transition:background .15s}
-.bplex-v2 .be-token[aria-pressed=true]{border-color:var(--part);box-shadow:0 0 0 2px var(--wash)}.bplex-v2 .be-label[aria-pressed=true]{background:var(--wash)}
-.bplex-v2 .be-detail{margin:8px 22px 22px;padding:15px 18px;background:var(--be-soft);border-radius:10px;min-height:104px}
-.bplex-v2 .be-detail-label{font-size:10px;letter-spacing:.09em;font-weight:600;color:var(--be-muted);margin-bottom:5px}.bplex-v2 .be-detail-title{font-weight:600;font-size:15px}.bplex-v2 .be-detail p{font-size:13px;color:var(--be-muted);margin:5px 0 0;max-width:60ch}
-.bplex-v2 footer{display:flex;align-items:center;gap:20px;padding:12px 22px;border-top:1px solid var(--be-line);font-size:12px;color:var(--be-muted)}.bplex-v2 footer span:first-child:not(.be-footnote){color:inherit}.bplex-v2 .be-current{color:var(--be-ink);font-weight:600}.bplex-v2 .be-footnote{margin-left:auto;font-size:11px}
-.bplex-v2 .be-switch{display:flex;padding:3px;background:var(--be-soft);border-radius:7px}.bplex-v2 .be-switch button{border:0;border-radius:5px;padding:5px 10px;background:transparent;font-size:12px}.bplex-v2 .be-switch button[aria-pressed=true]{background:var(--be-paper);box-shadow:0 1px 4px light-dark(#26395018,#00000044);font-weight:600}
-.bplex-v2 .be-group-stage{padding:24px 22px 4px;min-height:242px}.bplex-v2 .be-group-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:18px}.bplex-v2 code{font-family:"DejaVu Sans Mono",Consolas,monospace;color:inherit;background:none}.bplex-v2 .be-group-header code{font-size:22px}.bplex-v2 .be-group-kind{font-size:12px;color:var(--be-muted)}
-.bplex-v2 .be-bands{display:flex;gap:10px;align-items:stretch;padding:12px;background:var(--be-soft);border-radius:12px}
-.bplex-v2 .be-name{--part:light-dark(#556c89,#b4c7df);--wash:light-dark(#e9eef5,#2c3a4c)}.bplex-v2 .be-assignment{--part:var(--be-orange);--wash:var(--be-orange-bg)}
-.bplex-v2 [data-code]{display:flex;align-items:center;gap:3px;white-space:pre;flex-wrap:wrap}.bplex-v2 .be-source-part{font:inherit;border:1px solid transparent;border-radius:5px;padding:2px 5px;background:var(--wash);color:var(--be-ink)}.bplex-v2 [data-role][aria-pressed=true]{outline:2px solid var(--part);outline-offset:2px}
-.bplex-v2 .be-assignment-band{display:flex;gap:8px;align-items:center;margin-bottom:10px}.bplex-v2 .be-assignment-band button{background:var(--wash);border:0;border-radius:7px;padding:8px 12px;display:flex;align-items:center;gap:9px}.bplex-v2 .be-assignment-band code{font-size:20px}.bplex-v2 .be-assignment-band small{font-size:11px}.bplex-v2 .be-assignment-band>span{font-size:11px;color:var(--be-muted);margin-left:auto}
-.bplex-v2 .be-source-composite{padding:3px;background:light-dark(#edf0f6,#2b3341);border-radius:7px;display:inline-flex;align-items:center;gap:2px}.bplex-v2 .be-group-header{flex-wrap:wrap}.bplex-v2 .be-band{color:var(--be-ink)}
-.bplex-v2 .be-band{display:flex;flex:1;flex-direction:column;justify-content:center;align-items:center;background:var(--wash);border:0;border-radius:8px;padding:12px 6px;min-width:0}
-.bplex-v2 .be-band code{font-size:27px}.bplex-v2 .be-band small{font-size:11px;margin-top:5px}.bplex-v2 .be-nested{display:flex;gap:5px;align-items:center;justify-content:center}.bplex-v2 .be-nested span{border-radius:5px;padding:4px 10px;background:var(--wash);font:25px monospace}.bplex-v2 .be-composite{background:light-dark(#edf0f6,#2b3341);flex:2}.bplex-v2 .be-group-read{font-size:12px;color:var(--be-muted);text-align:center;padding:14px 0 4px}
-.bplex-v2 .be-walk-stage{padding:20px 22px 4px;min-height:242px}.bplex-v2 .be-walk-source{display:flex;justify-content:space-between;align-items:center}.bplex-v2 .be-walk-source code{font-size:22px}.bplex-v2 .be-step-count{font-size:12px;color:var(--be-muted)}
-.bplex-v2 .be-steps{display:flex;align-items:center;gap:8px;margin:18px 0}.bplex-v2 .be-steps i{font-style:normal;color:var(--be-muted)}.bplex-v2 .be-steps button{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:8px;border:0;border-radius:7px;background:var(--be-soft);font-size:12px}.bplex-v2 .be-steps button[aria-pressed=true]{background:var(--wash);box-shadow:inset 0 -2px var(--part)}.bplex-v2 .be-steps button span{font-size:11px;color:var(--part)}
-.bplex-v2 .be-data{display:grid;gap:5px;padding:8px 0}.bplex-v2 .be-data-row{display:grid;grid-template-columns:46px repeat(17,1fr);gap:3px;align-items:center}.bplex-v2 .be-data-row .be-row-label{font:11px sans-serif;color:var(--be-muted)}.bplex-v2 .be-data-row span{font:14px/1.8 monospace;text-align:center;border-radius:3px}.bplex-v2 .be-mark{background:var(--be-green-bg);color:var(--be-green)}.bplex-v2 .be-flip-mark{background:var(--be-purple-bg);color:var(--be-purple)}
-.bplex-v2 .be-total{display:flex;align-items:center;gap:14px;padding:5px 0}.bplex-v2 .be-total strong{font-size:36px;font-weight:500;color:var(--be-blue)}.bplex-v2 .be-total span{font-size:13px;color:var(--be-muted)}
-.bplex-v2 .be-step-controls{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}.bplex-v2 .be-step-controls button{border:1px solid var(--be-line);border-radius:6px;background:var(--be-paper);padding:5px 10px;font-size:12px}.bplex-v2 .be-step-controls button:disabled{opacity:.4}
-@media(max-width:480px){.bplex-v2{padding:8px 0}.bplex-v2>section{min-height:580px}.bplex-v2 header,.bplex-v2 .be-bar{padding-left:14px;padding-right:14px}.bplex-v2 .be-caption{display:none}.bplex-v2 .be-annotation{margin-left:10px;margin-right:10px;height:250px}.bplex-v2 .be-label small{max-width:120px}.bplex-v2 .be-top-a,.bplex-v2 .be-bottom-a{left:0}.bplex-v2 .be-top-b,.bplex-v2 .be-bottom-b{right:0}.bplex-v2 .be-label{min-width:110px;font-size:13px}.bplex-v2 .be-label small{font-size:11px}.bplex-v2 .be-token{padding:4px 6px;min-width:31px}.bplex-v2 .be-expression{font-size:24px}.bplex-v2 .be-assign{font-size:18px;padding-right:5px}.bplex-v2 .be-detail{margin:8px 14px 18px;padding:13px}.bplex-v2 footer{gap:15px;padding:12px 14px}.bplex-v2 .be-footnote{display:none}.bplex-v2 .be-group-stage,.bplex-v2 .be-walk-stage{padding-left:14px;padding-right:14px}.bplex-v2 .be-data-row{grid-template-columns:35px repeat(17,1fr);gap:1px}.bplex-v2 .be-data-row span{font-size:11px}.bplex-v2 .be-data-row .be-row-label{font-size:10px}.bplex-v2 .be-band code{font-size:23px}.bplex-v2 .be-bands{gap:6px;padding:8px}.bplex-v2 .be-band small{font-size:10px}.bplex-v2 .be-steps{gap:4px}.bplex-v2 .be-steps button{gap:4px;padding:8px 5px}}
-@media(prefers-reduced-motion:reduce){.bplex-v2 *{transition:none!important}}
-.bplex-v2{padding:0!important;margin:14px 0;max-width:100%;color-scheme:light dark}
-.bplex-v2 .be-app{max-width:700px}.bplex-v2 button{cursor:pointer}.bplex-v2 button:focus-visible,.bplex-v2 select:focus-visible{outline:2px solid var(--be-blue);outline-offset:3px}
-.bplex-v2 header{flex-wrap:wrap}.bplex-v2 .be-header-actions{display:flex;align-items:center;gap:10px;margin-left:auto}.bplex-v2 .be-close{border:0;background:transparent;color:var(--be-muted);font-size:22px;line-height:1;padding:3px 5px;border-radius:5px}
-.bplex-v2 .be-line-picker{display:flex;align-items:center;gap:8px;padding:10px 22px 0;font-size:11px;color:var(--be-muted)}.bplex-v2 .be-line-picker[hidden]{display:none}.bplex-v2 .be-line-picker select{min-width:0;flex:1;font:12px/1.6 "DejaVu Sans Mono",Consolas,monospace;padding:5px 8px;border:1px solid var(--be-line);border-radius:6px;color:var(--be-ink);background:var(--be-paper)}
-.bplex-v2 footer button{border:0;padding:0;background:transparent;color:inherit;font-size:12px;white-space:nowrap}.bplex-v2 footer button[aria-selected=true]{color:var(--be-ink);font-weight:600}
-.bplex-trigger-v2{border:0;background:transparent;color:inherit;cursor:pointer;padding:4px 7px;border-radius:5px;font:inherit}.bplex-trigger-v2:hover,.bplex-trigger-v2[aria-expanded=true]{background:#eaf2ff;color:#326dbd}
-.bplex-v2 .be-status{padding:34px 22px;min-height:180px;color:var(--be-muted);font-size:13px}.bplex-v2 .be-status strong{display:block;color:var(--be-ink);font-size:15px;margin-bottom:7px}.bplex-v2 .be-status p{margin:0 0 16px;max-width:54ch}.bplex-v2 .be-action{border:1px solid var(--be-line);border-radius:6px;background:var(--be-paper);padding:6px 12px;color:var(--be-ink);font-size:12px}
-.bplex-v2 .be-page-controls{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--be-muted)}.bplex-v2 .be-page-controls button{border:1px solid var(--be-line);background:var(--be-paper);border-radius:5px;padding:1px 7px}.bplex-v2 .be-page-controls button:disabled{opacity:.35;cursor:default}
-.bplex-v2 .be-expression-viewport{position:absolute;left:0;right:0;top:89px;overflow-x:auto;padding:9px 2px 12px;scrollbar-width:thin}.bplex-v2 .be-expression-viewport .be-expression{position:relative;top:auto;left:auto;transform:none;width:max-content;min-width:100%;justify-content:center;gap:0}.bplex-v2 .be-expression .be-token{margin:0 1px;flex-shrink:0;white-space:pre;font-family:"DejaVu Sans Mono",Consolas,monospace}.bplex-v2 .be-expression .be-plain{white-space:pre;font-size:22px;color:var(--be-muted)}
-.bplex-v2 .be-label{max-width:44%;min-width:0}.bplex-v2 .be-label small{max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bplex-v2 .be-label-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline-block;max-width:calc(100% - 18px);vertical-align:middle}
-.bplex-v2 .be-detail-title{overflow-wrap:anywhere}.bplex-v2 .be-detail p{white-space:pre-line}.bplex-v2 .be-source-part{white-space:pre;max-width:100%;overflow-wrap:anywhere}.bplex-v2 [data-code]{overflow-wrap:anywhere;font-size:22px;display:block;white-space:pre-wrap;line-height:1.85}.bplex-v2 .be-source-composite{display:inline-flex;flex-wrap:wrap}.bplex-v2 .be-band code{overflow-wrap:anywhere;white-space:pre-wrap;text-align:center;font-size:27px}.bplex-v2 .be-band small{text-align:center}.bplex-v2 .be-composite .be-nested{flex-wrap:wrap}.bplex-v2 .be-band-label{font-size:11px;margin-top:6px}.bplex-v2 .be-assignment-band{flex-wrap:wrap}.bplex-v2 .be-assignment-band>span{margin-left:auto}.bplex-v2 .be-group-read{white-space:pre-line}.bplex-v2 .be-bands{flex-wrap:wrap}.bplex-v2 .be-bands>.be-band{min-width:90px}
-.bplex-v2 .be-source-composite .be-source-part{font-size:inherit}.bplex-v2 .be-nested .be-source-part{font-size:25px}.bplex-v2 .be-step-count{white-space:nowrap}.bplex-v2 .be-walk-source{gap:12px}.bplex-v2 .be-walk-source code{overflow-wrap:anywhere;white-space:pre-wrap}.bplex-v2 .be-steps{overflow-x:auto;scrollbar-width:thin;padding-bottom:3px}.bplex-v2 .be-steps button{flex-shrink:0;min-width:70px}.bplex-v2 .be-data{overflow-x:auto;scrollbar-width:thin}.bplex-v2 .be-data-row{grid-template-columns:46px repeat(var(--be-count,17),minmax(18px,1fr));min-width:max-content}.bplex-v2 .be-data-row span{white-space:pre;padding:0 2px}.bplex-v2 .be-data-row .be-row-label{padding-right:6px}.bplex-v2 .be-total strong{overflow-wrap:anywhere}.bplex-v2 .be-error-detail{color:var(--be-muted);font:12px/1.5 monospace;white-space:pre-wrap;overflow-wrap:anywhere}
-@media(max-width:480px){.bplex-v2 .be-line-picker{padding-left:14px;padding-right:14px}.bplex-v2 .be-expression-viewport .be-expression{font-size:24px}.bplex-v2 .be-data-row{grid-template-columns:35px repeat(var(--be-count,17),minmax(16px,1fr))}.bplex-v2 footer{gap:15px}.bplex-v2 .be-caption{display:block;font-size:10px}.bplex-v2 .be-footnote{display:none}}
-`;
+  const VERSION = '4.0.0';
+  const CSS = '';
   const definitions = {
-    '+': ['Plus', 'Identity / add', 'With one argument, return it unchanged. With two arguments, add corresponding values.'],
+    '+': ['Plus', 'Conjugate / add', 'With one argument, conjugate complex values; real values stay unchanged. With two arguments, add corresponding values.'],
     '+/': ['Sum', 'Add the results', '/ combines with + to make one derived function. With one argument, it sums along the last axis.'],
     '/': ['Reduce', 'Build a reduction', 'This operator uses the function on its left to combine items along the last axis.'],
     '⌿': ['Reduce First', 'Reduce the first axis', 'This operator uses the function on its left to combine items along the first axis.'],
@@ -638,7 +590,7 @@ window.bplCraftPalette = // SolveIt BPL palette. Uses the merged BPL catalogue a
     '≢': ['Tally / Not Match', 'Count or compare whole arrays', 'With one argument, count leading-axis items. With two arguments, test whether the complete values differ, including their shapes.'],
     '≡': ['Depth / Match', 'Inspect or compare whole arrays', 'With two arguments, test whether the complete values match, including their shapes.'],
     '∘': ['Atop', 'Compose functions', 'Connect functions so that the result of the function on the right is passed to the function on the left.'],
-    '⍤': ['Rank / Atop', 'An operator', 'The meaning depends on its operands. The Grouping view shows the structure returned by this BPL runtime.'],
+    '⍤': ['Rank', 'Choose the rank of input cells', 'Apply the function on the left to cells of the rank specified on the right. BPL uses ∘ for Atop.'],
     '⍥': ['Over', 'Transform inputs first', 'Apply the right operand function to the arguments before calling the left operand function.'],
     '@': ['Under', 'Transform, operate, undo', 'For invertible transforms, apply the right function, then the left function, then the inverse of the right function.'],
     '#': ['Replicate', 'Repeat or filter items', 'The left argument gives repeat counts for corresponding items in the right argument. A true/false mask keeps or removes items.'],
@@ -663,7 +615,7 @@ window.bplCraftPalette = // SolveIt BPL palette. Uses the merged BPL catalogue a
   };
   const make = (tag, cls, text) => {const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=String(text);return e;};
   const button = (cls,text,action) => {const e=make('button',cls,text);e.type='button';if(action)e.onclick=action;return e;};
-  const style=make('style');style.dataset.bplex='v2';style.textContent=CSS;document.head.append(style);
+  const style=make('style');style.dataset.bplex='v2';style.textContent='';document.head.append(style);
   const mounted=new Map(),pending=new Map();
   let alive=true,scanTimer,socket,connection,channelName,sequence=0,bridgeEpoch,runtimeVersion;
   const hashText=async text=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text))),x=>x.toString(16).padStart(2,'0')).join('');
@@ -676,11 +628,13 @@ window.bplCraftPalette = // SolveIt BPL palette. Uses the merged BPL catalogue a
       ['Syntax','From the BPL parser','This part is identified by the installed BPL parser.'];
     const info=known||fallback;
     const suppliedSummary=String(item.summary||'');
-    const compactSummary=item.annotation?.summary||(known?known[1]:(suppliedSummary.length>0&&suppliedSummary.length<=42?suppliedSummary:fallback[1]));
+    const compactSummary=item.annotation?.summary||(suppliedSummary.length>0&&suppliedSummary.length<=52?suppliedSummary:known?known[1]:item.label||fallback[1]);
     return {title:item.annotation?.title||item.title||item.label||info[0],summary:compactSummary,description:item.annotation?.description||item.description||info[2]};
   };
   const tone = (item,index=0) => {
     const glyph=String(item.text||'').trim();
+    const explicit={blue:'sum',purple:'not',green:'equal',orange:'atop',slate:'name',name:'name',assignment:'assignment'}[item.tone||item.role];
+    if(explicit)return 'be-'+explicit;
     if(glyph==='←')return 'be-assignment';
     if(['=','≠','≢','≡'].includes(glyph))return 'be-equal';
     if(glyph==='~')return 'be-not';
@@ -696,6 +650,8 @@ window.bplCraftPalette = // SolveIt BPL palette. Uses the merged BPL catalogue a
   const validSpan=(item,length)=>{const [a,b]=span(item);return Number.isInteger(a)&&Number.isInteger(b)&&a>=0&&b>a&&b<=length;};
   function normaliseLine(raw,index) {
     const line={...raw,source:raw.source||'',index:raw.index??index};
+    const originals=raw.semantic_parts||[];
+    line.semantic_parts=originals.filter(p=>p.kind!=='body').map(p=>{let parent=originals.find(q=>q.id===p.parent);while(parent?.kind==='body')parent=originals.find(q=>q.id===parent.parent);return {...p,parent:parent?.id||null};}).sort((a,b)=>a.span[0]-b.span[0]||b.span[1]-a.span[1]);
     line.tokens=(raw.tokens||[]).map((x,i)=>({...x,id:x.id||`token-${i}`}));
     const g=raw.grouping||{};
     const normaliseNodes=(nodes,prefix='group')=>(nodes||[]).map((x,i)=>({...x,id:x.id||`${prefix}-${i}`,span:span(x),children:normaliseNodes(x.children,`${prefix}-${i}`)}));
@@ -725,26 +681,36 @@ window.bplCraftPalette = // SolveIt BPL palette. Uses the merged BPL catalogue a
           if(bridgeEpoch&&packet.epoch&&bridgeEpoch!==packet.epoch)rejectPending('The BPL runtime restarted. Please inspect the current expression again.');
           bridgeEpoch=packet.epoch;runtimeVersion=packet.version;clearTimeout(timeout);resolve(current);return;
         }
-        if(packet.op!=='inspection')return;
+        if(!['inspection','explanation'].includes(packet.op))return;
         const p=pending.get(packet.request_id);if(!p)return;
         clearTimeout(p.timer);pending.delete(packet.request_id);
         if(packet.error)p.reject(new Error(typeof packet.error==='string'?packet.error:'The BPL inspector could not read this expression.'));
-        else if(p.epoch&&p.epoch!==packet.epoch)p.reject(new Error('This inspection belongs to an earlier BPL session. Please try again.'));
+        else if(p.epoch&&p.epoch!==packet.epoch){
+          if(/^\d+$/.test(packet.epoch||'')&&/^\d+$/.test(bridgeEpoch||'')&&BigInt(packet.epoch)>BigInt(bridgeEpoch)){bridgeEpoch=packet.epoch;runtimeVersion=packet.version;}
+          p.reject(new Error('The BPL session was refreshed. Choose Try again to use its current inputs.'));
+        }
         else if(packet.result?.request_source_hash!==p.sourceHash)p.reject(new Error('The expression changed during inspection. Please reopen the explorer.'));
         else if(packet.result?.version&&p.version&&packet.result.version!==p.version)p.reject(new Error('The BPL version changed during inspection. Please try again.'));
-        else p.resolve(packet.result||{});
+        else {
+          if(packet.op==='explanation'&&packet.result?.status==='ok') {
+            try {localStorage.setItem('bplex-meaning-'+packet.result.evidence_key,JSON.stringify(packet.result));
+              current.send(JSON.stringify({op:'explanation_saved',request_id:packet.request_id,epoch:bridgeEpoch,evidence_key:packet.result.evidence_key}));
+            }catch{} // Keep the temporary prompt if browser storage is unavailable.
+          }
+          p.resolve(packet.result||{});
+        }
       };
     });
     try{return await connection;}catch(e){connection=null;throw e;}
   }
-  async function inspect(source,cellId) {
+  async function inspect(source,cellId,op="inspect",extra={}) {
     const sourceHash=await hashText(source);if(!alive)throw new Error('The explorer has closed.');
     const s=await connect();if(!alive)throw new Error('The explorer has closed.');
     const request_id=`bplex-${Date.now()}-${++sequence}`;
     return new Promise((resolve,reject)=>{
-      const timer=setTimeout(()=>{pending.delete(request_id);reject(new Error('The BPL inspector has not replied. Run the dialogue setup to start it, then choose Try again.'));},15000);
+      const timer=setTimeout(()=>{pending.delete(request_id);reject(new Error('The BPL inspector has not replied. Run the dialogue setup to start it, then choose Try again.'));},op==='explain'?250000:15000);
       pending.set(request_id,{resolve,reject,timer,epoch:bridgeEpoch,version:runtimeVersion,sourceHash});
-      try{s.send(JSON.stringify({op:'inspect',request_id,source,cell_id:cellId,source_hash:sourceHash,epoch:bridgeEpoch}));}catch(e){clearTimeout(timer);pending.delete(request_id);reject(e);}
+      try{s.send(JSON.stringify({op,request_id,source,cell_id:cellId,source_hash:sourceHash,epoch:bridgeEpoch,...extra}));}catch(e){clearTimeout(timer);pending.delete(request_id);reject(e);}
     });
   }
   function detail(label='SELECTED PART') {
@@ -756,9 +722,14 @@ window.bplCraftPalette = // SolveIt BPL palette. Uses the merged BPL catalogue a
     if(source){const header=make('div','be-group-header');header.append(make('code','',source));stage.append(header);}
     const box=make('div','be-detail');box.append(make('div','be-detail-label','INSPECTION LIMIT'),make('div','be-detail-title',title),make('p','',message));stage.append(box);view.append(stage);
   }
+  const sameSpan=(a,b)=>a&&b&&span(a).join(',')===span(b).join(',');
+  const selectedPart=line=>(line.semantic_parts||[]).find(p=>p.id===line._selected)||(line.semantic_parts||[])[0];
+  function nearestPart(line,item){const [a,b]=span(item);return (line.semantic_parts||[]).filter(p=>p.span[0]<=a&&p.span[1]>=b).sort((x,y)=>(x.span[1]-x.span[0])-(y.span[1]-y.span[0]))[0];}
+  function printedRows(values,target){const row=make('div','be-value-row be-printed');row.append(make('div','be-value-caption','Printed output'),make('pre','',values.join('\n')));target.append(row);}
   function mount(cell,code,nav) {
     const trigger=button('bplex-trigger-v2','↳');trigger.title='Explore BPL expression';trigger.setAttribute('aria-label',trigger.title);trigger.setAttribute('aria-expanded','false');nav.prepend(trigger);
-    let panel,resize,result,selectedLine=0,mode='Parts',currentSource='',requestRevision=0,cleanupView=()=>{};
+    let panel,resize,result,selectedLine=0,mode='Parts',currentSource='',requestRevision=0,cleanupView=()=>{},meaningBusy=false,meaningMessage='';
+    const cellId=cell.id.replace(/^_/,'').replace(/-i$/,'');
     function close(){requestRevision++;resize?.disconnect();cleanupView();panel?.remove();panel=null;trigger.setAttribute('aria-expanded','false');}
     function open(){
       if(panel){close();return;}
@@ -767,89 +738,151 @@ window.bplCraftPalette = // SolveIt BPL palette. Uses the merged BPL catalogue a
       const app=make('div','be-app'),header=make('header'),brand=make('div','be-brand');brand.append(make('span','be-emblem','↳'),make('span','','Expression explorer'));
       const actions=make('div','be-header-actions'),caption=make('span','be-caption','Connecting to BPL');actions.append(caption,button('be-close','×',close));actions.lastChild.setAttribute('aria-label','Close expression explorer');header.append(brand,actions);
       const picker=make('div','be-line-picker'),select=make('select');select.setAttribute('aria-label','Choose expression line');picker.append(make('span','','Expression'),select);picker.hidden=true;
-      const view=make('div'),footer=make('footer');footer.setAttribute('role','tablist');footer.setAttribute('aria-label','Explorer views');
-      const tabButtons=['Parts','Grouping','Walk Through'].map(name=>{const b=button('',name,()=>{mode=name;render();});b.setAttribute('role','tab');footer.append(b);return b;});
-      const footnote=make('span','be-footnote');footer.append(footnote);app.append(header,picker,view,footer);panel.append(app);cell.querySelector('.msg-body').append(panel);trigger.setAttribute('aria-expanded','true');
-      footer.onkeydown=e=>{const from=tabButtons.indexOf(document.activeElement);if(from<0)return;let next;if(e.key==='ArrowRight')next=(from+1)%3;else if(e.key==='ArrowLeft')next=(from+2)%3;else if(e.key==='Home')next=0;else if(e.key==='End')next=2;else return;e.preventDefault();tabButtons[next].click();tabButtons[next].focus();};
+      const tabs=make('nav','be-unified-tabs');tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','Explorer views');
+      const tabButtons=['Parts','Focus','Grouping','Walk Through','Compare'].map(name=>{const b=button('',name,()=>{mode=name;render();});b.setAttribute('role','tab');tabs.append(b);return b;});
+      const context=make('div','be-context'),view=make('div'),footer=make('footer'),footnote=make('span','be-footnote');footer.append(make('span','','Expression Explorer'),footnote);
+      app.append(header,picker,tabs,context,view,footer);panel.append(app);cell.querySelector('.msg-body').append(panel);trigger.setAttribute('aria-expanded','true');
+      tabs.onkeydown=e=>{const from=tabButtons.indexOf(document.activeElement);if(from<0)return;let next;if(e.key==='ArrowRight')next=(from+1)%5;else if(e.key==='ArrowLeft')next=(from+4)%5;else if(e.key==='Home')next=0;else if(e.key==='End')next=4;else return;e.preventDefault();tabButtons[next].click();tabButtons[next].focus();};
       select.onchange=()=>{selectedLine=Number(select.value);render();};
+      function applyMeaning(saved){
+        if(saved?.evidence_key!==result?.evidence_key)return;
+        for(const a of saved.lines||[]){const line=result.lines[a.index];if(!line)continue;line.meaningOverview=a.overview;
+          for(const p of a.parts||[]){const node=(line.semantic_parts||[]).find(n=>n.id===p.id);if(node){node.annotation={title:p.title,description:p.description,steps:p.steps};for(const g of flatten(line.grouping?.nodes))if(sameSpan(g,node))g.annotation=node.annotation;}}}
+        result.hasMeaning=true;
+      }
+      async function explain(refresh=false){
+        if(meaningBusy)return;meaningBusy=true;meaningMessage='SolveIt is reading the whole expression and its native BPL structure…';render();
+        const revision=requestRevision;
+        try{const answer=await inspect(currentSource,cellId,'explain',{refresh});if(!panel||revision!==requestRevision)return;
+          if(answer.status==='error')throw new Error(answer.message);applyMeaning(answer);meaningMessage='';
+        }catch(e){meaningMessage=e.message;}finally{meaningBusy=false;if(panel&&revision===requestRevision)render();}
+      }
       async function load(){
-        const revision=++requestRevision;resize?.disconnect();cleanupView();view.replaceChildren();
-        const status=make('div','be-status');status.setAttribute('role','status');status.append(make('strong','','Reading the expression'),make('p','','Asking the installed BPL runtime for its syntax and function structure.'));view.append(status);caption.textContent='Connecting to BPL';
-        try{
-          const inspected=await inspect(currentSource,cell.id.replace(/^_/,'').replace(/-i$/,''));if(!panel||revision!==requestRevision||cell.querySelector('.msg-content pre code')?.textContent!==currentSource)return;
+        const revision=++requestRevision;resize?.disconnect();cleanupView();view.replaceChildren();context.hidden=true;
+        const status=make('div','be-status');status.setAttribute('role','status');status.append(make('strong','','Reading the expression'),make('p','','Getting the syntax, groups and values from BPL.'));view.append(status);caption.textContent='Connecting to BPL';
+        try{const inspected=await inspect(currentSource,cellId);if(!panel||revision!==requestRevision||cell.querySelector('.msg-content pre code')?.textContent!==currentSource)return;
           if(inspected.status==='error'&&!inspected.lines?.length)throw new Error(inspected.message||'BPL could not inspect this cell.');
           result={...inspected,lines:(inspected.lines||[]).map(normaliseLine)};
-          caption.textContent=result.version?`BPL ${result.version}`:'BPL runtime';
-          select.replaceChildren();result.lines.forEach((line,i)=>{const o=make('option','',line.source);o.value=String(i);select.append(o);});
+          try{applyMeaning(JSON.parse(localStorage.getItem('bplex-meaning-'+result.evidence_key)||'null'));}catch{}
+          caption.textContent=result.version?`BPL ${result.version}`:'BPL runtime';select.replaceChildren();
+          result.lines.forEach((line,i)=>{const o=make('option','',line.source);o.value=String(i);select.append(o);});
           selectedLine=Math.min(selectedLine,Math.max(0,result.lines.length-1));select.value=String(selectedLine);picker.hidden=result.lines.length<2;render();
         }catch(error){if(!panel||revision!==requestRevision)return;caption.textContent='Not connected';view.replaceChildren();const box=make('div','be-status');box.setAttribute('role','status');box.append(make('strong','','Start the BPL inspector'),make('p','',error.message),button('be-action','Try again',load));view.append(box);}
       }
       function render(){
-        if(!panel||!result)return;resize?.disconnect();cleanupView();cleanupView=()=>{};view.replaceChildren();
+        if(!panel||!result)return;resize?.disconnect();cleanupView();cleanupView=()=>{};view.replaceChildren();context.replaceChildren();context.hidden=false;
         tabButtons.forEach(b=>{const active=b.textContent===mode;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});
-        const line=result.lines[selectedLine];if(!line){renderUnavailable(view,'No expression to inspect',result.message||'This cell does not contain a BPL expression.');return;}
-        footnote.textContent=mode==='Parts'?'BPL syntax':mode==='Grouping'?(line.grouping.status==='exact'?'BPL function structure':'Syntax only'):(line.walkthrough.status==='exact'?'Verified walkthrough':'');
-        const bar=make('div','be-bar');bar.append(make('span','be-section',mode==='Parts'?'Understand the parts':mode==='Grouping'?'See how it groups':'Follow the values'));view.append(bar);
+        const line=result.lines[selectedLine];if(!line){renderUnavailable(view,'No expression to inspect',result.message||'This cell contains no BPL expression.');return;}
+        context.append(make('div','be-detail-label','THE WHOLE EXPRESSION'),make('p','',line.meaningOverview||line.overview||'Explore the parts to understand this expression.'));
+        const cb=make('div','be-context-bottom'),status=make('span','be-context-status',meaningMessage||(result.hasMeaning?'Contextual explanation · SolveIt':'Native BPL structure and values'));
+        status.setAttribute('role','status');const explainButton=button('be-action',meaningBusy?'Explaining…':result.hasMeaning?'Refresh explanation':'Explain in context',()=>explain(!!result.hasMeaning));explainButton.disabled=meaningBusy;cb.append(status,explainButton);context.append(cb);
+        footnote.textContent=result.capture?.result_verified?'Native result verified against saved run':result.capture?.status==='recorded'?'Saved inputs · native BPL':'Native BPL · no saved run';
+        const bar=make('div','be-bar');bar.append(make('span','be-section',{Parts:'Understand the parts',Focus:'Focus on any section',Grouping:'See how it groups','Walk Through':'Follow the values',Compare:'See what a small edit changes'}[mode]));view.append(bar);
         if(mode==='Parts')renderParts(line,bar,view);
+        else if(mode==='Focus')renderFocus(line,bar,view);
         else if(mode==='Grouping')renderGrouping(line,bar,view);
+        else if(mode==='Compare')renderCompare(line,bar,view);
         else renderWalk(line,bar,view);
       }
+      function partInfo(part){return part.annotation||{title:part.title||part.label,description:part.description,steps:[]};}
+      function showPartDetail(line,part,box){
+        const info=partInfo(part);box.set(info.title,info.description,part.annotation?'IN THIS EXPRESSION · SOLVEIT':'IN THIS EXPRESSION');
+        box.box.querySelectorAll('.be-meaning-steps,.be-detail-actions,.be-selected-code').forEach(n=>n.remove());
+        const snippet=make('pre','be-selected-code',part.text);box.box.insertBefore(snippet,box.box.children[2]);
+        if(info.steps?.length){const list=make('ol','be-meaning-steps');info.steps.forEach(s=>list.append(make('li','',s)));box.box.append(list);}
+        const actions=make('div','be-detail-actions'),children=(line.semantic_parts||[]).filter(p=>p.parent===part.id);
+        if(children.length&&part.id!==line.root_id&&part.id!==line._scope)actions.append(button('be-action','Explore inside →',()=>{line._scope=part.id;line._selected=part.id;mode='Parts';render();}));
+        actions.append(button('be-action','Focus on this section',()=>{line._selected=part.id;line._range=[...part.span];mode='Focus';render();}),button('be-action','See its grouping',()=>{line._selected=part.id;mode='Grouping';render();}));box.box.append(actions);
+      }
       function renderParts(line,bar,view){
-        const chars=Array.from(line.source),semantic=flatten(line.grouping.status==='exact'?line.grouping.nodes:[]).filter(n=>!n.children?.length&&validSpan(n,chars.length)&&definitions[String(n.text||'').trim()]);
-        const merged=[],covered=new Set(),overlays=new Map();
-        for(const n of semantic){
-          const [a,b]=span(n),inside=line.tokens.filter(t=>t.start>=a&&t.end<=b);
-          if(inside.length>1){const info=definitions[n.text.trim()];merged.push({...n,start:a,end:b,kind:'Function',title:info[0],summary:info[1]});inside.forEach(t=>covered.add(t.id));}
-          else if(inside.length===1){const t=inside[0];overlays.set(t.id,{...t,annotation:n.annotation,description:n.annotation?.description||n.description||t.description});}
+        const switcher=make('div','be-switch'),useGlyphs=!!line._glyphs;
+        const meaning=button('','Expression parts',()=>{line._glyphs=false;render();}),glyphs=button('','Glyph reference',()=>{line._glyphs=true;render();});
+        meaning.setAttribute('aria-pressed',String(!useGlyphs));glyphs.setAttribute('aria-pressed',String(useGlyphs));switcher.append(meaning,glyphs);bar.append(switcher);
+        const chars=Array.from(line.source),all=line.semantic_parts||[],root=all.find(p=>p.id===line.root_id)||all[0];
+        let scope=all.find(p=>p.id===line._scope)||root;
+        let items=useGlyphs?line.tokens.map(t=>({...t,span:span(t),title:detailsFor(t).title,description:detailsFor(t).description})):
+          all.filter(p=>p.parent===scope?.id);
+        if(!items.length&&scope)items=[scope];
+        if(!items.length){renderUnavailable(view,'No complete parts yet',line.grouping?.message||'BPL did not return syntax for this expression.',line.source);return;}
+        let active=useGlyphs?items.find(p=>p.id===line._glyphSelected)||items[0]:all.find(p=>p.id===line._selected)||scope;
+        if(!useGlyphs){
+          const crumbs=make('div','be-breadcrumb');let lineage=[],p=scope;while(p){lineage.unshift(p);p=all.find(n=>n.id===p.parent);}
+          lineage.forEach((n,i)=>{if(i)crumbs.append(make('span','','›'));crumbs.append(button('',n===root?'Whole expression':partInfo(n).title,()=>{line._scope=n.id;line._selected=n.id;render();}));});view.append(crumbs);
+          const chips=make('div','be-chips');[scope,...items.filter(n=>n.id!==scope?.id)].forEach((n,i)=>{const b=button(tone(n,i),n===root?'Whole expression':partInfo(n).title,()=>choose(n));b.dataset.partChoice=n.id;b.setAttribute('aria-pressed',String(n.id===active?.id));chips.append(b);});view.append(chips);
         }
-        const assignmentSpans=line.grouping.assignment?[line.grouping.assignment.span,line.grouping.assignment.arrow_span].filter(Boolean):[];
-        // Keep a parser-confirmed assignment prefix quiet in Parts, as in the
-        // approved preview. Grouping gives its name and arrow their own colours.
-        // This also covers value assignments, whose function grouping is absent.
-        if(!assignmentSpans.length){
-          const syntaxTokens=line.tokens.filter(t=>validSpan(t,chars.length)).sort((a,b)=>span(a)[0]-span(b)[0]);
-          if(syntaxTokens[0]?.kind==='Name'&&['Assign','Assignment'].includes(syntaxTokens[1]?.kind))assignmentSpans.push(span(syntaxTokens[0]),span(syntaxTokens[1]));
-        }
-        const tokens=[...line.tokens.filter(t=>!covered.has(t.id)).map(t=>overlays.get(t.id)||t),...merged].filter(t=>validSpan(t,chars.length)&&!assignmentSpans.some(([a,b])=>span(t)[0]>=a&&span(t)[1]<=b)).sort((a,b)=>span(a)[0]-span(b)[0]);
-        if(!tokens.length){renderUnavailable(view,'No parts returned',line.message||'The BPL parser did not return source spans for this expression.',line.source);return;}
-        let page=0,active=0;
-        const controls=make('div','be-page-controls'),prev=button('','‹',()=>showPage(page-1)),pageLabel=make('span'),next=button('','›',()=>showPage(page+1));prev.setAttribute('aria-label','Previous annotations');next.setAttribute('aria-label','Next annotations');controls.append(prev,pageLabel,next);bar.append(tokens.length>4?controls:make('span','be-muted','Select a highlighted part'));
+        let page=Math.max(0,Math.floor(items.findIndex(n=>n.id===active?.id)/4));
+        const controls=make('div','be-page-controls'),prev=button('','‹',()=>showPage(page-1)),next=button('','›',()=>showPage(page+1)),pageLabel=make('span');prev.setAttribute('aria-label','Previous annotations');next.setAttribute('aria-label','Next annotations');controls.append(prev,pageLabel,next);if(items.length>4)bar.append(controls);
         const stage=make('div','be-annotation'),svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.classList.add('be-connectors');svg.setAttribute('aria-hidden','true');
         const viewport=make('div','be-expression-viewport'),expression=make('div','be-expression');viewport.append(expression);stage.append(svg,viewport);view.append(stage);
-        const selected=detail();view.append(selected.box);const tokenButtons=[],labels=[];let cursor=0;
-        tokens.forEach((token,i)=>{const [a,b]=span(token);if(a<cursor)return;if(a>cursor)expression.append(make('span','be-plain',chars.slice(cursor,a).join('')));const info=detailsFor(token);const t=button('be-token '+tone(token,i),chars.slice(a,b).join(''),()=>selectPart(i));t.setAttribute('aria-label',`${token.text}: ${info.title}`);t.dataset.part=String(i);expression.append(t);tokenButtons[i]=t;cursor=b;});
-        if(cursor<chars.length)expression.append(make('span','be-plain',chars.slice(cursor).join('')));
-        function draw(){
-          const box=stage.getBoundingClientRect();if(!box.width)return;svg.setAttribute('viewBox',`0 0 ${box.width} ${box.height}`);svg.replaceChildren();
-          labels.forEach(({index,label})=>{const t=tokenButtons[index];if(!t)return;const a=t.getBoundingClientRect(),b=label.getBoundingClientRect(),vp=viewport.getBoundingClientRect();if(a.right<vp.left||a.left>vp.right)return;const upper=b.top<a.top,x=a.left+a.width/2-box.left,y=(upper?a.top:a.bottom)-box.top,x2=b.left+b.width/2-box.left,y2=(upper?b.bottom:b.top)-box.top;const path=document.createElementNS(svg.namespaceURI,'path');path.setAttribute('d',`M ${x} ${y} L ${x} ${(y+y2)/2} L ${x2} ${(y+y2)/2} L ${x2} ${y2}`);path.setAttribute('stroke',getComputedStyle(label).getPropertyValue('--part'));path.setAttribute('stroke-width',index===active?'2':'1');path.setAttribute('opacity',index===active?'1':'.3');path.setAttribute('fill','none');svg.append(path);});
+        const chosen=detail();view.append(chosen.box);let labels=[],tokens=[];
+        function choose(p){active=p;if(useGlyphs)line._glyphSelected=p.id;else{line._selected=p.id;line._range=[...p.span];}
+          view.querySelectorAll('[data-part-choice]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.partChoice===p.id)));
+          tokens.forEach(({part,el})=>el.setAttribute('aria-pressed',String(part.id===p.id)));labels.forEach(({part,el})=>el.setAttribute('aria-pressed',String(part.id===p.id)));
+          if(useGlyphs){const d=detailsFor(p);chosen.set(p.text+' · '+d.title,d.description,'GLYPH REFERENCE');}else showPartDetail(line,p,chosen);draw();
         }
-        function selectPart(index){active=index;const desired=Math.floor(index/4);if(desired!==page)showPage(desired);tokenButtons.forEach((b,i)=>b?.setAttribute('aria-pressed',String(i===active)));labels.forEach(({index,label})=>label.setAttribute('aria-pressed',String(index===active)));const info=detailsFor(tokens[index]);selected.set(`${tokens[index].text} · ${info.title}`,info.description);const token=tokenButtons[index];if(token){const t=token.getBoundingClientRect(),v=viewport.getBoundingClientRect();if(t.left<v.left)viewport.scrollLeft-=v.left-t.left+6;else if(t.right>v.right)viewport.scrollLeft+=t.right-v.right+6;}draw();}
-        function showPage(value){page=Math.max(0,Math.min(Math.ceil(tokens.length/4)-1,value));labels.splice(0).forEach(x=>x.label.remove());const positions=['be-top-a','be-bottom-a','be-bottom-b','be-top-b'];tokens.slice(page*4,page*4+4).forEach((token,j)=>{const index=page*4+j,info=detailsFor(token),label=button(`be-label ${tone(token,index)} ${positions[j]}`,'',()=>selectPart(index));label.append(make('span','be-dot'),make('span','be-label-title',info.title),make('small','',info.summary));stage.append(label);labels.push({index,label});});prev.disabled=page===0;next.disabled=(page+1)*4>=tokens.length;pageLabel.textContent=`${page*4+1}–${Math.min(tokens.length,(page+1)*4)} of ${tokens.length}`;if(active<page*4||active>=page*4+4)active=page*4;selectPart(active);}
-        viewport.addEventListener('scroll',draw,{passive:true});resize=new ResizeObserver(draw);resize.observe(stage);showPage(0);cleanupView=()=>viewport.removeEventListener('scroll',draw);
+        function draw(){const r=stage.getBoundingClientRect();if(!r.width)return;svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);svg.replaceChildren();
+          labels.forEach(({part,el})=>{const token=tokens.find(t=>t.part.id===part.id)?.el;if(!token)return;const a=token.getBoundingClientRect(),b=el.getBoundingClientRect(),v=viewport.getBoundingClientRect();if(a.right<v.left||a.left>v.right)return;const top=b.top<a.top,x=Math.min(v.right,Math.max(v.left,a.left+a.width/2))-r.left,y=(top?a.top:a.bottom)-r.top,xx=b.left+b.width/2-r.left,yy=(top?b.bottom:b.top)-r.top;const path=document.createElementNS(svg.namespaceURI,'path');path.setAttribute('d',`M${x},${y} V${(y+yy)/2} H${xx} V${yy}`);path.setAttribute('stroke',getComputedStyle(el).getPropertyValue('--part'));path.setAttribute('stroke-width',part.id===active?.id?'2':'1');path.setAttribute('opacity',part.id===active?.id?'1':'.35');path.setAttribute('fill','none');svg.append(path);});}
+        function showPage(value){page=Math.max(0,Math.min(Math.ceil(items.length/4)-1,value));labels.forEach(l=>l.el.remove());labels=[];tokens=[];expression.replaceChildren();const visible=items.slice(page*4,page*4+4);let cursor=0;
+          items.slice().sort((x,y)=>span(x)[0]-span(y)[0]).forEach((part,i)=>{const [a,b]=span(part);if(a<cursor||!validSpan(part,chars.length))return;if(a>cursor)expression.append(make('span','be-plain',chars.slice(cursor,a).join('')));const el=button('be-token '+tone(part,i),chars.slice(a,b).join(''),()=>choose(part));el.setAttribute('aria-label',partInfo(part).title||part.text);expression.append(el);tokens.push({part,el});cursor=b;});
+          if(cursor<chars.length)expression.append(make('span','be-plain',chars.slice(cursor).join('')));
+          ['be-top-a','be-bottom-a','be-top-b','be-bottom-b'].forEach((pos,i)=>{const part=visible[i];if(!part)return;const info=partInfo(part),el=button('be-label '+tone(part,items.indexOf(part))+' '+pos,'',()=>choose(part));el.append(make('span','be-dot'),make('span','be-label-title',info.title||part.text),make('small','',part.text.length>35?part.text.slice(0,32)+'…':part.text));stage.append(el);labels.push({part,el});});prev.disabled=page===0;next.disabled=(page+1)*4>=items.length;pageLabel.textContent=`${page*4+1}–${Math.min(items.length,(page+1)*4)} of ${items.length}`;choose(active||items[0]);}
+        viewport.addEventListener('scroll',draw,{passive:true});resize=new ResizeObserver(draw);resize.observe(stage);showPage(page);cleanupView=()=>viewport.removeEventListener('scroll',draw);
+      }
+      function renderFocus(line,bar,view){
+        const chars=Array.from(line.source),n=chars.length;if(!n)return;let range=line._range||selectedPart(line)?.span||[0,n];range=[Math.max(0,range[0]),Math.min(n,range[1])];
+        const stage=make('div','be-focus-stage'),scroll=make('div','be-focus-scroll'),track=make('div','be-focus-line'),windowEl=make('div','be-window');windowEl.tabIndex=0;windowEl.setAttribute('role','group');windowEl.setAttribute('aria-label','Selected expression window. Left and right arrows move it. Shift plus arrows resize it.');
+        const charEls=chars.map((c,i)=>{const b=button('be-focus-char',c,()=>set(i,i+1));b.setAttribute('aria-label',`${i+1}: ${c}`);track.append(b);return b;});
+        const left=make('span','be-handle'),right=make('span','be-handle');windowEl.append(left,right);track.append(windowEl);scroll.append(track);stage.append(scroll,make('p','be-focus-help','Drag the window to move it. Drag either edge to resize. Arrow keys work too.'));
+        const controls=make('div','be-range-controls');const starts=make('input'),ends=make('input');for(const input of [starts,ends]){input.type='range';input.min='0';input.max=String(n);input.step='1';}const sl=make('label','','Start'),el=make('label','','End');sl.append(starts);el.append(ends);starts.setAttribute('aria-label','Selection start');ends.setAttribute('aria-label','Selection end');controls.append(sl,el);stage.append(controls);view.append(stage);
+        const box=detail('SELECTED SECTION');view.append(box.box);const shortcuts=make('div','be-chips');(line.semantic_parts||[]).filter(p=>p.id===line.root_id||p.parent===line.root_id).forEach((p,i)=>shortcuts.append(button(tone(p,i),p.id===line.root_id?'Whole expression':partInfo(p).title,()=>set(...p.span))));stage.before(shortcuts);
+        function paint(){const [a,b]=range,r=charEls[a]?.getBoundingClientRect(),end=charEls[b-1]?.getBoundingClientRect(),base=track.getBoundingClientRect();if(r&&end){windowEl.style.left=(r.left-base.left)+'px';windowEl.style.width=(end.right-r.left)+'px';}charEls.forEach((e,i)=>e.classList.toggle('is-inside',a<=i&&i<b));starts.value=a;ends.value=b;}
+        function set(a,b){a=Math.max(0,Math.min(n-1,a));b=Math.max(a+1,Math.min(n,b));range=[a,b];line._range=range;paint();const part=nearestPart(line,{span:range});line._selected=part?.id;
+          box.box.querySelectorAll('pre,ol,button,.be-fragment-context').forEach(e=>e.remove());
+          if(part){const exact=sameSpan(part,{span:range}),info=partInfo(part);box.set(exact?info.title:'Inside: '+info.title,exact?info.description:'This selection sits inside the complete section below. Its meaning depends on that surrounding expression.','SELECTED SECTION');
+            box.box.append(make('pre','',chars.slice(a,b).join('')));
+            if(!exact){box.box.append(make('p','be-fragment-context',info.description),button('be-action','Snap to complete section',()=>set(...part.span)));}
+            if(exact&&info.steps?.length){const list=make('ol','be-meaning-steps');info.steps.forEach(s=>list.append(make('li','',s)));box.box.append(list);}
+          }else box.set('Selected fragment','Choose Explain in context for an explanation grounded in the whole expression.');}
+        // Keep the original detail nodes: replacing them would detach its setter.
+        function refresh(a,b){box.box.querySelectorAll('pre,ol,button').forEach(e=>e.remove());set(a,b);}
+        starts.oninput=()=>refresh(Number(starts.value),Math.max(Number(starts.value)+1,range[1]));ends.oninput=()=>refresh(Math.min(range[0],Number(ends.value)-1),Number(ends.value));
+        windowEl.onkeydown=e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const d=e.key==='ArrowLeft'?-1:1;if(e.key==='Home')refresh(0,range[1]-range[0]);else if(e.key==='End')refresh(n-(range[1]-range[0]),n);else if(e.shiftKey)refresh(range[0],range[1]+d);else{const width=range[1]-range[0],a=Math.max(0,Math.min(n-width,range[0]+d));refresh(a,a+width);}};
+        windowEl.onpointerdown=e=>{e.preventDefault();windowEl.focus();windowEl.setPointerCapture(e.pointerId);const original=[...range],start=e.clientX,unit=charEls[0].getBoundingClientRect().width,edge=e.target===left?'left':e.target===right?'right':'move';
+          windowEl.onpointermove=event=>{const delta=Math.round((event.clientX-start)/unit);if(edge==='left')refresh(Math.min(original[1]-1,original[0]+delta),original[1]);else if(edge==='right')refresh(original[0],original[1]+delta);else{const width=original[1]-original[0],a=Math.max(0,Math.min(n-width,original[0]+delta));refresh(a,a+width);}};
+          windowEl.onpointerup=windowEl.onpointercancel=()=>{windowEl.onpointermove=null;};};
+        resize=new ResizeObserver(paint);resize.observe(track);refresh(...range);
+      }
+      function renderCompare(line,bar,view){
+        const stage=make('div','be-compare'),label=make('label','','Edit a copy of this cell'),input=make('textarea');input.value=line._variant||currentSource;input.setAttribute('aria-label','Alternative BPL cell');label.append(input);stage.append(label,make('p','be-focus-help','The edited copy uses the original cell’s saved starting inputs in a separate BPL process. Your cell stays as it is.'));
+        const status=make('p','be-focus-help'),output=make('div','be-compare-grid'),run=button('be-action','Compare expressions',async()=>{line._variant=input.value;run.disabled=true;status.textContent='Comparing with native BPL…';try{const other=await inspect(currentSource,cellId,'compare',{variant:input.value});if(other.status==='error')throw new Error(other.message);line._comparison=other;paint(other);status.textContent='Colours mark the changed source. Results and brackets come from BPL.';}catch(e){status.textContent=e.message;}finally{run.disabled=false;}});stage.append(run,status,output);view.append(stage);
+        function paint(other){output.replaceChildren();const b=other.lines?.[selectedLine]||other.lines?.at(-1);if(!b)return;const aa=Array.from(line.source),bb=Array.from(b.source);let pre=0,end=0;while(pre<aa.length&&pre<bb.length&&aa[pre]===bb[pre])pre++;while(end<aa.length-pre&&end<bb.length-pre&&aa[aa.length-1-end]===bb[bb.length-1-end])end++;
+          [['Original',line,aa],['Edited copy',b,bb]].forEach(([title,data,chars])=>{const card=make('div','be-compare-card'),src=make('pre');src.append(document.createTextNode(chars.slice(0,pre).join('')),make('mark','',chars.slice(pre,chars.length-end).join('')),document.createTextNode(chars.slice(chars.length-end).join('')));card.append(make('div','be-detail-label',title),src,make('p','',data.grouping?.summary||data.overview||''));if(data.grouping?.canonical)card.append(make('div','be-detail-label','BPL GROUPING'),make('pre','',data.grouping.canonical));if('result'in data)card.append(make('div','be-detail-label','RESULT'),make('pre','',data.result_native||(typeof data.result==='string'?data.result:JSON.stringify(data.result))));else card.append(make('p','',data.walkthrough?.message||'No result available.'));output.append(card);});}
+        if(line._comparison)paint(line._comparison);
       }
       function renderGrouping(line,bar,view){
         const g=line.grouping,chars=Array.from(line.source);
-        if(g.status!=='exact'||!g.nodes?.length){renderUnavailable(view,'Grouping is not available for this expression',g.message||g.explanation||'The parser has identified its syntax, but the runtime has not provided a verified function grouping. The Parts view is still available.',line.source);return;}
+        if(!g.nodes?.length){renderUnavailable(view,'About this inspection',g.message||'Run this cell once, then reopen the explorer to use its saved inputs.',line.source);return;}
         const control=make('div','be-switch');control.setAttribute('aria-label','Grouping display');let highlighted=true;const no=button('','Source',()=>{highlighted=false;paintSource();}),yes=button('','Highlight groups',()=>{highlighted=true;paintSource();});control.append(no,yes);bar.append(control);
         const stage=make('div','be-group-stage'),head=make('div','be-group-header'),source=make('code');source.dataset.code='';const kind=make('span','be-group-kind',g.title||g.kind||'Function structure');head.append(source,kind);stage.append(head);
         const chosen=detail(),items=[];let nodes=g.nodes.map((n,i)=>({...n,id:n.id||`group-${i}`}));
         const assignment=g.assignment;
         if(assignment){
-          const name={id:'assignment-name',text:assignment.name,span:assignment.span,role:'name',label:'Function name',description:'The name on the left of the arrow refers to the complete value or function on its right.'};
+          const name={id:'assignment-name',text:assignment.name,span:assignment.span,role:'name',label:'Name',description:'The name on the left of the arrow refers to the complete value or function on its right.'};
           const arrow={id:'assignment-arrow',text:'←',span:assignment.arrow_span,role:'assignment',label:'Assign',description:`The assignment arrow associates ${assignment.name} with the complete expression on its right.`};
-          items.push(name,arrow);const row=make('div','be-assignment-band');[name,arrow].forEach(n=>{const b=button(tone(n),'',()=>focus(n));b.dataset.role=n.id;b.append(make('code','',n.text),make('small','',n.label));row.append(b);});row.append(make('span','','Names the whole function below'));stage.append(row);
+          items.push(name,arrow);const row=make('div','be-assignment-band');[name,arrow].forEach(n=>{const b=button(tone(n),'',()=>focus(n));b.dataset.role=n.id;b.append(make('code','',n.text),make('small','',n.label));row.append(b);});row.append(make('span','','Names the whole result below'));stage.append(row);
         }
-        const bands=make('div','be-bands');nodes.forEach((node,i)=>bands.append(band(node,i)));stage.append(bands,make('div','be-group-read',g.summary||g.explanation||''));view.append(stage,chosen.box);items.push(...flatten(nodes));
-        function focus(node){stage.querySelectorAll('[data-role]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.role===node.id)));const info=detailsFor(node);chosen.set(`${node.text||node.label} · ${node.title||node.label||info.title}`,node.description||info.description);}
+        const bands=make('div','be-bands');nodes.forEach((node,i)=>bands.append(band(node,i)));stage.append(bands);view.append(stage,chosen.box);items.push(...flatten(nodes));
+        function focus(node){line._selected=nearestPart(line,node)?.id||line._selected;stage.querySelectorAll('[data-role]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.role===node.id)));const info=detailsFor(node);chosen.set(`${node.text||node.label} · ${node.annotation?.title||node.title||node.label||info.title}`,node.annotation?.description||node.description||info.description);chosen.box.querySelector('.be-group-children')?.remove();if(node.children?.length){const list=make('div','be-group-children');node.children.forEach(child=>list.append(button('be-action '+tone(child),child.text+' · '+child.label,()=>focus(child))));chosen.box.append(list);}}
         function chip(node){const b=button('be-source-part '+tone(node),node.text,()=>focus(node));b.dataset.role=node.id;return b;}
         function band(node,i){
-          const b=make('div','be-band '+(node.children?.length?'be-composite':tone(node,i)));
-          if(node.children?.length){const nested=make('div','be-nested');node.children.forEach(child=>nested.append(chip(child)));b.append(nested,make('small','',node.label||'Composed function'));b.tabIndex=0;b.setAttribute('role','button');b.onclick=e=>{if(e.target===b||e.target.tagName==='SMALL')focus(node);};b.onkeydown=e=>{if(e.target===b&&(e.key==='Enter'||e.key===' ')){e.preventDefault();focus(node);}};}
+          const composite=node.kind==='call'&&node.children?.length;
+          const b=make('div','be-band '+(composite?'be-composite':tone(node,i)));
+          if(composite){const nested=make('div','be-nested');node.children.forEach(child=>nested.append(chip(child)));b.append(nested,make('small','',node.label||'Nested call'));b.tabIndex=0;b.setAttribute('role','button');b.onclick=e=>{if(e.target===b||e.target.tagName==='SMALL')focus(node);};b.onkeydown=e=>{if(e.target===b&&(e.key==='Enter'||e.key===' ')){e.preventDefault();focus(node);}};}
           else{b.setAttribute('role','button');b.tabIndex=0;b.append(make('code','',node.text),make('small','',node.label||detailsFor(node).title));b.onclick=()=>focus(node);b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();focus(node);}};}
           b.dataset.role=node.id;return b;
         }
         function sourceNode(node){
-          if(!node.children?.length)return chip(node);
+          if(node.kind!=='call'||!node.children?.length)return chip(node);
           const wrap=make('span','be-source-composite');
           const [a,b]=span(node);let at=a;node.children.filter(x=>validSpan(x,chars.length)).sort((x,y)=>span(x)[0]-span(y)[0]).forEach(child=>{const [ca,cb]=span(child);if(ca>at)wrap.append(document.createTextNode(chars.slice(at,ca).join('')));wrap.append(sourceNode(child));at=cb;});if(at<b)wrap.append(document.createTextNode(chars.slice(at,b).join('')));return wrap;
         }
@@ -858,21 +891,27 @@ window.bplCraftPalette = // SolveIt BPL palette. Uses the merged BPL catalogue a
           const top=[...items.filter(n=>n.role==='name'||n.role==='assignment'),...nodes].filter(n=>validSpan(n,chars.length)).sort((a,b)=>span(a)[0]-span(b)[0]);
           top.forEach(node=>{const [a,b]=span(node);if(a<at)return;if(a>at)source.append(document.createTextNode(chars.slice(at,a).join('')));source.append(sourceNode(node));at=b;});if(at<chars.length)source.append(document.createTextNode(chars.slice(at).join('')));
         }
-        paintSource();chosen.set(g.title||g.kind||'BPL function structure',g.description||g.explanation||'Select a highlighted part to connect it with its role in the function.','HOW BPL GROUPS THIS EXPRESSION');
+        paintSource();chosen.set(g.title||g.kind||'BPL function structure','Select a coloured group to see what it contributes. Groups with inner operations can be explored further.','HOW BPL GROUPS THIS EXPRESSION');
+        const shared=items.find(n=>validSpan(n,chars.length)&&sameSpan(n,selectedPart(line)));if(shared)focus(shared);
+        if(g.canonical){const more=make('details','be-native-tree'),summary=make('summary','','BPL’s fully bracketed expression');more.append(summary,make('pre','',g.canonical));stage.append(more);}
       }
       function renderWalk(line,bar,view){
         const walk=line.walkthrough;
-        if(walk.status!=='exact'||!walk.steps?.length){renderUnavailable(view,'A value walkthrough is not available here',walk.message||'This expression has no verified value trace. The explorer will not invent intermediate results. Use Parts or Grouping to inspect the available structure.',line.source);return;}
-        bar.append(make('span','be-muted',walk.label||'Captured inputs · verified steps'));let step=0;
-        const stage=make('div','be-walk-stage'),head=make('div','be-walk-source'),count=make('span','be-step-count');head.append(make('code','',line.source),count);const steps=make('div','be-steps');steps.setAttribute('aria-label','Evaluation steps');const data=make('div','be-data');data.setAttribute('aria-live','polite');stage.append(head,steps,data);view.append(stage);const selected=detail('CURRENT OPERATION');selected.box.classList.add('be-walk-detail');const controls=make('div','be-step-controls'),back=button('','Previous',()=>show(step-1)),next=button('','Next step →',()=>show(step+1));controls.append(back,next);selected.box.append(controls);view.append(selected.box);
+        if(!walk.steps?.length){renderUnavailable(view,'About this walkthrough',walk.message||'Run this cell once, then reopen the explorer to use its saved inputs.',line.source);return;}
+        bar.append(make('span','be-muted',walk.label||'BPL replay'));let step=line._step||0;
+        const stage=make('div','be-walk-stage'),head=make('div','be-walk-source'),source=make('code'),count=make('span','be-step-count');head.append(source,count);const steps=make('div','be-steps');steps.setAttribute('aria-label','Evaluation steps');const data=make('div','be-data');data.setAttribute('aria-live','polite');stage.append(head,steps,data);view.append(stage);const selected=detail('CURRENT OPERATION');selected.box.classList.add('be-walk-detail');const children=make('div','be-inner-steps'),controls=make('div','be-step-controls'),back=button('','Previous',()=>show(step-1)),next=button('','Next step →',()=>show(step+1));controls.append(back,next);selected.box.append(children,controls);view.append(selected.box);
         const buttons=walk.steps.map((s,i)=>{if(i)steps.append(make('i','','→'));const b=button(tone(s,i),'',()=>show(i));b.append(make('span','',i+1),document.createTextNode(s.label||s.title||`Step ${i+1}`));steps.append(b);return b;});
-        const value=v=>typeof v==='boolean'?(v?'1':'0'):v===null?'':typeof v==='object'?JSON.stringify(v):String(v);
-        function show(n){step=Math.max(0,Math.min(walk.steps.length-1,n));const current=walk.steps[step];count.textContent=`Step ${step+1} of ${walk.steps.length}`;buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===step)));data.replaceChildren();
-          for(const r of current.rows||[]){const values=Array.isArray(r.values)?r.values:Array.from(String(r.values??'')),row=make('div','be-data-row');row.style.setProperty('--be-count',String(Math.max(1,values.length)));row.append(make('span','be-row-label',r.label||''));values.forEach((v,i)=>{const s=make('span','',value(v));if(r.highlight?.[i])s.className=(current.tone==='purple'||current.tone==='not')?'be-flip-mark':'be-mark';row.append(s);});data.append(row);}
-          if(current.result!==undefined){const total=make('div','be-total');total.append(make('strong','',value(current.result)),make('span','',current.result_label||''));data.append(total);}
-          selected.set(current.title||current.label,current.description);back.disabled=step===0;next.disabled=step===walk.steps.length-1;
+        const value=v=>typeof v==='boolean'?(v?'1':'0'):v===null?'':Array.isArray(v)?'['+v.map(value).join(' ')+']':typeof v==='object'?JSON.stringify(v):String(v);
+        function valueRows(rows,target){for(const r of rows||[]){const row=make('div','be-value-row'),caption=make('div','be-value-caption');caption.append(make('span','',r.label||''));if(r.shape){const rank=r.shape.length,shape=rank===0?'scalar':rank===1?`${r.shape[0]} ${r.shape[0]===1?'item':'items'}`:`${r.shape.join(' × ')} array`;caption.append(make('small','be-shape',shape));}const v=r.values?.length===1?r.values[0]:r.values;
+          const native=r.native||value(v),pre=make('pre','',native);row.append(caption,pre);if(r.label==='Result')row.classList.add('be-value-result');target.append(row);}}
+        function innerSteps(items,target,depth=0){items.forEach((s,i)=>{const box=make('details','be-inner-operation '+tone(s,i)),summary=make('summary');summary.append(make('span','be-inner-number',i+1),make('span','',s.title||s.label),make('code','',s.operation||''));box.append(summary,make('p','',s.description));if(s.expansion_note)box.append(make('p','be-muted',s.expansion_note));const values=make('div','be-inner-values');valueRows(s.rows,values);if(s.printed?.length)printedRows(s.printed,values);box.append(values);if(s.children?.length&&depth<8){const nested=make('div','be-inner-steps');innerSteps(s.children,nested,depth+1);box.append(nested);}target.append(box);});}
+        function show(n){step=Math.max(0,Math.min(walk.steps.length-1,n));line._step=step;const current=walk.steps[step];if(validSpan(current,Array.from(line.source).length))line._selected=nearestPart(line,current)?.id||line._selected;count.textContent=`Step ${step+1} of ${walk.steps.length}`;buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===step)));data.replaceChildren();
+          source.replaceChildren();const chars=Array.from(line.source);if(validSpan(current,chars.length)){const [a,b]=span(current);source.append(document.createTextNode(chars.slice(0,a).join('')),make('mark',tone(current),chars.slice(a,b).join('')),document.createTextNode(chars.slice(b).join('')));}else source.textContent=line.source;
+          if(current.operation){const op=make('div','be-operation-code');op.append(make('small','','Operation'),make('code','',current.operation));data.append(op);}valueRows(current.rows,data);if(current.printed?.length)printedRows(current.printed,data);
+          selected.set(current.title||current.label,current.description);children.replaceChildren();if(current.expansion_note)children.append(make('p','be-muted',current.expansion_note));if(current.children?.length){children.append(make('div','be-detail-label',`INSIDE THIS OPERATION · ${current.children.length} STEPS`));innerSteps(current.children,children);}back.disabled=step===0;next.disabled=step===walk.steps.length-1;
         }
-        show(0);
+        if(walk.message){const provenance=make('details','be-native-tree be-replay-note');provenance.append(make('summary','','How these steps were obtained'),make('p','',walk.message));view.append(provenance);}
+        show(step);
       }
       load();
     }
@@ -894,230 +933,260 @@ window.bplCraftPalette = // SolveIt BPL palette. Uses the merged BPL catalogue a
 // BEGIN GENERATED BPL BOOTSTRAP
 (() => {
 const start=()=>{
-if(!document.getElementById("bpl-craft-fonts")){const s=document.createElement("style");s.id="bpl-craft-fonts";s.textContent="/* Code fonts for the magics and the docs. The docs load this file through the symlink nbs/fonts.css. */\n:root { --bpl-font: SAX2B; --apl-font: BQN386; }\n@font-face { font-family: SAX2B; src: local(\"SAX2B\"), url(\"https://cdn.jsdelivr.net/gh/AnswerDotAI/basedpl@main/nbs/fonts/SAX2B.woff2\") format(\"woff2\"); }\n@font-face { font-family: BQN386; src: local(\"BQN386\"), url(\"https://cdn.jsdelivr.net/gh/dzaima/BQN386@master/BQN386.woff2\") format(\"woff2\"); }\n.bpl_out { font-family: var(--bpl-font), monospace !important; line-height: 1.05 !important; }\n.bpl_choices button[aria-selected=\"true\"]{background:#2463a8;color:white}";document.head.append(s);}
+if(!document.getElementById("bpl-craft-fonts")){const s=document.createElement("style");s.id="bpl-craft-fonts";s.textContent="/* Code fonts for the magics and the docs. The docs load this file through the symlink nbs/fonts.css. */\n:root { --bpl-font: SAX2B; --apl-font: BQN386B; }\n@font-face { font-family: SAX2B; src: url(\"https://cdn.jsdelivr.net/gh/AnswerDotAI/basedpl@main/python/basedpl/browser/SAX2B.woff2\") format(\"woff2\"); }\n@font-face { font-family: BQN386B; src: local(\"BQN386B\"), url(\"https://cdn.jsdelivr.net/gh/AnswerDotAI/basedpl@main/nbs/fonts/BQN386B.woff2\") format(\"woff2\"); }\n.bpl_out { font-family: var(--bpl-font), monospace !important; line-height: 1.05 !important; }\n.bpl_page_bar { --bpl-bar-background: #eee; --bpl-bar-color: #111; }\n@media(prefers-color-scheme:dark) { .bpl_page_bar { --bpl-bar-background: #222; --bpl-bar-color: #ddd; } }\n.bpl_choices button[aria-selected=\"true\"]{background:#2463a8;color:white}";document.head.append(s);}
 // Based on Adám Brudzewsky's APL language bar: https://abrudz.github.io/lb
 // MIT License, Copyright (c) 2011-2020 Nikolay G. Nikolov and Adam Brudzevski.
-// BPL name completion, editor adapters, dark mode and overlay layout by Jeremy Howard.
-((symbols, input, layout) => {
-    const d = document;
-    // Docs pages have no bar, except a page with a `data-bpl` editor, such as the playground.
-    if (d.querySelector('.ngn_lb') || d.querySelector('meta[name=generator][content^=quarto]') && !d.querySelector('[data-bpl]')) return;
-
-    const {inCode, bplStart, entry, press, reset} = input(symbols, layout);
-    const shortcuts = new Map(symbols.map(({glyph, shortcut}) => [glyph, shortcut]));
-    let leftAlt = false, rightAlt = false;
-
-    function textareaRect(t) {
-        const mirror = d.createElement('div'), caret = d.createElement('span'), css = getComputedStyle(t), rect = t.getBoundingClientRect();
-        for (const p of ['font', 'lineHeight', 'letterSpacing', 'padding', 'border', 'boxSizing', 'width', 'tabSize']) mirror.style[p] = css[p];
-        Object.assign(mirror.style, {position: 'fixed', visibility: 'hidden', whiteSpace: 'pre-wrap', overflowWrap: 'break-word',
-            left: `${rect.left - t.scrollLeft}px`, top: `${rect.top - t.scrollTop}px`});
-        mirror.textContent = t.value.slice(0, t.selectionStart);
-        caret.textContent = '\u200b';
-        mirror.append(caret);
-        d.body.append(mirror);
-        const result = caret.getBoundingClientRect();
-        mirror.remove();
-        return result;
-    }
-
-    function editor(target) {
-        if (target.closest?.('.text_cell, .jp-MarkdownCell')) return;
-        const m = window.monaco?.editor?.getEditors?.().find(e => e.hasTextFocus());
-        if (m) {
-            const model = m.getModel(), p = m.getPosition(), selection = m.getSelection();
-            if (model.getLanguageId() === 'markdown' || m.getOption(window.monaco.editor.EditorOption.readOnly)) return;
-            return {id: m, text: model.getValue(), pos: model.getOffsetAt(p), empty: selection.isEmpty(), bpl: model.getLanguageId() === 'bpl',
-                rect: () => {
-                    const r = m.getDomNode().getBoundingClientRect(), c = m.getScrolledVisiblePosition(p);
-                    return {left: r.left + c.left, bottom: r.top + c.top + c.height};
-                },
-                insert: (text, from = model.getOffsetAt(selection.getStartPosition())) => {
-                    const a = model.getPositionAt(from), b = selection.getEndPosition();
-                    m.pushUndoStop();
-                    m.executeEdits('aplnb', [{range: {startLineNumber: a.lineNumber, startColumn: a.column,
-                        endLineNumber: b.lineNumber, endColumn: b.column}, text}], () => {
-                        const end = model.getPositionAt(from + text.length);
-                        return [new window.monaco.Selection(end.lineNumber, end.column, end.lineNumber, end.column)];
-                    });
-                    m.pushUndoStop();
-                    m.focus();
-                }};
+// BPL name completion, editor adapters and page toolbar by Jeremy Howard.
+export default (symbols, input, layout, editorOptions) => {
+    function mount(container) {
+        const d = container.ownerDocument, w = d.defaultView, events = new AbortController();
+        const on = (target, name, fn, capture = false) => target.addEventListener(name, fn, {capture, signal: events.signal});
+        const {inCode, bplStart, entry, press, reset} = input(symbols, layout);
+        const shortcuts = new Map(symbols.map(({glyph, shortcut}) => [glyph, shortcut]));
+        let leftAlt = false, rightAlt = false;
+        let editorFonts;
+        function fonts() {
+            if (!w.monaco || editorFonts) return;
+            editorFonts = w.monaco.editor.onDidCreateEditor(e => e.updateOptions(editorOptions));
+            w.monaco.editor.getEditors().forEach(e => e.updateOptions(editorOptions));
         }
-        const view = target.closest?.('.cm-editor')?.querySelector('.cm-content')?.cmTile?.view;
-        if (view) {
-            if (view.state.readOnly) return;
-            const sel = view.state.selection.main;
-            return {id: view, text: view.state.doc.toString(), pos: sel.head, empty: sel.empty,
-                rect: () => view.coordsAtPos(sel.head),
-                insert: (text, from = sel.from) => {
-                    view.dispatch({changes: {from, to: sel.to, insert: text}, selection: {anchor: from + text.length}, userEvent: 'input.complete'});
-                    view.focus();
-                }};
-        }
-        if (target.tagName !== 'TEXTAREA' || target.readOnly || target.disabled) return;
-        return {id: target, text: target.value, pos: target.selectionStart, empty: target.selectionStart === target.selectionEnd, bpl: target.hasAttribute('data-bpl'),
-            rect: () => textareaRect(target),
-            insert: (text, from = target.selectionStart) => {
-                target.focus();
-                target.selectionStart = from;
-                d.execCommand('insertText', false, text);
-            }};
-    }
+        fonts();
 
-    const host = d.createElement('div');
-    host.innerHTML = `<div class="ngn_lb" aria-label="BPL symbols"><button class="ngn_x" title="Close symbol bar">×</button><button class="ngn_o" title="Toggle overlay/push-down"></button></div>
-        <div class="bpl_choices" role="group" aria-label="BPL symbol completions" hidden></div>
-        <style>
-        .ngn_lb,.bpl_choices{background:#eee;color:#111;font:15px var(--bpl-font),monospace;z-index:2147483647}
-        .ngn_lb{position:fixed;top:0;left:0;right:0;border-bottom:1px solid #999;padding:2px}
-        .ngn_lb button,.bpl_choices button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:2px 4px}
-        .ngn_lb button:hover,.bpl_choices button:hover{background:#777;color:white}
-        .ngn_x,.ngn_o{float:right}
-        .bpl_choices{position:fixed;max-height:240px;max-width:calc(100vw - 16px);overflow:auto;border:1px solid #888;border-radius:4px;box-shadow:0 3px 12px #0003;padding:4px}
-        .bpl_choices button{display:block;width:100%;text-align:left;white-space:nowrap}
-        .bpl_choices small{display:block;padding:4px}
-        .ngn_lb .bpl_dead::after{content:'▾';font-size:9px;margin-left:1px}
-        .bpl_choices.bpl_menu{max-width:min(320px,calc(100vw - 16px))}
-        .bpl_menu button{display:inline-block;width:auto;min-width:28px;text-align:center}
-        @media(prefers-color-scheme:dark){.ngn_lb,.bpl_choices{background:#222;color:#ddd}.ngn_lb button:hover,.bpl_choices button:hover{background:#bbb;color:#111}}
-        </style>`;
-    d.body.append(host);
-    const bar = host.querySelector('.ngn_lb'), tip = host.querySelector('.bpl_choices'), toggle = bar.querySelector('.ngn_o');
-    let overlay = false, active, lastEditor, choice, keyInput = false, picked = 0;
+        function textareaRect(t) {
+            const mirror = d.createElement('div'), caret = d.createElement('span'), css = getComputedStyle(t), rect = t.getBoundingClientRect();
+            for (const p of ['font', 'lineHeight', 'letterSpacing', 'padding', 'border', 'boxSizing', 'width', 'tabSize']) mirror.style[p] = css[p];
+            Object.assign(mirror.style, {position: 'fixed', visibility: 'hidden', whiteSpace: 'pre-wrap', overflowWrap: 'break-word',
+                left: `${rect.left - t.scrollLeft}px`, top: `${rect.top - t.scrollTop}px`});
+            mirror.textContent = t.value.slice(0, t.selectionStart);
+            caret.textContent = '\u200b';
+            mirror.append(caret);
+            d.body.append(mirror);
+            const result = caret.getBoundingClientRect();
+            mirror.remove();
+            return result;
+        }
+
+        function editor(target) {
+            if (target.closest?.('.text_cell, .jp-MarkdownCell')) return;
+            const monaco = w.monaco;
+            const m = monaco?.editor.getEditors().find(e => e.hasTextFocus());
+            if (m) {
+                const model = m.getModel(), p = m.getPosition(), selection = m.getSelection();
+                if (!model || !p || !selection) return;
+                const valid = () => m.getDomNode()?.isConnected && m.getModel() === model && !m.getOption(monaco.editor.EditorOption.readOnly)
+                    && bplStart({bpl: model.getLanguageId() === 'bpl', text: model.getValue(), pos: model.getOffsetAt(m.getPosition())}) >= 0;
+                if (!valid()) return;
+                const e = {id: model, valid, text: model.getValue(), pos: model.getOffsetAt(p), empty: selection.isEmpty(), bpl: model.getLanguageId() === 'bpl',
+                    rect: () => {
+                        const r = m.getDomNode().getBoundingClientRect(), c = m.getScrolledVisiblePosition(p);
+                        return {left: r.left + c.left, bottom: r.top + c.top + c.height};
+                    },
+                    insert: (text, from) => {
+                        if (!valid()) return;
+                        const selection = m.getSelection();
+                        from ??= model.getOffsetAt(selection.getStartPosition());
+                        const a = model.getPositionAt(from), b = selection.getEndPosition();
+                        m.pushUndoStop();
+                        m.executeEdits('aplnb', [{range: {startLineNumber: a.lineNumber, startColumn: a.column,
+                            endLineNumber: b.lineNumber, endColumn: b.column}, text}], () => {
+                            const end = model.getPositionAt(from + text.length);
+                            return [new monaco.Selection(end.lineNumber, end.column, end.lineNumber, end.column)];
+                        });
+                        m.pushUndoStop();
+                        m.focus();
+                    }};
+                return bplStart(e) >= 0 ? e : undefined;
+            }
+            const view = target.closest?.('.cm-editor')?.querySelector('.cm-content')?.cmTile?.view;
+            if (view) {
+                if (view.state.readOnly) return;
+                const sel = view.state.selection.main;
+                const e = {id: view, valid: () => view.dom.isConnected && !view.state.readOnly
+                    && bplStart({text: view.state.doc.toString(), pos: view.state.selection.main.head}) >= 0,
+                    text: view.state.doc.toString(), pos: sel.head, empty: sel.empty,
+                    rect: () => view.coordsAtPos(sel.head),
+                    insert: (text, from) => {
+                        if (!e.valid()) return;
+                        const sel = view.state.selection.main;
+                        from ??= sel.from;
+                        view.dispatch({changes: {from, to: sel.to, insert: text}, selection: {anchor: from + text.length}, userEvent: 'input.complete'});
+                        view.focus();
+                    }};
+                return bplStart(e) >= 0 ? e : undefined;
+            }
+            if (target.tagName !== 'TEXTAREA' || target.readOnly || target.disabled) return;
+            const e = {id: target, valid: () => target.isConnected && !target.readOnly && !target.disabled
+                && bplStart({text: target.value, pos: target.selectionStart, bpl: target.hasAttribute('data-bpl')}) >= 0,
+                text: target.value, pos: target.selectionStart, empty: target.selectionStart === target.selectionEnd, bpl: target.hasAttribute('data-bpl'),
+                rect: () => textareaRect(target),
+                insert: (text, from = target.selectionStart) => {
+                    if (!e.valid()) return;
+                    target.focus();
+                    target.selectionStart = from;
+                    d.execCommand('insertText', false, text);
+                }};
+            return bplStart(e) >= 0 ? e : undefined;
+        }
+
+        const host = d.createElement('div');
+        host.className = 'bpl_tools';
+        host.innerHTML = `<button type="button" class="bpl_toggle"></button><div class="ngn_lb" aria-label="BPL symbols"></div>
+            <div class="bpl_choices" role="group" aria-label="BPL symbol completions" hidden></div>
+            <style>
+            pre,code{font-family:var(--bpl-font,SAX2B),monospace}
+            .bpl_out{line-height:1.05!important}
+            .bpl_tools{position:relative}
+            .ngn_lb,.bpl_choices,.bpl_toggle{background:var(--bpl-bar-background,light-dark(#eee,#222));color:var(--bpl-bar-color,light-dark(#111,#ddd));font:15px var(--bpl-font,SAX2B),monospace}
+            .ngn_lb{border-bottom:1px solid #999;padding:2px 26px 2px 2px;white-space:nowrap;overflow-x:auto}
+            .bpl_tools button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:2px 4px}
+            .bpl_tools .bpl_toggle{position:absolute;right:0;top:0;z-index:1;background:var(--bpl-bar-background,light-dark(#eee,#222))}
+            .bpl_tools button:hover{background:#777;color:white}
+            .bpl_choices{position:fixed;z-index:2147483647;max-height:240px;max-width:calc(100vw - 16px);overflow:auto;border:1px solid #888;border-radius:4px;box-shadow:0 3px 12px #0003;padding:4px}
+            .bpl_choices button{display:block;width:100%;text-align:left;white-space:nowrap}
+            .bpl_choices small{display:block;padding:4px}
+            .ngn_lb .bpl_dead::after{content:'▾';font-size:9px;margin-left:1px}
+            .bpl_choices.bpl_menu{max-width:min(320px,calc(100vw - 16px))}
+            .bpl_menu button{display:inline-block;width:auto;min-width:28px;text-align:center}
+            </style>`;
+        container.append(host);
+        const bar = host.querySelector('.ngn_lb'), tip = host.querySelector('.bpl_choices'), toggle = host.querySelector('.bpl_toggle');
+        let collapsed = false;
+        try { collapsed = localStorage.getItem('bpl-bar-collapsed') === '1'; } catch {}
+        function collapse() {
+            bar.hidden = collapsed;
+            toggle.textContent = collapsed ? '▼' : '▲';
+            toggle.title = collapsed ? 'Expand BPL symbols' : 'Collapse BPL symbols';
+            toggle.setAttribute('aria-label', toggle.title);
+            toggle.setAttribute('aria-expanded', String(!collapsed));
+        }
+        toggle.onmousedown = ev => ev.preventDefault();
+        toggle.onclick = () => {
+            collapsed = !collapsed; cancel(); collapse();
+            try { localStorage.setItem('bpl-bar-collapsed', collapsed ? '1' : '0'); } catch {}
+        };
+        collapse();
+        let active, lastEditor, choice, keyInput = false, picked = 0;
         function highlight() {
             tip.setAttribute('role', 'listbox');
             [...tip.querySelectorAll('button')].forEach((b, i) => {
                 b.setAttribute('role', 'option'); b.setAttribute('aria-selected', String(i === picked));
             });
         }
-    const originalPadding = d.body.style.paddingTop;
-    try { overlay = localStorage.getItem('ngn_lb_overlay') === '1'; } catch {}
-    function reflow() {
-        toggle.textContent = overlay ? '▼' : '▲';
-        d.body.style.paddingTop = overlay || bar.hidden ? originalPadding : `${bar.offsetHeight}px`;
-    }
-    const names = new Map(symbols.map(({glyph, name, monad, dyad}) =>
-        [glyph, [name, monad, dyad].filter(Boolean).join(' ')]));
-    function stateGlyphs(state) {
-        const {terminator, keys} = layout.states[state];
-        return [terminator, ...Object.values(keys).flatMap(value => typeof value === 'string' ? [value] : stateGlyphs(value.state))];
-    }
-    const groups = new Map(Object.values(layout.option).filter(value => value.state).map(({state}) =>
-        [layout.states[state].terminator, [...new Set(stateGlyphs(state))]]));
-    const variants = new Set([...groups.values()].flatMap(glyphs => glyphs.slice(1)));
-    function button(glyph, name) {
-        const b = d.createElement('button');
-        b.type = 'button'; b.textContent = glyph; b.title = (name || glyph) + (shortcuts.get(glyph) || ''); b.dataset.glyph = glyph;
-        return b;
-    }
-    // Related glyphs stay together; arrows meet at the boundary between menus and plain buttons.
-    const order = [...new Set([
-        ...'^_¯¨○⎕≡⍭↑↓←↦↢↣⇄∨∧⍺⍵∆∇⋄∊⍳⊂⊃∩∪⊥⊤⊣⊢×÷⌊⌈≤≥≠√π', ...groups.keys(), ...names.keys()
-    ])];
-    for (const glyph of [...order.filter(g => groups.has(g)), ...order.filter(g => !groups.has(g))]) {
-        if (!groups.has(glyph) && (variants.has(glyph) || /^[\x20-\x7e]+$/.test(glyph))) continue;
-        const b = button(glyph, names.get(glyph));
-        if (groups.has(glyph)) {
-            b.textContent = {'^': '²', '_': '₂'}[glyph] || glyph;
-            b.classList.add('bpl_dead');
-            b.setAttribute('aria-expanded', 'false');
-            b.title += ' (variants)';
+        const names = new Map(symbols.map(({glyph, name, monad, dyad}) =>
+            [glyph, [name, monad, dyad].filter(Boolean).join(' ')]));
+        function stateGlyphs(state) {
+            const {terminator, keys} = layout.states[state];
+            return [terminator, ...Object.values(keys).flatMap(value => typeof value === 'string' ? [value] : stateGlyphs(value.state))];
         }
-        bar.append(b);
-    }
-    new ResizeObserver(reflow).observe(bar);
-    reflow();
-
-    function cancel() {
-        choice?.anchor?.setAttribute('aria-expanded', 'false');
-        active = undefined; choice = undefined; tip.hidden = true;
-    }
-    function show(e, item, anchor) {
-        tip.classList.toggle('bpl_menu', !!anchor);
-        tip.setAttribute('aria-label', anchor ? 'BPL symbol variants' : 'BPL symbol completions');
-        anchor?.setAttribute('aria-expanded', 'true');
-        if (choice?.item.query !== item.query || choice?.anchor !== anchor) {
-            picked = 0; tip.replaceChildren(); tip.scrollTop = 0;
-            for (const [glyph, name] of item.found) {
-                const b = button(glyph, name);
-                if (!anchor) b.textContent = `${glyph} ${b.title}`;
-                tip.append(b);
+        const groups = new Map(Object.values(layout.option).filter(value => value.state).map(({state}) =>
+            [layout.states[state].terminator, [...new Set(stateGlyphs(state))]]));
+        const variants = new Set([...groups.values()].flatMap(glyphs => glyphs.slice(1)));
+        function button(glyph, name) {
+            const b = d.createElement('button');
+            b.type = 'button'; b.textContent = glyph; b.title = (name || glyph) + (shortcuts.get(glyph) || ''); b.dataset.glyph = glyph;
+            return b;
+        }
+        // Related glyphs stay together; arrows meet at the boundary between menus and plain buttons.
+        const order = [...new Set([
+            ...'^_¯¨○⎕≡⍭↑↓←↦↢↣⇄∨∧⍺⍵∆∇⋄∊⍳⊂⊃∩∪⊥⊤⊣⊢×÷⌊⌈≤≥≠√π', ...groups.keys(), ...names.keys()
+        ])];
+        for (const glyph of [...order.filter(g => groups.has(g)), ...order.filter(g => !groups.has(g))]) {
+            if (!groups.has(glyph) && (variants.has(glyph) || /^[\x20-\x7e]+$/.test(glyph))) continue;
+            const b = button(glyph, names.get(glyph));
+            if (groups.has(glyph)) {
+                b.textContent = {'^': '²', '_': '₂'}[glyph] || glyph;
+                b.classList.add('bpl_dead');
+                b.setAttribute('aria-expanded', 'false');
+                b.title += ' (variants)';
             }
-            if (!item.found.length) {
-                const note = d.createElement('small'); note.textContent = 'Unknown symbol'; tip.append(note);
+            bar.append(b);
+        }
+        function cancel() {
+            choice?.anchor?.setAttribute('aria-expanded', 'false');
+            active = undefined; choice = undefined; tip.hidden = true;
+        }
+        function show(e, item, anchor) {
+            tip.classList.toggle('bpl_menu', !!anchor);
+            tip.setAttribute('aria-label', anchor ? 'BPL symbol variants' : 'BPL symbol completions');
+            anchor?.setAttribute('aria-expanded', 'true');
+            if (choice?.item.query !== item.query || choice?.anchor !== anchor) {
+                picked = 0; tip.replaceChildren(); tip.scrollTop = 0;
+                for (const [glyph, name] of item.found) {
+                    const b = button(glyph, name);
+                    if (!anchor) b.textContent = `${glyph} ${b.title}`;
+                    tip.append(b);
+                }
+                if (!item.found.length) {
+                    const note = d.createElement('small'); note.textContent = 'Unknown symbol'; tip.append(note);
+                }
             }
+            choice = {e, item, anchor};
+            tip.hidden = false; if (!anchor) highlight();
+            const r = anchor ? anchor.getBoundingClientRect() : e.rect();
+            tip.style.left = `${Math.max(4, Math.min(r.left, w.innerWidth - tip.offsetWidth - 8))}px`;
+            tip.style.top = `${Math.max(4, Math.min(r.bottom + 4, w.innerHeight - tip.offsetHeight - 8))}px`;
         }
-        choice = {e, item, anchor};
-        tip.hidden = false; if (!anchor) highlight();
-        const r = anchor ? anchor.getBoundingClientRect() : e.rect();
-        tip.style.left = `${Math.max(4, Math.min(r.left, innerWidth - tip.offsetWidth - 8))}px`;
-        tip.style.top = `${Math.max(bar.hidden || overlay ? 4 : bar.offsetHeight, Math.min(r.bottom + 4, innerHeight - tip.offsetHeight - 8))}px`;
-    }
-    function refresh(target) {
-        const e = editor(target), item = e && entry(e);
-        if (item && active?.id === e.id && active.start === item.start) show(e, item);
-        else cancel();
-    }
-    bar.addEventListener('mousedown', ev => {
-        ev.preventDefault();
-        const b = ev.target.closest('button');
-        const opened = choice?.anchor === b;
-        cancel();
-        if (b?.classList.contains('ngn_x')) { bar.hidden = true; reflow(); }
-        else if (b === toggle) {
-            overlay = !overlay;
-            try { localStorage.setItem('ngn_lb_overlay', overlay ? '1' : '0'); } catch {}
-            reflow();
-        } else if (b?.dataset.glyph && lastEditor) {
-            const glyph = b.dataset.glyph, group = groups.get(glyph);
-            if (group) {
-                if (!opened) show(lastEditor, {query: glyph, found: group.map(g => [g, names.get(g)])}, b);
-            } else lastEditor.insert(glyph);
+        function refresh(target) {
+            const e = editor(target), item = e && entry(e);
+            if (item && active?.id === e.id && active.start === item.start) show(e, item);
+            else cancel();
         }
-    });
-    tip.addEventListener('mousedown', ev => {
-        ev.preventDefault();
-        const b = ev.target.closest('button');
-        if (b && choice) choice.e.insert(b.dataset.glyph, choice.item.start);
-        cancel();
-    });
-    d.addEventListener('focusin', ev => { lastEditor = editor(ev.target); cancel(); });
-    d.addEventListener('pointerdown', ev => { if (!host.contains(ev.target)) cancel(); }, true);
-    d.addEventListener('pointerup', ev => { if (!host.contains(ev.target)) lastEditor = editor(ev.target); });
-    for (const event of ['paste', 'cut', 'compositionstart', 'focusout']) d.addEventListener(event, cancel, true);
-    d.addEventListener('input', ev => {
-        if (!keyInput || ev.inputType !== 'insertText' && ev.inputType !== 'deleteContentBackward') cancel();
-        keyInput = false;
-        requestAnimationFrame(() => { lastEditor = editor(ev.target); refresh(ev.target); });
-    });
-    window.addEventListener('blur', () => { leftAlt = rightAlt = false; cancel(); reset(); });
-    window.addEventListener('focusin', reset, true);
-    window.addEventListener('keyup', ev => {
-        if (ev.code === 'AltLeft') leftAlt = false;
-        if (ev.code === 'AltRight') rightAlt = false;
-        keyInput = false; lastEditor = editor(ev.target); if (active) refresh(ev.target);
-    }, true);
-    window.addEventListener('keydown', ev => {
-        if (ev.key === 'Escape' && choice?.anchor) {
-            cancel(); ev.preventDefault(); ev.stopImmediatePropagation(); return;
-        }
-        keyInput = false;
-        if (ev.code === 'AltLeft') leftAlt = true;
-        if (ev.code === 'AltRight') rightAlt = true;
-        if (['Shift', 'Control', 'Alt', 'Meta'].includes(ev.key)) return;
-        const e = editor(ev.target);
-        if (!e || ev.isComposing || ev.defaultPrevented) { cancel(); return; }
-        lastEditor = e;
-        const body = bplStart(e);
-        const pressed = press(ev, leftAlt && !rightAlt && !ev.getModifierState('AltGraph') && body >= 0);
-        if (pressed) {
-            if (pressed.text) e.insert(pressed.text);
-            if (pressed.stop) { cancel(); ev.preventDefault(); ev.stopImmediatePropagation(); return; }
-        }
-        const item = entry(e), plain = !ev.ctrlKey && !ev.altKey && !ev.metaKey;
-        const tab = ev.key === 'Tab' && plain && !ev.shiftKey, enter = ev.key === 'Enter';
-        const typed = active?.id === e.id && active.start === item?.start;
+        on(bar, 'mousedown', ev => {
+            ev.preventDefault();
+            const b = ev.target.closest('button');
+            const opened = choice?.anchor === b;
+            cancel();
+            if (!lastEditor?.valid()) lastEditor = undefined;
+            if (b?.dataset.glyph && lastEditor) {
+                const glyph = b.dataset.glyph, group = groups.get(glyph);
+                if (group) {
+                    if (!opened) show(lastEditor, {query: glyph, found: group.map(g => [g, names.get(g)])}, b);
+                } else lastEditor.insert(glyph);
+            }
+        });
+        on(tip, 'mousedown', ev => {
+            ev.preventDefault();
+            const b = ev.target.closest('button');
+            if (b && choice?.e.valid()) choice.e.insert(b.dataset.glyph, choice.item.start);
+            cancel();
+        });
+        on(d, 'focusin', ev => { fonts(); if (!host.contains(ev.target)) lastEditor = editor(ev.target); cancel(); });
+        on(d, 'pointerdown', ev => { if (!host.contains(ev.target)) cancel(); }, true);
+        on(d, 'pointerup', ev => { if (!host.contains(ev.target)) lastEditor = editor(ev.target); });
+        for (const event of ['paste', 'cut', 'compositionstart', 'focusout']) on(d, event, cancel, true);
+        on(d, 'input', ev => {
+            if (!keyInput || ev.inputType !== 'insertText' && ev.inputType !== 'deleteContentBackward') cancel();
+            keyInput = false;
+            w.requestAnimationFrame(() => { if (!events.signal.aborted) { lastEditor = editor(ev.target); refresh(ev.target); } });
+        });
+        on(w, 'blur', () => { leftAlt = rightAlt = false; lastEditor = undefined; cancel(); reset(); });
+        on(w, 'focusin', reset, true);
+        on(w, 'keyup', ev => {
+            if (ev.code === 'AltLeft') leftAlt = false;
+            if (ev.code === 'AltRight') rightAlt = false;
+            keyInput = false; lastEditor = editor(ev.target); if (active) refresh(ev.target);
+        }, true);
+        on(w, 'keydown', ev => {
+            if (ev.key === 'Escape' && choice?.anchor) {
+                cancel(); ev.preventDefault(); ev.stopImmediatePropagation(); return;
+            }
+            keyInput = false;
+            if (ev.code === 'AltLeft') leftAlt = true;
+            if (ev.code === 'AltRight') rightAlt = true;
+            if (['Shift', 'Control', 'Alt', 'Meta'].includes(ev.key)) return;
+            const e = editor(ev.target);
+            if (!e || ev.isComposing || ev.defaultPrevented) { lastEditor = undefined; cancel(); reset(); return; }
+            if (lastEditor && lastEditor.id !== e.id) { cancel(); reset(); }
+            lastEditor = e;
+            const body = bplStart(e);
+            const pressed = press(ev, leftAlt && !rightAlt && !ev.getModifierState('AltGraph') && body >= 0);
+            if (pressed) {
+                if (pressed.text) e.insert(pressed.text);
+                if (pressed.stop) { cancel(); ev.preventDefault(); ev.stopImmediatePropagation(); return; }
+            }
+            const item = entry(e), plain = !ev.ctrlKey && !ev.altKey && !ev.metaKey;
+            const tab = ev.key === 'Tab' && plain && !ev.shiftKey, enter = ev.key === 'Enter';
+            const typed = active?.id === e.id && active.start === item?.start;
             if (typed && plain && !ev.shiftKey && !tip.hidden && !choice?.anchor &&
                 ['ArrowUp', 'ArrowDown', 'Enter', 'Tab', 'Escape'].includes(ev.key)) {
                 const buttons = [...tip.querySelectorAll('button')];
@@ -1131,26 +1200,30 @@ if(!document.getElementById("bpl-craft-fonts")){const s=document.createElement("
                 }
                 ev.preventDefault(); ev.stopImmediatePropagation(); return;
             }
-        const delimiter = plain && ev.key.length === 1 && !/[a-z]/i.test(ev.key);
-        if (item && (tab || typed && (enter || delimiter))) {
-            if (item.found.length === 1) {
-                e.insert(item.found[0][0], item.start);
-                cancel();
-            } else if (tab) {
-                active = {id: e.id, start: item.start};
-                show(e, item);
+            const delimiter = plain && ev.key.length === 1 && !/[a-z]/i.test(ev.key);
+            if (item && (tab || typed && (enter || delimiter))) {
+                if (item.found.length === 1) {
+                    e.insert(item.found[0][0], item.start);
+                    cancel();
+                } else if (tab) {
+                    active = {id: e.id, start: item.start};
+                    show(e, item);
+                }
+                if (tab) { ev.preventDefault(); ev.stopImmediatePropagation(); return; }
             }
-            if (tab) { ev.preventDefault(); ev.stopImmediatePropagation(); return; }
-        }
-        if (ev.key === '`' && plain) {
-            const updated = editor(ev.target), body = bplStart(updated);
-            if (body >= 0 && updated.empty && inCode(updated.text.slice(body, updated.pos))) active = {id: updated.id, start: updated.pos};
-            else cancel();
-        } else if (!(typed && plain && (/^[a-z]$/i.test(ev.key) || ev.key === 'Backspace'))) cancel();
-        keyInput = plain && (ev.key.length === 1 || ev.key === 'Backspace');
-    }, true);
-})
-([{"glyph": "\u2190", "name": "left-arrow", "kind": "syntax", "monad": "assign", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u662f", "\u662f"], "shortcut": " h"}, {"glyph": "\u2395", "name": "quad", "kind": "syntax", "monad": "io", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u51fa\u5165", "\u51fa\u5165"], "shortcut": " q"}, {"glyph": "\u2022", "name": "bullet", "kind": "system", "monad": "system", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u7cfb", "\u7cfb"], "shortcut": " y"}, {"glyph": "\u237a", "name": "alpha", "kind": "argument", "monad": "left-argument", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u7532", "\u7532"], "shortcut": " a"}, {"glyph": "\u2375", "name": "omega", "kind": "argument", "monad": "right-argument", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u4e59", "\u4e59"], "shortcut": " w"}, {"glyph": "\u2376", "name": "alpha-underbar", "kind": "argument", "monad": "left-operand", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u4e19", "\u4e19"], "shortcut": " - a"}, {"glyph": "\u2379", "name": "omega-underbar", "kind": "argument", "monad": "right-operand", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u4e01", "\u4e01"], "shortcut": " - w"}, {"glyph": "\u2207", "name": "del", "kind": "argument", "monad": "recursion", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u9012", "\u905e"], "shortcut": " g"}, {"glyph": "\u2362", "name": "del-diaeresis", "kind": "argument", "monad": "operator-recursion", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u5faa", "\u5faa"], "shortcut": " 1 g"}, {"glyph": "\u235d", "name": "lamp", "kind": "comment", "monad": "comment", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u6ce8", "\u6ce8"], "shortcut": " o c"}, {"glyph": "\u22c4", "name": "diamond", "kind": "syntax", "monad": "separator", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u53e5", "\u53e5"], "shortcut": " `"}, {"glyph": "?", "name": "question", "kind": "syntax", "monad": "predicate", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u82e5", "\u82e5"], "shortcut": ""}, {"glyph": "\u00af", "name": "overbar", "kind": "literal", "monad": "negative", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u8d1f", "\u8ca0"], "shortcut": " -"}, {"glyph": "\u221e", "name": "infinity", "kind": "literal", "monad": "", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u6c38", "\u6c38"], "shortcut": " 8"}, {"glyph": "\u236c", "name": "zilde", "kind": "literal", "monad": "empty", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u7a7a", "\u7a7a"], "shortcut": " )"}, {"glyph": "+", "name": "plus", "kind": "function", "monad": "conjugate", "dyad": "add", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u52a0", "\u52a0"], "shortcut": ""}, {"glyph": "-", "name": "minus", "kind": "function", "monad": "negate", "dyad": "subtract", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u51cf", "\u6e1b"], "shortcut": ""}, {"glyph": "\u00d7", "name": "times", "kind": "function", "monad": "sign", "dyad": "multiply", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u4e58\u53f7", "\u4e58\u865f"], "shortcut": " m"}, {"glyph": "\u00f7", "name": "obelus", "kind": "function", "monad": "reciprocal", "dyad": "divide", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u9664", "\u9664"], "shortcut": " u"}, {"glyph": "\u2308", "name": "upstile", "kind": "function", "monad": "ceiling", "dyad": "maximum", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u4e0a", "\u4e0a"], "shortcut": " s"}, {"glyph": "\u230a", "name": "downstile", "kind": "function", "monad": "floor", "dyad": "minimum", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u4e0b", "\u4e0b"], "shortcut": " d"}, {"glyph": "|", "name": "stile", "kind": "function", "monad": "magnitude", "dyad": "residue", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u7edd\u4f59", "\u7d55\u9918"], "shortcut": ""}, {"glyph": "*", "name": "star", "kind": "function", "monad": "exponential", "dyad": "exponent", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u5e42", "\u51aa"], "shortcut": ""}, {"glyph": "\u235f", "name": "circle-star", "kind": "function", "monad": "natural-log", "dyad": "logarithm", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u5bf9", "\u5c0d"], "shortcut": " o 8"}, {"glyph": "\u25cb", "name": "circle", "kind": "function", "monad": "cis", "dyad": "circular", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u5706", "\u5713"], "shortcut": " o"}, {"glyph": "\u03c0", "name": "pi", "kind": "function", "monad": "pi-times", "dyad": "pi-ratio", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u5468", "\u5468"], "shortcut": " p"}, {"glyph": "\u221a", "name": "radical", "kind": "function", "monad": "sqrt", "dyad": "root", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u6839", "\u6839"], "shortcut": " 3"}, {"glyph": "!", "name": "exclamation", "kind": "function", "monad": "factorial", "dyad": "binomial", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u9636\u62e3", "\u968e\u63c0"], "shortcut": ""}, {"glyph": "\u2227", "name": "wedge", "kind": "function", "monad": "polar", "dyad": "and", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u6781\u4e14", "\u6975\u4e14"], "shortcut": " 0"}, {"glyph": "\u2228", "name": "vee", "kind": "function", "monad": "real-imag", "dyad": "or", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u6790\u6216", "\u6790\u6216"], "shortcut": " 9"}, {"glyph": "\u22bc", "name": "wedge-bar", "kind": "function", "monad": "square", "dyad": "nand", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u65b9\u5426", "\u65b9\u5426"], "shortcut": " - 0"}, {"glyph": "\u22bd", "name": "vee-bar", "kind": "function", "monad": "double", "dyad": "nor", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u53cc\u83ab", "\u96d9\u83ab"], "shortcut": " - 9"}, {"glyph": "~", "name": "tilde", "kind": "function", "monad": "not", "dyad": "without", "monad_rank": "0", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u975e\u65e0", "\u975e\u7121"], "shortcut": ""}, {"glyph": "=", "name": "equals", "kind": "function", "monad": "classify", "dyad": "equal", "monad_rank": "\u221e", "dyad_ranks": "0 0", "hanzi": ["\u7b49", "\u7b49"], "shortcut": ""}, {"glyph": "\u2260", "name": "not-equals", "kind": "function", "monad": "unique-mask", "dyad": "not-equal", "monad_rank": "\u221e", "dyad_ranks": "0 0", "hanzi": ["\u522b\u521d", "\u5225\u521d"], "shortcut": " +"}, {"glyph": "<", "name": "less-than", "kind": "function", "monad": "sort-up", "dyad": "less", "monad_rank": "\u221e", "dyad_ranks": "0 0", "hanzi": ["\u5c0f", "\u5c0f"], "shortcut": ""}, {"glyph": "\u2264", "name": "less-than-or-equal", "kind": "function", "monad": "decrement", "dyad": "less-equal", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u9650\u9000", "\u9650\u9000"], "shortcut": " <"}, {"glyph": ">", "name": "greater-than", "kind": "function", "monad": "sort-down", "dyad": "greater", "monad_rank": "\u221e", "dyad_ranks": "0 0", "hanzi": ["\u5927", "\u5927"], "shortcut": ""}, {"glyph": "\u2265", "name": "greater-than-or-equal", "kind": "function", "monad": "increment", "dyad": "greater-equal", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u8fbe\u8fdb", "\u9054\u9032"], "shortcut": " >"}, {"glyph": "\u2373", "name": "iota", "kind": "function", "monad": "indices", "dyad": "index-of", "monad_rank": "1", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u4f4d", "\u4f4d"], "shortcut": " i"}, {"glyph": "\u21a6", "name": "right-arrow-from-bar", "kind": "function", "monad": "range", "dyad": "to", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u81f3", "\u81f3"], "shortcut": " l"}, {"glyph": ":", "name": "colon", "kind": "function", "monad": "unkey", "dyad": "keyed", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u952e\u5378", "\u9375\u5378"], "shortcut": ""}, {"glyph": "\u2374", "name": "rho", "kind": "function", "monad": "shape", "dyad": "reshape", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u5f62", "\u5f62"], "shortcut": " r"}, {"glyph": "\u2262", "name": "equal-underbar-slash", "kind": "function", "monad": "tally", "dyad": "not-match", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u6570\u5f02", "\u6578\u7570"], "shortcut": " ?"}, {"glyph": "\u2261", "name": "equal-underbar", "kind": "function", "monad": "depth", "dyad": "match", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u540c\u6df1", "\u540c\u6df1"], "shortcut": " ="}, {"glyph": ",", "name": "comma", "kind": "function", "monad": "ravel", "dyad": "catenate", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u8fde", "\u9023"], "shortcut": ""}, {"glyph": "\u236a", "name": "comma-bar", "kind": "function", "monad": "table", "dyad": "catenate-first", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u63a5\u77e9", "\u63a5\u77e9"], "shortcut": " - ,"}, {"glyph": "\u2282", "name": "left-shoe", "kind": "function", "monad": "enclose", "dyad": "partitioned-enclose", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u5305", "\u5305"], "shortcut": " z"}, {"glyph": "\u2283", "name": "right-shoe", "kind": "function", "monad": "mix", "dyad": "pick", "monad_rank": "0", "dyad_ranks": "1 \u221e", "hanzi": ["\u9009\u5408", "\u9078\u5408"], "shortcut": " x"}, {"glyph": "\u2286", "name": "left-shoe-underbar", "kind": "function", "monad": "nest", "dyad": "partition", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u5de2\u6bb5", "\u5de2\u6bb5"], "shortcut": " - z"}, {"glyph": "\u220a", "name": "epsilon", "kind": "function", "monad": "enlist", "dyad": "member", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u5c5e\u5c55", "\u5c6c\u5c55"], "shortcut": " e"}, {"glyph": "\u222a", "name": "down-shoe", "kind": "function", "monad": "unique", "dyad": "union", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u5e76\u72ec", "\u4f75\u7368"], "shortcut": " v"}, {"glyph": "\u2229", "name": "up-shoe", "kind": "function", "monad": "duplicates", "dyad": "intersection", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u4ea4\u91cd", "\u4ea4\u91cd"], "shortcut": " c"}, {"glyph": "\u234b", "name": "delta-stile", "kind": "function", "monad": "grade-up", "dyad": "grade-up-by", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u5347", "\u5347"], "shortcut": " \\ 7"}, {"glyph": "\u2352", "name": "del-stile", "kind": "function", "monad": "grade-down", "dyad": "grade-down-by", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u964d", "\u964d"], "shortcut": " \\ g"}, {"glyph": "\u2191", "name": "up-arrow", "kind": "function", "monad": "first", "dyad": "take", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u53d6", "\u53d6"], "shortcut": " k"}, {"glyph": "\u2193", "name": "down-arrow", "kind": "function", "monad": "split", "dyad": "drop", "monad_rank": "1", "dyad_ranks": "1 \u221e", "hanzi": ["\u53bb\u62c6", "\u53bb\u62c6"], "shortcut": " j"}, {"glyph": "\u233d", "name": "circle-stile", "kind": "function", "monad": "reverse", "dyad": "rotate", "monad_rank": "1", "dyad_ranks": "0 1", "hanzi": ["\u8f6c", "\u8f49"], "shortcut": " 2"}, {"glyph": "\u2296", "name": "circle-bar", "kind": "function", "monad": "reverse-first", "dyad": "rotate-first", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u7eb5", "\u7e31"], "shortcut": " o -"}, {"glyph": "\u2349", "name": "circle-backslash", "kind": "function", "monad": "transpose", "dyad": "reorder-axes", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u7ffb", "\u7ffb"], "shortcut": " o \\"}, {"glyph": "\u22a4", "name": "down-tack", "kind": "function", "monad": "binary-encode", "dyad": "encode", "monad_rank": "\u221e", "dyad_ranks": "1 0", "hanzi": ["\u7f16", "\u7de8"], "shortcut": " n"}, {"glyph": "\u22a5", "name": "up-tack", "kind": "function", "monad": "binary-decode", "dyad": "decode", "monad_rank": "1", "dyad_ranks": "1 1", "hanzi": ["\u8bd1", "\u8b6f"], "shortcut": " b"}, {"glyph": "\u234e", "name": "hydrant", "kind": "function", "monad": "execute", "dyad": "execute-in", "monad_rank": "1", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u884c", "\u884c"], "shortcut": " o b"}, {"glyph": "\u2355", "name": "thorn", "kind": "function", "monad": "format", "dyad": "format-spec", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u6587", "\u6587"], "shortcut": " o n"}, {"glyph": "\u2337", "name": "squad", "kind": "function", "monad": "materialise", "dyad": "index", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u7d22", "\u7d22"], "shortcut": " q \\"}, {"glyph": "\u2339", "name": "domino", "kind": "function", "monad": "matrix-inverse", "dyad": "matrix-divide", "monad_rank": "2", "dyad_ranks": "\u221e 2", "hanzi": ["\u89e3\u9006", "\u89e3\u9006"], "shortcut": " q u"}, {"glyph": "#", "name": "hash", "kind": "function", "monad": "runs", "dyad": "replicate", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u590d", "\u8907"], "shortcut": ""}, {"glyph": "\u2195", "name": "up-down-arrow", "kind": "function", "monad": "pairs", "dyad": "windows", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u7a97", "\u7a97"], "shortcut": " K"}, {"glyph": "\u236d", "name": "stile-tilde", "kind": "function", "monad": "prime", "dyad": "prime-mode", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u7d20", "\u7d20"], "shortcut": " \\"}, {"glyph": "\u2a38", "name": "circle-divide", "kind": "function", "monad": "factors", "dyad": "factor-spec", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u56e0", "\u56e0"], "shortcut": " o u"}, {"glyph": "\u233b", "name": "quad-jot", "kind": "function", "monad": "roots", "dyad": "polyval", "monad_rank": "1", "dyad_ranks": "1 0", "hanzi": ["\u96f6\u503c", "\u96f6\u503c"], "shortcut": " q t"}, {"glyph": "\u2378", "name": "iota-underbar", "kind": "function", "monad": "where", "dyad": "interval-index", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u5904\u95f4", "\u8655\u9593"], "shortcut": " - i"}, {"glyph": "\u2377", "name": "epsilon-underbar", "kind": "function", "monad": "groups", "dyad": "find", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u5bfb\u7fa4", "\u5c0b\u7fa4"], "shortcut": " - e"}, {"glyph": "\u22a2", "name": "right-tack", "kind": "function", "monad": "same", "dyad": "right", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u53f3", "\u53f3"], "shortcut": " '"}, {"glyph": "\u22a3", "name": "left-tack", "kind": "function", "monad": "same-left", "dyad": "left", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u5de6", "\u5de6"], "shortcut": " ;"}, {"glyph": "\u00bf", "name": "inverted-question", "kind": "function", "monad": "roll", "dyad": "deal", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u63b7\u62bd", "\u64f2\u62bd"], "shortcut": " /"}, {"glyph": "\u00a8", "name": "diaeresis", "kind": "monadic-operator", "monad": "each", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u904d", "\u904d"], "shortcut": " 1"}, {"glyph": "\u1d47", "name": "superscript-b", "kind": "monadic-operator", "monad": "bitwise", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u6309", "\u6309"], "shortcut": " 6 b"}, {"glyph": "\u2368", "name": "tilde-diaeresis", "kind": "monadic-operator", "monad": "self", "dyad": "commute", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u5df1\u6362", "\u5df1\u63db"], "shortcut": " 1 `"}, {"glyph": "\u21a3", "name": "right-tail-arrow", "kind": "dyadic-operator", "monad": "before", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u5148", "\u5148"], "shortcut": " ."}, {"glyph": "\u2364", "name": "jot-diaeresis", "kind": "dyadic-operator", "monad": "rank", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u79e9", "\u79e9"], "shortcut": " 1 t"}, {"glyph": "\u2218", "name": "jot", "kind": "dyadic-operator", "monad": "atop", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u627f", "\u627f"], "shortcut": " t"}, {"glyph": "\u2360", "name": "quad-colon", "kind": "dyadic-operator", "monad": "axis", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u8f74", "\u8ef8"], "shortcut": " q ;"}, {"glyph": "\u2365", "name": "circle-diaeresis", "kind": "dyadic-operator", "monad": "over", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u7ecf", "\u7d93"], "shortcut": " 1 o"}, {"glyph": "\u21a2", "name": "left-tail-arrow", "kind": "dyadic-operator", "monad": "after", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u540e", "\u5f8c"], "shortcut": " ,"}, {"glyph": ".", "name": "dot", "kind": "dyadic-operator", "monad": "determinant", "dyad": "inner-product", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u5185", "\u5167"], "shortcut": ""}, {"glyph": "\u2297", "name": "circle-times", "kind": "monadic-operator", "monad": "outer-product", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u8868", "\u8868"], "shortcut": " o m"}, {"glyph": "\u2338", "name": "quad-equal", "kind": "monadic-operator", "monad": "key", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u7ec4", "\u7d44"], "shortcut": " q ="}, {"glyph": "\u2363", "name": "star-diaeresis", "kind": "dyadic-operator", "monad": "power", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u6b21\u6b62", "\u6b21\u6b62"], "shortcut": " 1 8"}, {"glyph": "\u21c4", "name": "right-left-arrows", "kind": "monadic-operator", "monad": "optimize", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u4f18", "\u512a"], "shortcut": " 4"}, {"glyph": "\u2298", "name": "circle-slash", "kind": "dyadic-operator", "monad": "valences", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u517c", "\u517c"], "shortcut": " o /"}, {"glyph": "@", "name": "at", "kind": "dyadic-operator", "monad": "under", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u4e8e", "\u65bc"], "shortcut": ""}, {"glyph": "\u2202", "name": "partial", "kind": "monadic-operator", "monad": "derivative", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u5bfc\u68af", "\u5c0e\u68af"], "shortcut": " f"}, {"glyph": "\u235a", "name": "diamond-underbar", "kind": "dyadic-operator", "monad": "agenda", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u62e9", "\u64c7"], "shortcut": " - `"}, {"glyph": "\u233a", "name": "quad-diamond", "kind": "dyadic-operator", "monad": "stencil", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u90bb", "\u9130"], "shortcut": " q `"}, {"glyph": "/", "name": "slash", "kind": "monadic-operator", "monad": "reduce", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u603b", "\u7e3d"], "shortcut": ""}, {"glyph": "\u233f", "name": "slash-bar", "kind": "monadic-operator", "monad": "reduce-first", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u6c47", "\u532f"], "shortcut": " - /"}, {"glyph": "\\", "name": "backslash", "kind": "monadic-operator", "monad": "scan", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u7d2f", "\u7d2f"], "shortcut": ""}, {"glyph": "\u2340", "name": "backslash-bar", "kind": "monadic-operator", "monad": "scan-first", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u7eed", "\u7e8c"], "shortcut": " - \\"}], ((symbols, layout) => {
+            if (ev.key === '`' && plain) {
+                const updated = editor(ev.target), body = updated ? bplStart(updated) : -1;
+                if (updated && body >= 0 && updated.empty && inCode(updated.text.slice(body, updated.pos))) active = {id: updated.id, start: updated.pos};
+                else cancel();
+            } else if (!(typed && plain && (/^[a-z]$/i.test(ev.key) || ev.key === 'Backspace'))) cancel();
+            keyInput = plain && (ev.key.length === 1 || ev.key === 'Backspace');
+        }, true);
+        return {element: host, fonts, dispose() { events.abort(); editorFonts?.dispose(); reset(); lastEditor = undefined; cancel(); host.remove(); }};
+    }
+
+    return mount;
+};
+([{"glyph": "\u2190", "name": "left-arrow", "kind": "syntax", "monad": "assign", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u662f", "\u662f"], "shortcut": " h"}, {"glyph": "\u2395", "name": "quad", "kind": "syntax", "monad": "io", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u51fa\u5165", "\u51fa\u5165"], "shortcut": " q"}, {"glyph": "\u2022", "name": "bullet", "kind": "system", "monad": "system", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u7cfb", "\u7cfb"], "shortcut": " y"}, {"glyph": "\u237a", "name": "alpha", "kind": "argument", "monad": "left-argument", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u7532", "\u7532"], "shortcut": " a"}, {"glyph": "\u2375", "name": "omega", "kind": "argument", "monad": "right-argument", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u4e59", "\u4e59"], "shortcut": " w"}, {"glyph": "\u2376", "name": "alpha-underbar", "kind": "argument", "monad": "left-operand", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u4e19", "\u4e19"], "shortcut": " - a"}, {"glyph": "\u2379", "name": "omega-underbar", "kind": "argument", "monad": "right-operand", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u4e01", "\u4e01"], "shortcut": " - w"}, {"glyph": "\u2207", "name": "del", "kind": "argument", "monad": "recursion", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u9012", "\u905e"], "shortcut": " g"}, {"glyph": "\u2362", "name": "del-diaeresis", "kind": "argument", "monad": "operator-recursion", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u5faa", "\u5faa"], "shortcut": " 1 g"}, {"glyph": "\u235d", "name": "lamp", "kind": "comment", "monad": "comment", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u6ce8", "\u6ce8"], "shortcut": " o c"}, {"glyph": "\u22c4", "name": "diamond", "kind": "syntax", "monad": "separator", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u53e5", "\u53e5"], "shortcut": " `"}, {"glyph": "\u205d", "name": "tricolon", "kind": "syntax", "monad": "token-separator", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u9694", "\u9694"], "shortcut": " :"}, {"glyph": "?", "name": "question", "kind": "syntax", "monad": "predicate", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u82e5", "\u82e5"], "shortcut": ""}, {"glyph": "\u00af", "name": "overbar", "kind": "literal", "monad": "negative", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u8d1f", "\u8ca0"], "shortcut": " -"}, {"glyph": "\u221e", "name": "infinity", "kind": "literal", "monad": "", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u6c38", "\u6c38"], "shortcut": " 8"}, {"glyph": "\u236c", "name": "zilde", "kind": "literal", "monad": "empty", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u7a7a", "\u7a7a"], "shortcut": " )"}, {"glyph": "+", "name": "plus", "kind": "function", "monad": "conjugate", "dyad": "add", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u52a0", "\u52a0"], "shortcut": ""}, {"glyph": "-", "name": "minus", "kind": "function", "monad": "negate", "dyad": "subtract", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u51cf", "\u6e1b"], "shortcut": ""}, {"glyph": "\u00d7", "name": "times", "kind": "function", "monad": "sign", "dyad": "multiply", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u4e58\u53f7", "\u4e58\u865f"], "shortcut": " m"}, {"glyph": "\u00f7", "name": "obelus", "kind": "function", "monad": "reciprocal", "dyad": "divide", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u9664", "\u9664"], "shortcut": " u"}, {"glyph": "\u2308", "name": "upstile", "kind": "function", "monad": "ceiling", "dyad": "maximum", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u4e0a", "\u4e0a"], "shortcut": " s"}, {"glyph": "\u230a", "name": "downstile", "kind": "function", "monad": "floor", "dyad": "minimum", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u4e0b", "\u4e0b"], "shortcut": " d"}, {"glyph": "|", "name": "stile", "kind": "function", "monad": "magnitude", "dyad": "residue", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u7edd\u4f59", "\u7d55\u9918"], "shortcut": ""}, {"glyph": "*", "name": "star", "kind": "function", "monad": "exponential", "dyad": "exponent", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u5e42", "\u51aa"], "shortcut": ""}, {"glyph": "\u235f", "name": "circle-star", "kind": "function", "monad": "natural-log", "dyad": "logarithm", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u5bf9", "\u5c0d"], "shortcut": " o 8"}, {"glyph": "\u25cb", "name": "circle", "kind": "function", "monad": "cis", "dyad": "circular", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u5706", "\u5713"], "shortcut": " o"}, {"glyph": "\u03c0", "name": "pi", "kind": "function", "monad": "pi-times", "dyad": "pi-ratio", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u5468", "\u5468"], "shortcut": " p"}, {"glyph": "\u221a", "name": "radical", "kind": "function", "monad": "sqrt", "dyad": "root", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u6839", "\u6839"], "shortcut": " 3"}, {"glyph": "!", "name": "exclamation", "kind": "function", "monad": "factorial", "dyad": "binomial", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u9636\u62e3", "\u968e\u63c0"], "shortcut": ""}, {"glyph": "\u2227", "name": "wedge", "kind": "function", "monad": "polar", "dyad": "and", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u6781\u4e14", "\u6975\u4e14"], "shortcut": " 0"}, {"glyph": "\u2228", "name": "vee", "kind": "function", "monad": "real-imag", "dyad": "or", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u6790\u6216", "\u6790\u6216"], "shortcut": " 9"}, {"glyph": "\u22bc", "name": "wedge-bar", "kind": "function", "monad": "square", "dyad": "nand", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u65b9\u5426", "\u65b9\u5426"], "shortcut": " - 0"}, {"glyph": "\u22bd", "name": "vee-bar", "kind": "function", "monad": "double", "dyad": "nor", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u53cc\u83ab", "\u96d9\u83ab"], "shortcut": " - 9"}, {"glyph": "~", "name": "tilde", "kind": "function", "monad": "not", "dyad": "without", "monad_rank": "0", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u975e\u65e0", "\u975e\u7121"], "shortcut": ""}, {"glyph": "=", "name": "equals", "kind": "function", "monad": "classify", "dyad": "equal", "monad_rank": "\u221e", "dyad_ranks": "0 0", "hanzi": ["\u7b49", "\u7b49"], "shortcut": ""}, {"glyph": "\u2260", "name": "not-equals", "kind": "function", "monad": "unique-mask", "dyad": "not-equal", "monad_rank": "\u221e", "dyad_ranks": "0 0", "hanzi": ["\u522b\u521d", "\u5225\u521d"], "shortcut": " +"}, {"glyph": "<", "name": "less-than", "kind": "function", "monad": "sort-up", "dyad": "less", "monad_rank": "\u221e", "dyad_ranks": "0 0", "hanzi": ["\u5c0f", "\u5c0f"], "shortcut": ""}, {"glyph": "\u2264", "name": "less-than-or-equal", "kind": "function", "monad": "decrement", "dyad": "less-equal", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u9650\u9000", "\u9650\u9000"], "shortcut": " <"}, {"glyph": ">", "name": "greater-than", "kind": "function", "monad": "sort-down", "dyad": "greater", "monad_rank": "\u221e", "dyad_ranks": "0 0", "hanzi": ["\u5927", "\u5927"], "shortcut": ""}, {"glyph": "\u2265", "name": "greater-than-or-equal", "kind": "function", "monad": "increment", "dyad": "greater-equal", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u8fbe\u8fdb", "\u9054\u9032"], "shortcut": " >"}, {"glyph": "\u2373", "name": "iota", "kind": "function", "monad": "indices", "dyad": "index-of", "monad_rank": "1", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u4f4d", "\u4f4d"], "shortcut": " i"}, {"glyph": "\u21a6", "name": "right-arrow-from-bar", "kind": "function", "monad": "range", "dyad": "to", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u81f3", "\u81f3"], "shortcut": " l"}, {"glyph": ":", "name": "colon", "kind": "function", "monad": "unkey", "dyad": "keyed", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u952e\u5378", "\u9375\u5378"], "shortcut": ""}, {"glyph": "\u2374", "name": "rho", "kind": "function", "monad": "shape", "dyad": "reshape", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u5f62", "\u5f62"], "shortcut": " r"}, {"glyph": "\u2262", "name": "equal-underbar-slash", "kind": "function", "monad": "tally", "dyad": "not-match", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u6570\u5f02", "\u6578\u7570"], "shortcut": " ?"}, {"glyph": "\u2261", "name": "equal-underbar", "kind": "function", "monad": "depth", "dyad": "match", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u540c\u6df1", "\u540c\u6df1"], "shortcut": " ="}, {"glyph": ",", "name": "comma", "kind": "function", "monad": "ravel", "dyad": "catenate", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u8fde", "\u9023"], "shortcut": ""}, {"glyph": "\u236a", "name": "comma-bar", "kind": "function", "monad": "table", "dyad": "catenate-first", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u63a5\u77e9", "\u63a5\u77e9"], "shortcut": " - ,"}, {"glyph": "\u2282", "name": "left-shoe", "kind": "function", "monad": "enclose", "dyad": "partitioned-enclose", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u5305", "\u5305"], "shortcut": " z"}, {"glyph": "\u2283", "name": "right-shoe", "kind": "function", "monad": "mix", "dyad": "pick", "monad_rank": "0", "dyad_ranks": "1 \u221e", "hanzi": ["\u9009\u5408", "\u9078\u5408"], "shortcut": " x"}, {"glyph": "\u2286", "name": "left-shoe-underbar", "kind": "function", "monad": "nest", "dyad": "partition", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u5de2\u6bb5", "\u5de2\u6bb5"], "shortcut": " - z"}, {"glyph": "\u220a", "name": "epsilon", "kind": "function", "monad": "enlist", "dyad": "member", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u5c5e\u5c55", "\u5c6c\u5c55"], "shortcut": " e"}, {"glyph": "\u222a", "name": "down-shoe", "kind": "function", "monad": "unique", "dyad": "union", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u5e76\u72ec", "\u4f75\u7368"], "shortcut": " v"}, {"glyph": "\u2229", "name": "up-shoe", "kind": "function", "monad": "duplicates", "dyad": "intersection", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u4ea4\u91cd", "\u4ea4\u91cd"], "shortcut": " c"}, {"glyph": "\u234b", "name": "delta-stile", "kind": "function", "monad": "grade-up", "dyad": "grade-up-by", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u5347", "\u5347"], "shortcut": " \\ 7"}, {"glyph": "\u2352", "name": "del-stile", "kind": "function", "monad": "grade-down", "dyad": "grade-down-by", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u964d", "\u964d"], "shortcut": " \\ g"}, {"glyph": "\u2191", "name": "up-arrow", "kind": "function", "monad": "first", "dyad": "take", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u53d6", "\u53d6"], "shortcut": " k"}, {"glyph": "\u2193", "name": "down-arrow", "kind": "function", "monad": "split", "dyad": "drop", "monad_rank": "1", "dyad_ranks": "1 \u221e", "hanzi": ["\u53bb\u62c6", "\u53bb\u62c6"], "shortcut": " j"}, {"glyph": "\u233d", "name": "circle-stile", "kind": "function", "monad": "reverse", "dyad": "rotate", "monad_rank": "1", "dyad_ranks": "0 1", "hanzi": ["\u8f6c", "\u8f49"], "shortcut": " 2"}, {"glyph": "\u2296", "name": "circle-bar", "kind": "function", "monad": "reverse-first", "dyad": "rotate-first", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u7eb5", "\u7e31"], "shortcut": " o -"}, {"glyph": "\u2349", "name": "circle-backslash", "kind": "function", "monad": "transpose", "dyad": "reorder-axes", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u7ffb", "\u7ffb"], "shortcut": " o \\"}, {"glyph": "\u22a4", "name": "down-tack", "kind": "function", "monad": "binary-encode", "dyad": "encode", "monad_rank": "\u221e", "dyad_ranks": "1 0", "hanzi": ["\u7f16", "\u7de8"], "shortcut": " n"}, {"glyph": "\u22a5", "name": "up-tack", "kind": "function", "monad": "binary-decode", "dyad": "decode", "monad_rank": "1", "dyad_ranks": "1 1", "hanzi": ["\u8bd1", "\u8b6f"], "shortcut": " b"}, {"glyph": "\u234e", "name": "hydrant", "kind": "function", "monad": "execute", "dyad": "execute-in", "monad_rank": "1", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u884c", "\u884c"], "shortcut": " o b"}, {"glyph": "\u2355", "name": "thorn", "kind": "function", "monad": "format", "dyad": "format-spec", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u6587", "\u6587"], "shortcut": " o n"}, {"glyph": "\u2337", "name": "squad", "kind": "function", "monad": "materialise", "dyad": "index", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u7d22", "\u7d22"], "shortcut": " q \\"}, {"glyph": "\u2339", "name": "domino", "kind": "function", "monad": "matrix-inverse", "dyad": "matrix-divide", "monad_rank": "2", "dyad_ranks": "\u221e 2", "hanzi": ["\u89e3\u9006", "\u89e3\u9006"], "shortcut": " q u"}, {"glyph": "#", "name": "hash", "kind": "function", "monad": "runs", "dyad": "replicate", "monad_rank": "\u221e", "dyad_ranks": "1 \u221e", "hanzi": ["\u590d", "\u8907"], "shortcut": ""}, {"glyph": "\u2195", "name": "up-down-arrow", "kind": "function", "monad": "pairs", "dyad": "windows", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u7a97", "\u7a97"], "shortcut": " K"}, {"glyph": "\u236d", "name": "stile-tilde", "kind": "function", "monad": "prime", "dyad": "prime-mode", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u7d20", "\u7d20"], "shortcut": " \\"}, {"glyph": "\u2a38", "name": "circle-divide", "kind": "function", "monad": "factors", "dyad": "factor-spec", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u56e0", "\u56e0"], "shortcut": " o u"}, {"glyph": "\u233b", "name": "quad-jot", "kind": "function", "monad": "roots", "dyad": "polyval", "monad_rank": "1", "dyad_ranks": "1 0", "hanzi": ["\u96f6\u503c", "\u96f6\u503c"], "shortcut": " q t"}, {"glyph": "\u2378", "name": "iota-underbar", "kind": "function", "monad": "where", "dyad": "interval-index", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u5904\u95f4", "\u8655\u9593"], "shortcut": " - i"}, {"glyph": "\u2377", "name": "epsilon-underbar", "kind": "function", "monad": "groups", "dyad": "find", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u5bfb\u7fa4", "\u5c0b\u7fa4"], "shortcut": " - e"}, {"glyph": "\u22a2", "name": "right-tack", "kind": "function", "monad": "same", "dyad": "right", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u53f3", "\u53f3"], "shortcut": " '"}, {"glyph": "\u22a3", "name": "left-tack", "kind": "function", "monad": "same-left", "dyad": "left", "monad_rank": "\u221e", "dyad_ranks": "\u221e \u221e", "hanzi": ["\u5de6", "\u5de6"], "shortcut": " ;"}, {"glyph": "\u00bf", "name": "inverted-question", "kind": "function", "monad": "roll", "dyad": "deal", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["\u63b7\u62bd", "\u64f2\u62bd"], "shortcut": " /"}, {"glyph": "\u00a8", "name": "diaeresis", "kind": "monadic-operator", "monad": "each", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u904d", "\u904d"], "shortcut": " 1"}, {"glyph": "\u1d47", "name": "superscript-b", "kind": "monadic-operator", "monad": "bitwise", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u6309", "\u6309"], "shortcut": " 6 b"}, {"glyph": "\u2368", "name": "tilde-diaeresis", "kind": "monadic-operator", "monad": "self", "dyad": "commute", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u5df1\u6362", "\u5df1\u63db"], "shortcut": " 1 `"}, {"glyph": "\u21a3", "name": "right-tail-arrow", "kind": "dyadic-operator", "monad": "before", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u5148", "\u5148"], "shortcut": " ."}, {"glyph": "\u2364", "name": "jot-diaeresis", "kind": "dyadic-operator", "monad": "rank", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u79e9", "\u79e9"], "shortcut": " 1 t"}, {"glyph": "\u2218", "name": "jot", "kind": "dyadic-operator", "monad": "atop", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u627f", "\u627f"], "shortcut": " t"}, {"glyph": "\u2360", "name": "quad-colon", "kind": "dyadic-operator", "monad": "axis", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u8f74", "\u8ef8"], "shortcut": " q ;"}, {"glyph": "\u2365", "name": "circle-diaeresis", "kind": "dyadic-operator", "monad": "over", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u7ecf", "\u7d93"], "shortcut": " 1 o"}, {"glyph": "\u21a2", "name": "left-tail-arrow", "kind": "dyadic-operator", "monad": "after", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u540e", "\u5f8c"], "shortcut": " ,"}, {"glyph": ".", "name": "dot", "kind": "dyadic-operator", "monad": "determinant", "dyad": "inner-product", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u5185", "\u5167"], "shortcut": ""}, {"glyph": "\u2297", "name": "circle-times", "kind": "monadic-operator", "monad": "outer-product", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u8868", "\u8868"], "shortcut": " o m"}, {"glyph": "\u2338", "name": "quad-equal", "kind": "monadic-operator", "monad": "key", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u7ec4", "\u7d44"], "shortcut": " q ="}, {"glyph": "\u2363", "name": "star-diaeresis", "kind": "dyadic-operator", "monad": "power", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u6b21\u6b62", "\u6b21\u6b62"], "shortcut": " 1 8"}, {"glyph": "\u21c4", "name": "right-left-arrows", "kind": "monadic-operator", "monad": "optimize", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u4f18", "\u512a"], "shortcut": " 4"}, {"glyph": "\u2298", "name": "circle-slash", "kind": "dyadic-operator", "monad": "valences", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u517c", "\u517c"], "shortcut": " o /"}, {"glyph": "@", "name": "at", "kind": "dyadic-operator", "monad": "under", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u4e8e", "\u65bc"], "shortcut": ""}, {"glyph": "\u2202", "name": "partial", "kind": "monadic-operator", "monad": "derivative", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u5bfc\u68af", "\u5c0e\u68af"], "shortcut": " f"}, {"glyph": "\u235a", "name": "diamond-underbar", "kind": "dyadic-operator", "monad": "agenda", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u62e9", "\u64c7"], "shortcut": " - `"}, {"glyph": "\u233a", "name": "quad-diamond", "kind": "dyadic-operator", "monad": "stencil", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u90bb", "\u9130"], "shortcut": " q `"}, {"glyph": "/", "name": "slash", "kind": "monadic-operator", "monad": "reduce", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u603b", "\u7e3d"], "shortcut": ""}, {"glyph": "\u233f", "name": "slash-bar", "kind": "monadic-operator", "monad": "reduce-first", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u6c47", "\u532f"], "shortcut": " - /"}, {"glyph": "\\", "name": "backslash", "kind": "monadic-operator", "monad": "scan", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u7d2f", "\u7d2f"], "shortcut": ""}, {"glyph": "\u2340", "name": "backslash-bar", "kind": "monadic-operator", "monad": "scan-first", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["\u7eed", "\u7e8c"], "shortcut": " - \\"}], export default (symbols, layout) => {
     const comments = new Set(symbols.filter(s => s.kind === 'comment').flatMap(s => [...s.glyph, ...s.hanzi.join('')]));
     // US physical keys, before macOS Option or another layout transforms event.key.
     const punctuation = {Backquote: '`~', Minus: '-_', Equal: '=+', BracketLeft: '[{', BracketRight: ']}',
@@ -1158,6 +1231,7 @@ if(!document.getElementById("bpl-craft-fonts")){const s=document.createElement("
     function usKey({code, shiftKey}) {
         if (/^Key[A-Z]$/.test(code)) return shiftKey ? code.slice(3) : code.slice(3).toLowerCase();
         if (/^Digit[0-9]$/.test(code)) return shiftKey ? ')!@#$%^&*('[Number(code[5])] : code[5];
+        if (code === 'Space') return ' ';
         return punctuation[code]?.[Number(shiftKey)];
     }
 
@@ -1168,21 +1242,22 @@ if(!document.getElementById("bpl-craft-fonts")){const s=document.createElement("
     // What a key types: `{text, stop}`, where `stop` means the key itself does nothing more, or nothing for an ordinary key.
     // `option` is whether an Option chord counts here.
     function press(ev, option) {
-        const key = usKey(ev), plain = !ev.altKey && !ev.ctrlKey && !ev.metaKey;
-        // Native Option can hide the alias character; accept its US physical chord too.
-        const action = option && ev.altKey && !ev.ctrlKey && !ev.metaKey
-            ? layout.alt_aliases[ev.key] ?? (Object.values(layout.alt_aliases).includes(key) ? key : layout.option[key]) : null;
+        const key = usKey(ev);
         if (pending) {
-            const state = layout.states[pending], repeated = action?.state === pending;
+            const name = pending, state = layout.states[name];
             pending = null;
-            if (repeated) return {text: state.terminator, stop: true};
-            if (plain && ev.key === ' ') return {text: state.terminator, stop: true};
             if (ev.key === 'Backspace' || ev.key === 'Escape') return {text: '', stop: true};
-            if (plain && key in state.keys) return {text: act(state.keys[key]), stop: true};
+            if (!ev.ctrlKey && !ev.metaKey) {
+                if (key in state.keys) return {text: act(state.keys[key]), stop: true};
+                if (key === ' ' || layout.option[key]?.state === name) return {text: state.terminator, stop: true};
+            }
             // Any other key types the terminator, then acts as if nothing were pending.
             const rest = press(ev, option);
             return {text: state.terminator + (rest?.text ?? ''), stop: rest?.stop ?? false};
         }
+        // Native Option can hide the alias character; accept its US physical chord too.
+        const action = option && ev.altKey && !ev.ctrlKey && !ev.metaKey
+            ? layout.alt_aliases[ev.key] ?? (Object.values(layout.alt_aliases).includes(key) ? key : layout.option[key]) : null;
         if (action) return {text: act(action), stop: true};
     }
     const reset = () => { pending = null; };
@@ -1257,10 +1332,10 @@ if(!document.getElementById("bpl-craft-fonts")){const s=document.createElement("
     }
 
     return {matches, inCode, bplStart, entry, press, reset};
-})
+};
 , {
  "alt_aliases": {"£": "#"},
- "unshifted": {"*": "8", "~": "`", "_": "-", "|": "\\", ":": ";"},
+ "unshifted": {"!": "1", "@": "2", "#": "3", "$": "4", "%": "5", "^": "6", "&": "7", "*": "8", "(": "9", ")": "0", "~": "`", "_": "-", "|": "\\", ":": ";"},
  "optional_shift": {"!": "1", "@": "2", "#": "3", "$": "4", "%": "5", "^": "6", "&": "7", "*": "8", "(": "9", "_": "-"},
  "option": {
   "`": "⋄",
@@ -1310,6 +1385,7 @@ if(!document.getElementById("bpl-craft-fonts")){const s=document.createElement("
   "K": "↕",
   "l": "↦",
   ";": "⊣",
+  ":": "⁝",
   "'": "⊢",
   "z": "⊂",
   "x": "⊃",
@@ -1327,10 +1403,10 @@ if(!document.getElementById("bpl-craft-fonts")){const s=document.createElement("
  },
  "states": {
   "diaeresis": {"terminator": "¨", "keys": {"t": "⍤", "o": "⍥", "*": "⍣", "~": "⍨", "g": "⍢", "8": "⍣", "`": "⍨"}},
-  "superscript": {"terminator": "^", "keys": {"0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹", "-": {"state": "superscript-minus"}, "b": "ᵇ", "t": "ᵀ", "u": "ᵘ"}},
-  "superscript-minus": {"terminator": "⁻", "keys": {"0": "⁻⁰", "1": "⁻¹", "2": "⁻²", "3": "⁻³", "4": "⁻⁴", "5": "⁻⁵", "6": "⁻⁶", "7": "⁻⁷", "8": "⁻⁸", "9": "⁻⁹"}},
-  "subscript": {"terminator": "_", "keys": {"0": "₀", "1": "₁", "2": "₂", "3": "₃", "4": "₄", "5": "₅", "6": "₆", "7": "₇", "8": "₈", "9": "₉", "x": "ₓ", "j": "ⱼ", "e": "ₑ", "r": "ᵣ", "-": {"state": "subscript-minus"}}},
-  "subscript-minus": {"terminator": "₋", "keys": {"0": "₋₀", "1": "₋₁", "2": "₋₂", "3": "₋₃", "4": "₋₄", "5": "₋₅", "6": "₋₆", "7": "₋₇", "8": "₋₈", "9": "₋₉"}},
+  "superscript": {"terminator": "⁶", "keys": {"0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹", ")": "⁰", "!": "¹", "@": "²", "#": "³", "$": "⁴", "%": "⁵", "^": "⁶", "&": "⁷", "*": "⁸", "(": "⁹", "-": {"state": "superscript-minus"}, "b": "ᵇ", "t": "ᵀ", "u": "ᵘ"}},
+  "superscript-minus": {"terminator": "⁻", "keys": {"0": "⁻⁰", "1": "⁻¹", "2": "⁻²", "3": "⁻³", "4": "⁻⁴", "5": "⁻⁵", "6": "⁻⁶", "7": "⁻⁷", "8": "⁻⁸", "9": "⁻⁹", ")": "⁻⁰", "!": "⁻¹", "@": "⁻²", "#": "⁻³", "$": "⁻⁴", "%": "⁻⁵", "^": "⁻⁶", "&": "⁻⁷", "*": "⁻⁸", "(": "⁻⁹"}},
+  "subscript": {"terminator": "₅", "keys": {"0": "₀", "1": "₁", "2": "₂", "3": "₃", "4": "₄", "5": "₅", "6": "₆", "7": "₇", "8": "₈", "9": "₉", ")": "₀", "!": "₁", "@": "₂", "#": "₃", "$": "₄", "%": "₅", "^": "₆", "&": "₇", "*": "₈", "(": "₉", "x": "ₓ", "j": "ⱼ", "e": "ₑ", "r": "ᵣ", "h": "ₕ", "s": "ₛ", "p": "ₚ", "-": {"state": "subscript-minus"}}},
+  "subscript-minus": {"terminator": "₋", "keys": {"0": "₋₀", "1": "₋₁", "2": "₋₂", "3": "₋₃", "4": "₋₄", "5": "₋₅", "6": "₋₆", "7": "₋₇", "8": "₋₈", "9": "₋₉", ")": "₋₀", "!": "₋₁", "@": "₋₂", "#": "₋₃", "$": "₋₄", "%": "₋₅", "^": "₋₆", "&": "₋₇", "*": "₋₈", "(": "₋₉"}},
   "bar": {"terminator": "¯", "keys": {",": "⍪", "\\": "⍀", "/": "⌿", "a": "⍶", "w": "⍹", "7": "⍙", "`": "⍚", "0": "⊼", "9": "⊽", "e": "⍷", "i": "⍸", "z": "⊆"}},
   "quad": {"terminator": "⎕", "keys": {"t": "⌻", ":": "⍠", "=": "⌸", "u": "⌹", "|": "⌷", "`": "⌺", ";": "⍠", "\\": "⌷"}},
   "circle": {"terminator": "○", "keys": {"-": "⊖", "\\": "⍉", "/": "⊘", "*": "⍟", "m": "⊗", "u": "⨸", "8": "⍟", "c": "⍝", "b": "⍎", "n": "⍕"}},
@@ -1356,6 +1432,6 @@ if(!document.getElementById("bpl-craft-fonts")){const s=document.createElement("
     };
     })();
 ;
-((symbols,layout,examples)=>window.bplCraftPalette(window.bplCraftCatalogue(symbols,layout),examples))([{"glyph": "←", "name": "left-arrow", "kind": "syntax", "monad": "assign", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["是", "是"], "shortcut": " h"}, {"glyph": "⎕", "name": "quad", "kind": "syntax", "monad": "io", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["出入", "出入"], "shortcut": " q"}, {"glyph": "•", "name": "bullet", "kind": "system", "monad": "system", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["系", "系"], "shortcut": " y"}, {"glyph": "⍺", "name": "alpha", "kind": "argument", "monad": "left-argument", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["甲", "甲"], "shortcut": " a"}, {"glyph": "⍵", "name": "omega", "kind": "argument", "monad": "right-argument", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["乙", "乙"], "shortcut": " w"}, {"glyph": "⍶", "name": "alpha-underbar", "kind": "argument", "monad": "left-operand", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["丙", "丙"], "shortcut": " - a"}, {"glyph": "⍹", "name": "omega-underbar", "kind": "argument", "monad": "right-operand", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["丁", "丁"], "shortcut": " - w"}, {"glyph": "∇", "name": "del", "kind": "argument", "monad": "recursion", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["递", "遞"], "shortcut": " g"}, {"glyph": "⍢", "name": "del-diaeresis", "kind": "argument", "monad": "operator-recursion", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["循", "循"], "shortcut": " 1 g"}, {"glyph": "⍝", "name": "lamp", "kind": "comment", "monad": "comment", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["注", "注"], "shortcut": " o c"}, {"glyph": "⋄", "name": "diamond", "kind": "syntax", "monad": "separator", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["句", "句"], "shortcut": " `"}, {"glyph": "?", "name": "question", "kind": "syntax", "monad": "predicate", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["若", "若"], "shortcut": ""}, {"glyph": "¯", "name": "overbar", "kind": "literal", "monad": "negative", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["负", "負"], "shortcut": " -"}, {"glyph": "∞", "name": "infinity", "kind": "literal", "monad": "", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["永", "永"], "shortcut": " 8"}, {"glyph": "⍬", "name": "zilde", "kind": "literal", "monad": "empty", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["空", "空"], "shortcut": " )"}, {"glyph": "+", "name": "plus", "kind": "function", "monad": "conjugate", "dyad": "add", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["加", "加"], "shortcut": ""}, {"glyph": "-", "name": "minus", "kind": "function", "monad": "negate", "dyad": "subtract", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["减", "減"], "shortcut": ""}, {"glyph": "×", "name": "times", "kind": "function", "monad": "sign", "dyad": "multiply", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["乘号", "乘號"], "shortcut": " m"}, {"glyph": "÷", "name": "obelus", "kind": "function", "monad": "reciprocal", "dyad": "divide", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["除", "除"], "shortcut": " u"}, {"glyph": "⌈", "name": "upstile", "kind": "function", "monad": "ceiling", "dyad": "maximum", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["上", "上"], "shortcut": " s"}, {"glyph": "⌊", "name": "downstile", "kind": "function", "monad": "floor", "dyad": "minimum", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["下", "下"], "shortcut": " d"}, {"glyph": "|", "name": "stile", "kind": "function", "monad": "magnitude", "dyad": "residue", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["绝余", "絕餘"], "shortcut": ""}, {"glyph": "*", "name": "star", "kind": "function", "monad": "exponential", "dyad": "exponent", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["幂", "冪"], "shortcut": ""}, {"glyph": "⍟", "name": "circle-star", "kind": "function", "monad": "natural-log", "dyad": "logarithm", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["对", "對"], "shortcut": " o 8"}, {"glyph": "○", "name": "circle", "kind": "function", "monad": "cis", "dyad": "circular", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["圆", "圓"], "shortcut": " o"}, {"glyph": "π", "name": "pi", "kind": "function", "monad": "pi-times", "dyad": "pi-ratio", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["周", "周"], "shortcut": " p"}, {"glyph": "√", "name": "radical", "kind": "function", "monad": "sqrt", "dyad": "root", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["根", "根"], "shortcut": " 3"}, {"glyph": "!", "name": "exclamation", "kind": "function", "monad": "factorial", "dyad": "binomial", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["阶拣", "階揀"], "shortcut": ""}, {"glyph": "∧", "name": "wedge", "kind": "function", "monad": "polar", "dyad": "and", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["极且", "極且"], "shortcut": " 0"}, {"glyph": "∨", "name": "vee", "kind": "function", "monad": "real-imag", "dyad": "or", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["析或", "析或"], "shortcut": " 9"}, {"glyph": "⊼", "name": "wedge-bar", "kind": "function", "monad": "square", "dyad": "nand", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["方否", "方否"], "shortcut": " - 0"}, {"glyph": "⊽", "name": "vee-bar", "kind": "function", "monad": "double", "dyad": "nor", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["双莫", "雙莫"], "shortcut": " - 9"}, {"glyph": "~", "name": "tilde", "kind": "function", "monad": "not", "dyad": "without", "monad_rank": "0", "dyad_ranks": "∞ ∞", "hanzi": ["非无", "非無"], "shortcut": ""}, {"glyph": "=", "name": "equals", "kind": "function", "monad": "classify", "dyad": "equal", "monad_rank": "∞", "dyad_ranks": "0 0", "hanzi": ["等", "等"], "shortcut": ""}, {"glyph": "≠", "name": "not-equals", "kind": "function", "monad": "unique-mask", "dyad": "not-equal", "monad_rank": "∞", "dyad_ranks": "0 0", "hanzi": ["别初", "別初"], "shortcut": " +"}, {"glyph": "<", "name": "less-than", "kind": "function", "monad": "sort-up", "dyad": "less", "monad_rank": "∞", "dyad_ranks": "0 0", "hanzi": ["小", "小"], "shortcut": ""}, {"glyph": "≤", "name": "less-than-or-equal", "kind": "function", "monad": "decrement", "dyad": "less-equal", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["限退", "限退"], "shortcut": " <"}, {"glyph": ">", "name": "greater-than", "kind": "function", "monad": "sort-down", "dyad": "greater", "monad_rank": "∞", "dyad_ranks": "0 0", "hanzi": ["大", "大"], "shortcut": ""}, {"glyph": "≥", "name": "greater-than-or-equal", "kind": "function", "monad": "increment", "dyad": "greater-equal", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["达进", "達進"], "shortcut": " >"}, {"glyph": "⍳", "name": "iota", "kind": "function", "monad": "indices", "dyad": "index-of", "monad_rank": "1", "dyad_ranks": "∞ ∞", "hanzi": ["位", "位"], "shortcut": " i"}, {"glyph": "↦", "name": "right-arrow-from-bar", "kind": "function", "monad": "range", "dyad": "to", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["至", "至"], "shortcut": " l"}, {"glyph": ":", "name": "colon", "kind": "function", "monad": "unkey", "dyad": "keyed", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["键卸", "鍵卸"], "shortcut": ""}, {"glyph": "⍴", "name": "rho", "kind": "function", "monad": "shape", "dyad": "reshape", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["形", "形"], "shortcut": " r"}, {"glyph": "≢", "name": "equal-underbar-slash", "kind": "function", "monad": "tally", "dyad": "not-match", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["数异", "數異"], "shortcut": " ?"}, {"glyph": "≡", "name": "equal-underbar", "kind": "function", "monad": "depth", "dyad": "match", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["同深", "同深"], "shortcut": " ="}, {"glyph": ",", "name": "comma", "kind": "function", "monad": "ravel", "dyad": "catenate", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["连", "連"], "shortcut": ""}, {"glyph": "⍪", "name": "comma-bar", "kind": "function", "monad": "table", "dyad": "catenate-first", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["接矩", "接矩"], "shortcut": " - ,"}, {"glyph": "⊂", "name": "left-shoe", "kind": "function", "monad": "enclose", "dyad": "partitioned-enclose", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["包", "包"], "shortcut": " z"}, {"glyph": "⊃", "name": "right-shoe", "kind": "function", "monad": "mix", "dyad": "pick", "monad_rank": "0", "dyad_ranks": "1 ∞", "hanzi": ["选合", "選合"], "shortcut": " x"}, {"glyph": "⊆", "name": "left-shoe-underbar", "kind": "function", "monad": "nest", "dyad": "partition", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["巢段", "巢段"], "shortcut": " - z"}, {"glyph": "∊", "name": "epsilon", "kind": "function", "monad": "enlist", "dyad": "member", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["属展", "屬展"], "shortcut": " e"}, {"glyph": "∪", "name": "down-shoe", "kind": "function", "monad": "unique", "dyad": "union", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["并独", "併獨"], "shortcut": " v"}, {"glyph": "∩", "name": "up-shoe", "kind": "function", "monad": "duplicates", "dyad": "intersection", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["交重", "交重"], "shortcut": " c"}, {"glyph": "⍋", "name": "delta-stile", "kind": "function", "monad": "grade-up", "dyad": "grade-up-by", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["升", "升"], "shortcut": " \\ 7"}, {"glyph": "⍒", "name": "del-stile", "kind": "function", "monad": "grade-down", "dyad": "grade-down-by", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["降", "降"], "shortcut": " \\ g"}, {"glyph": "↑", "name": "up-arrow", "kind": "function", "monad": "first", "dyad": "take", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["取", "取"], "shortcut": " k"}, {"glyph": "↓", "name": "down-arrow", "kind": "function", "monad": "split", "dyad": "drop", "monad_rank": "1", "dyad_ranks": "1 ∞", "hanzi": ["去拆", "去拆"], "shortcut": " j"}, {"glyph": "⌽", "name": "circle-stile", "kind": "function", "monad": "reverse", "dyad": "rotate", "monad_rank": "1", "dyad_ranks": "0 1", "hanzi": ["转", "轉"], "shortcut": " 2"}, {"glyph": "⊖", "name": "circle-bar", "kind": "function", "monad": "reverse-first", "dyad": "rotate-first", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["纵", "縱"], "shortcut": " o -"}, {"glyph": "⍉", "name": "circle-backslash", "kind": "function", "monad": "transpose", "dyad": "reorder-axes", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["翻", "翻"], "shortcut": " o \\"}, {"glyph": "⊤", "name": "down-tack", "kind": "function", "monad": "binary-encode", "dyad": "encode", "monad_rank": "∞", "dyad_ranks": "1 0", "hanzi": ["编", "編"], "shortcut": " n"}, {"glyph": "⊥", "name": "up-tack", "kind": "function", "monad": "binary-decode", "dyad": "decode", "monad_rank": "1", "dyad_ranks": "1 1", "hanzi": ["译", "譯"], "shortcut": " b"}, {"glyph": "⍎", "name": "hydrant", "kind": "function", "monad": "execute", "dyad": "execute-in", "monad_rank": "1", "dyad_ranks": "∞ ∞", "hanzi": ["行", "行"], "shortcut": " o b"}, {"glyph": "⍕", "name": "thorn", "kind": "function", "monad": "format", "dyad": "format-spec", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["文", "文"], "shortcut": " o n"}, {"glyph": "⌷", "name": "squad", "kind": "function", "monad": "materialise", "dyad": "index", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["索", "索"], "shortcut": " q \\"}, {"glyph": "⌹", "name": "domino", "kind": "function", "monad": "matrix-inverse", "dyad": "matrix-divide", "monad_rank": "2", "dyad_ranks": "∞ 2", "hanzi": ["解逆", "解逆"], "shortcut": " q u"}, {"glyph": "#", "name": "hash", "kind": "function", "monad": "runs", "dyad": "replicate", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["复", "複"], "shortcut": ""}, {"glyph": "↕", "name": "up-down-arrow", "kind": "function", "monad": "pairs", "dyad": "windows", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["窗", "窗"], "shortcut": " K"}, {"glyph": "⍭", "name": "stile-tilde", "kind": "function", "monad": "prime", "dyad": "prime-mode", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["素", "素"], "shortcut": " \\"}, {"glyph": "⨸", "name": "circle-divide", "kind": "function", "monad": "factors", "dyad": "factor-spec", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["因", "因"], "shortcut": " o u"}, {"glyph": "⌻", "name": "quad-jot", "kind": "function", "monad": "roots", "dyad": "polyval", "monad_rank": "1", "dyad_ranks": "1 0", "hanzi": ["零值", "零值"], "shortcut": " q t"}, {"glyph": "⍸", "name": "iota-underbar", "kind": "function", "monad": "where", "dyad": "interval-index", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["处间", "處間"], "shortcut": " - i"}, {"glyph": "⍷", "name": "epsilon-underbar", "kind": "function", "monad": "groups", "dyad": "find", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["寻群", "尋群"], "shortcut": " - e"}, {"glyph": "⊢", "name": "right-tack", "kind": "function", "monad": "same", "dyad": "right", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["右", "右"], "shortcut": " '"}, {"glyph": "⊣", "name": "left-tack", "kind": "function", "monad": "same-left", "dyad": "left", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["左", "左"], "shortcut": " ;"}, {"glyph": "¿", "name": "inverted-question", "kind": "function", "monad": "roll", "dyad": "deal", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["掷抽", "擲抽"], "shortcut": " /"}, {"glyph": "¨", "name": "diaeresis", "kind": "monadic-operator", "monad": "each", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["遍", "遍"], "shortcut": " 1"}, {"glyph": "ᵇ", "name": "superscript-b", "kind": "monadic-operator", "monad": "bitwise", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["按", "按"], "shortcut": " 6 b"}, {"glyph": "⍨", "name": "tilde-diaeresis", "kind": "monadic-operator", "monad": "self", "dyad": "commute", "monad_rank": "", "dyad_ranks": "", "hanzi": ["己换", "己換"], "shortcut": " 1 `"}, {"glyph": "↣", "name": "right-tail-arrow", "kind": "dyadic-operator", "monad": "before", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["先", "先"], "shortcut": " ."}, {"glyph": "⍤", "name": "jot-diaeresis", "kind": "dyadic-operator", "monad": "rank", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["秩", "秩"], "shortcut": " 1 t"}, {"glyph": "∘", "name": "jot", "kind": "dyadic-operator", "monad": "atop", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["承", "承"], "shortcut": " t"}, {"glyph": "⍠", "name": "quad-colon", "kind": "dyadic-operator", "monad": "axis", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["轴", "軸"], "shortcut": " q ;"}, {"glyph": "⍥", "name": "circle-diaeresis", "kind": "dyadic-operator", "monad": "over", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["经", "經"], "shortcut": " 1 o"}, {"glyph": "↢", "name": "left-tail-arrow", "kind": "dyadic-operator", "monad": "after", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["后", "後"], "shortcut": " ,"}, {"glyph": ".", "name": "dot", "kind": "dyadic-operator", "monad": "determinant", "dyad": "inner-product", "monad_rank": "", "dyad_ranks": "", "hanzi": ["内", "內"], "shortcut": ""}, {"glyph": "⊗", "name": "circle-times", "kind": "monadic-operator", "monad": "outer-product", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["表", "表"], "shortcut": " o m"}, {"glyph": "⌸", "name": "quad-equal", "kind": "monadic-operator", "monad": "key", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["组", "組"], "shortcut": " q ="}, {"glyph": "⍣", "name": "star-diaeresis", "kind": "dyadic-operator", "monad": "power", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["次止", "次止"], "shortcut": " 1 8"}, {"glyph": "⇄", "name": "right-left-arrows", "kind": "monadic-operator", "monad": "optimize", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["优", "優"], "shortcut": " 4"}, {"glyph": "⊘", "name": "circle-slash", "kind": "dyadic-operator", "monad": "valences", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["兼", "兼"], "shortcut": " o /"}, {"glyph": "@", "name": "at", "kind": "dyadic-operator", "monad": "under", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["于", "於"], "shortcut": ""}, {"glyph": "∂", "name": "partial", "kind": "monadic-operator", "monad": "derivative", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["导梯", "導梯"], "shortcut": " f"}, {"glyph": "⍚", "name": "diamond-underbar", "kind": "dyadic-operator", "monad": "agenda", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["择", "擇"], "shortcut": " - `"}, {"glyph": "⌺", "name": "quad-diamond", "kind": "dyadic-operator", "monad": "stencil", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["邻", "鄰"], "shortcut": " q `"}, {"glyph": "/", "name": "slash", "kind": "monadic-operator", "monad": "reduce", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["总", "總"], "shortcut": ""}, {"glyph": "⌿", "name": "slash-bar", "kind": "monadic-operator", "monad": "reduce-first", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["汇", "匯"], "shortcut": " - /"}, {"glyph": "\\", "name": "backslash", "kind": "monadic-operator", "monad": "scan", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["累", "累"], "shortcut": ""}, {"glyph": "⍀", "name": "backslash-bar", "kind": "monadic-operator", "monad": "scan-first", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["续", "續"], "shortcut": " - \\"}],{"alt_aliases": {"£": "#"}, "unshifted": {"*": "8", "~": "`", "_": "-", "|": "\\", ":": ";"}, "optional_shift": {"!": "1", "@": "2", "#": "3", "$": "4", "%": "5", "^": "6", "&": "7", "*": "8", "(": "9", "_": "-"}, "option": {"`": "⋄", "1": {"state": "diaeresis"}, "2": "⌽", "3": "√", "4": "⇄", "5": {"state": "subscript"}, "6": {"state": "superscript"}, "7": "∆", "8": "∞", "9": "∨", "0": "∧", ")": "⍬", "!": "¹", "@": "²", "#": "³", "$": "⁴", "%": "⁵", "^": "⁶", "&": "⁷", "*": "⁸", "(": "⁹", "_": "⁻", "-": {"state": "bar"}, "=": "≡", "q": {"state": "quad"}, "w": "⍵", "e": "∊", "r": "⍴", "t": "∘", "y": "•", "u": "÷", "i": "⍳", "o": {"state": "circle"}, "p": "π", "+": "≠", "\\": {"state": "stile"}, "a": "⍺", "s": "⌈", "d": "⌊", "f": "∂", "g": "∇", "h": "←", "j": "↓", "k": "↑", "K": "↕", "l": "↦", ";": "⊣", "'": "⊢", "z": "⊂", "x": "⊃", "c": "∩", "v": "∪", "b": "⊥", "n": "⊤", "m": "×", ",": "↢", ".": "↣", "<": "≤", ">": "≥", "/": "¿", "?": "≢"}, "states": {"diaeresis": {"terminator": "¨", "keys": {"t": "⍤", "o": "⍥", "*": "⍣", "~": "⍨", "g": "⍢", "8": "⍣", "`": "⍨"}}, "superscript": {"terminator": "^", "keys": {"0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹", "-": {"state": "superscript-minus"}, "b": "ᵇ", "t": "ᵀ", "u": "ᵘ"}}, "superscript-minus": {"terminator": "⁻", "keys": {"0": "⁻⁰", "1": "⁻¹", "2": "⁻²", "3": "⁻³", "4": "⁻⁴", "5": "⁻⁵", "6": "⁻⁶", "7": "⁻⁷", "8": "⁻⁸", "9": "⁻⁹"}}, "subscript": {"terminator": "_", "keys": {"0": "₀", "1": "₁", "2": "₂", "3": "₃", "4": "₄", "5": "₅", "6": "₆", "7": "₇", "8": "₈", "9": "₉", "x": "ₓ", "j": "ⱼ", "e": "ₑ", "r": "ᵣ", "-": {"state": "subscript-minus"}}}, "subscript-minus": {"terminator": "₋", "keys": {"0": "₋₀", "1": "₋₁", "2": "₋₂", "3": "₋₃", "4": "₋₄", "5": "₋₅", "6": "₋₆", "7": "₋₇", "8": "₋₈", "9": "₋₉"}}, "bar": {"terminator": "¯", "keys": {",": "⍪", "\\": "⍀", "/": "⌿", "a": "⍶", "w": "⍹", "7": "⍙", "`": "⍚", "0": "⊼", "9": "⊽", "e": "⍷", "i": "⍸", "z": "⊆"}}, "quad": {"terminator": "⎕", "keys": {"t": "⌻", ":": "⍠", "=": "⌸", "u": "⌹", "|": "⌷", "`": "⌺", ";": "⍠", "\\": "⌷"}}, "circle": {"terminator": "○", "keys": {"-": "⊖", "\\": "⍉", "/": "⊘", "*": "⍟", "m": "⊗", "u": "⨸", "8": "⍟", "c": "⍝", "b": "⍎", "n": "⍕"}}, "stile": {"terminator": "⍭", "keys": {"7": "⍋", "g": "⍒"}}}},{"⍳": [{"label": "One input · zero-based indices", "code": "⍳4"}, {"label": "Two inputs · index of", "code": "\"abc\"⍳\"cabz\""}], "↦": [{"label": "One input · range from one", "code": "↦4"}, {"label": "Two inputs · inclusive range", "code": "0↦4"}], "=": [{"label": "One input · classify equal items", "code": "=4 7 4 9"}, {"label": "Two inputs · compare each item", "code": "1 2 3 = 1 9 3"}], "≠": [{"label": "One input · first occurrences", "code": "≠4 7 4 9"}, {"label": "Two inputs · not equal", "code": "1 2 3 ≠ 1 9 3"}], "≡": [{"label": "One input · nesting depth", "code": "≡1 2 3"}, {"label": "Two inputs · whole-array match", "code": "1 2 3 ≡ 1 2 3"}], "≢": [{"label": "One input · count items", "code": "≢2 4 9"}, {"label": "Two inputs · whole-array mismatch", "code": "1 2 3 ≢ 1 2"}], "⍴": [{"label": "One input · shape", "code": "⍴1 2 3"}, {"label": "Two inputs · reshape", "code": "2 3⍴⍳6"}], "×": [{"label": "One input · sign", "code": "×¯3 0 4"}, {"label": "Two inputs · multiply", "code": "3×1 2 3"}], "÷": [{"label": "One input · reciprocal", "code": "÷1 2 4"}, {"label": "Two inputs · divide", "code": "12÷3"}], "+": [{"label": "Two inputs · add", "code": "1 2 3 + 10"}], "-": [{"label": "One input · negate", "code": "-1 2 3"}, {"label": "Two inputs · subtract", "code": "10-3"}], "/": [{"label": "Reduce · sum a list", "code": "+/2 4 9"}, {"label": "Reduce · product", "code": "×/1 2 3 4"}], "\\": [{"label": "Scan · running sum", "code": "+\\1 2 3 4"}], "⌽": [{"label": "One input · reverse", "code": "⌽1 2 3"}, {"label": "Two inputs · rotate", "code": "1⌽1 2 3"}], "↑": [{"label": "One input · first", "code": "↑10 20 30"}, {"label": "Two inputs · take", "code": "2↑10 20 30"}], "↓": [{"label": "Two inputs · drop", "code": "1↓10 20 30"}], "⎕": [{"label": "Display a result", "code": "⎕←1 2 3"}], "⍟": [{"label": "One input · natural logarithm", "code": "⍟1 2 4"}, {"label": "Two inputs · logarithm base two", "code": "2⍟8"}], "√": [{"label": "One input · square root", "code": "√1 4 9"}, {"label": "Two inputs · cube root", "code": "3√27"}]});
+((symbols,layout,examples)=>window.bplCraftPalette(window.bplCraftCatalogue(symbols,layout),examples))([{"glyph": "←", "name": "left-arrow", "kind": "syntax", "monad": "assign", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["是", "是"], "shortcut": " h"}, {"glyph": "⎕", "name": "quad", "kind": "syntax", "monad": "io", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["出入", "出入"], "shortcut": " q"}, {"glyph": "•", "name": "bullet", "kind": "system", "monad": "system", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["系", "系"], "shortcut": " y"}, {"glyph": "⍺", "name": "alpha", "kind": "argument", "monad": "left-argument", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["甲", "甲"], "shortcut": " a"}, {"glyph": "⍵", "name": "omega", "kind": "argument", "monad": "right-argument", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["乙", "乙"], "shortcut": " w"}, {"glyph": "⍶", "name": "alpha-underbar", "kind": "argument", "monad": "left-operand", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["丙", "丙"], "shortcut": " - a"}, {"glyph": "⍹", "name": "omega-underbar", "kind": "argument", "monad": "right-operand", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["丁", "丁"], "shortcut": " - w"}, {"glyph": "∇", "name": "del", "kind": "argument", "monad": "recursion", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["递", "遞"], "shortcut": " g"}, {"glyph": "⍢", "name": "del-diaeresis", "kind": "argument", "monad": "operator-recursion", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["循", "循"], "shortcut": " 1 g"}, {"glyph": "⍝", "name": "lamp", "kind": "comment", "monad": "comment", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["注", "注"], "shortcut": " o c"}, {"glyph": "⋄", "name": "diamond", "kind": "syntax", "monad": "separator", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["句", "句"], "shortcut": " `"}, {"glyph": "⁝", "name": "tricolon", "kind": "syntax", "monad": "token-separator", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["隔", "隔"], "shortcut": " :"}, {"glyph": "?", "name": "question", "kind": "syntax", "monad": "predicate", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["若", "若"], "shortcut": ""}, {"glyph": "¯", "name": "overbar", "kind": "literal", "monad": "negative", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["负", "負"], "shortcut": " -"}, {"glyph": "∞", "name": "infinity", "kind": "literal", "monad": "", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["永", "永"], "shortcut": " 8"}, {"glyph": "⍬", "name": "zilde", "kind": "literal", "monad": "empty", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["空", "空"], "shortcut": " )"}, {"glyph": "+", "name": "plus", "kind": "function", "monad": "conjugate", "dyad": "add", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["加", "加"], "shortcut": ""}, {"glyph": "-", "name": "minus", "kind": "function", "monad": "negate", "dyad": "subtract", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["减", "減"], "shortcut": ""}, {"glyph": "×", "name": "times", "kind": "function", "monad": "sign", "dyad": "multiply", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["乘号", "乘號"], "shortcut": " m"}, {"glyph": "÷", "name": "obelus", "kind": "function", "monad": "reciprocal", "dyad": "divide", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["除", "除"], "shortcut": " u"}, {"glyph": "⌈", "name": "upstile", "kind": "function", "monad": "ceiling", "dyad": "maximum", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["上", "上"], "shortcut": " s"}, {"glyph": "⌊", "name": "downstile", "kind": "function", "monad": "floor", "dyad": "minimum", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["下", "下"], "shortcut": " d"}, {"glyph": "|", "name": "stile", "kind": "function", "monad": "magnitude", "dyad": "residue", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["绝余", "絕餘"], "shortcut": ""}, {"glyph": "*", "name": "star", "kind": "function", "monad": "exponential", "dyad": "exponent", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["幂", "冪"], "shortcut": ""}, {"glyph": "⍟", "name": "circle-star", "kind": "function", "monad": "natural-log", "dyad": "logarithm", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["对", "對"], "shortcut": " o 8"}, {"glyph": "○", "name": "circle", "kind": "function", "monad": "cis", "dyad": "circular", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["圆", "圓"], "shortcut": " o"}, {"glyph": "π", "name": "pi", "kind": "function", "monad": "pi-times", "dyad": "pi-ratio", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["周", "周"], "shortcut": " p"}, {"glyph": "√", "name": "radical", "kind": "function", "monad": "sqrt", "dyad": "root", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["根", "根"], "shortcut": " 3"}, {"glyph": "!", "name": "exclamation", "kind": "function", "monad": "factorial", "dyad": "binomial", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["阶拣", "階揀"], "shortcut": ""}, {"glyph": "∧", "name": "wedge", "kind": "function", "monad": "polar", "dyad": "and", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["极且", "極且"], "shortcut": " 0"}, {"glyph": "∨", "name": "vee", "kind": "function", "monad": "real-imag", "dyad": "or", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["析或", "析或"], "shortcut": " 9"}, {"glyph": "⊼", "name": "wedge-bar", "kind": "function", "monad": "square", "dyad": "nand", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["方否", "方否"], "shortcut": " - 0"}, {"glyph": "⊽", "name": "vee-bar", "kind": "function", "monad": "double", "dyad": "nor", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["双莫", "雙莫"], "shortcut": " - 9"}, {"glyph": "~", "name": "tilde", "kind": "function", "monad": "not", "dyad": "without", "monad_rank": "0", "dyad_ranks": "∞ ∞", "hanzi": ["非无", "非無"], "shortcut": ""}, {"glyph": "=", "name": "equals", "kind": "function", "monad": "classify", "dyad": "equal", "monad_rank": "∞", "dyad_ranks": "0 0", "hanzi": ["等", "等"], "shortcut": ""}, {"glyph": "≠", "name": "not-equals", "kind": "function", "monad": "unique-mask", "dyad": "not-equal", "monad_rank": "∞", "dyad_ranks": "0 0", "hanzi": ["别初", "別初"], "shortcut": " +"}, {"glyph": "<", "name": "less-than", "kind": "function", "monad": "sort-up", "dyad": "less", "monad_rank": "∞", "dyad_ranks": "0 0", "hanzi": ["小", "小"], "shortcut": ""}, {"glyph": "≤", "name": "less-than-or-equal", "kind": "function", "monad": "decrement", "dyad": "less-equal", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["限退", "限退"], "shortcut": " <"}, {"glyph": ">", "name": "greater-than", "kind": "function", "monad": "sort-down", "dyad": "greater", "monad_rank": "∞", "dyad_ranks": "0 0", "hanzi": ["大", "大"], "shortcut": ""}, {"glyph": "≥", "name": "greater-than-or-equal", "kind": "function", "monad": "increment", "dyad": "greater-equal", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["达进", "達進"], "shortcut": " >"}, {"glyph": "⍳", "name": "iota", "kind": "function", "monad": "indices", "dyad": "index-of", "monad_rank": "1", "dyad_ranks": "∞ ∞", "hanzi": ["位", "位"], "shortcut": " i"}, {"glyph": "↦", "name": "right-arrow-from-bar", "kind": "function", "monad": "range", "dyad": "to", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["至", "至"], "shortcut": " l"}, {"glyph": ":", "name": "colon", "kind": "function", "monad": "unkey", "dyad": "keyed", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["键卸", "鍵卸"], "shortcut": ""}, {"glyph": "⍴", "name": "rho", "kind": "function", "monad": "shape", "dyad": "reshape", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["形", "形"], "shortcut": " r"}, {"glyph": "≢", "name": "equal-underbar-slash", "kind": "function", "monad": "tally", "dyad": "not-match", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["数异", "數異"], "shortcut": " ?"}, {"glyph": "≡", "name": "equal-underbar", "kind": "function", "monad": "depth", "dyad": "match", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["同深", "同深"], "shortcut": " ="}, {"glyph": ",", "name": "comma", "kind": "function", "monad": "ravel", "dyad": "catenate", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["连", "連"], "shortcut": ""}, {"glyph": "⍪", "name": "comma-bar", "kind": "function", "monad": "table", "dyad": "catenate-first", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["接矩", "接矩"], "shortcut": " - ,"}, {"glyph": "⊂", "name": "left-shoe", "kind": "function", "monad": "enclose", "dyad": "partitioned-enclose", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["包", "包"], "shortcut": " z"}, {"glyph": "⊃", "name": "right-shoe", "kind": "function", "monad": "mix", "dyad": "pick", "monad_rank": "0", "dyad_ranks": "1 ∞", "hanzi": ["选合", "選合"], "shortcut": " x"}, {"glyph": "⊆", "name": "left-shoe-underbar", "kind": "function", "monad": "nest", "dyad": "partition", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["巢段", "巢段"], "shortcut": " - z"}, {"glyph": "∊", "name": "epsilon", "kind": "function", "monad": "enlist", "dyad": "member", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["属展", "屬展"], "shortcut": " e"}, {"glyph": "∪", "name": "down-shoe", "kind": "function", "monad": "unique", "dyad": "union", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["并独", "併獨"], "shortcut": " v"}, {"glyph": "∩", "name": "up-shoe", "kind": "function", "monad": "duplicates", "dyad": "intersection", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["交重", "交重"], "shortcut": " c"}, {"glyph": "⍋", "name": "delta-stile", "kind": "function", "monad": "grade-up", "dyad": "grade-up-by", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["升", "升"], "shortcut": " \\ 7"}, {"glyph": "⍒", "name": "del-stile", "kind": "function", "monad": "grade-down", "dyad": "grade-down-by", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["降", "降"], "shortcut": " \\ g"}, {"glyph": "↑", "name": "up-arrow", "kind": "function", "monad": "first", "dyad": "take", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["取", "取"], "shortcut": " k"}, {"glyph": "↓", "name": "down-arrow", "kind": "function", "monad": "split", "dyad": "drop", "monad_rank": "1", "dyad_ranks": "1 ∞", "hanzi": ["去拆", "去拆"], "shortcut": " j"}, {"glyph": "⌽", "name": "circle-stile", "kind": "function", "monad": "reverse", "dyad": "rotate", "monad_rank": "1", "dyad_ranks": "0 1", "hanzi": ["转", "轉"], "shortcut": " 2"}, {"glyph": "⊖", "name": "circle-bar", "kind": "function", "monad": "reverse-first", "dyad": "rotate-first", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["纵", "縱"], "shortcut": " o -"}, {"glyph": "⍉", "name": "circle-backslash", "kind": "function", "monad": "transpose", "dyad": "reorder-axes", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["翻", "翻"], "shortcut": " o \\"}, {"glyph": "⊤", "name": "down-tack", "kind": "function", "monad": "binary-encode", "dyad": "encode", "monad_rank": "∞", "dyad_ranks": "1 0", "hanzi": ["编", "編"], "shortcut": " n"}, {"glyph": "⊥", "name": "up-tack", "kind": "function", "monad": "binary-decode", "dyad": "decode", "monad_rank": "1", "dyad_ranks": "1 1", "hanzi": ["译", "譯"], "shortcut": " b"}, {"glyph": "⍎", "name": "hydrant", "kind": "function", "monad": "execute", "dyad": "execute-in", "monad_rank": "1", "dyad_ranks": "∞ ∞", "hanzi": ["行", "行"], "shortcut": " o b"}, {"glyph": "⍕", "name": "thorn", "kind": "function", "monad": "format", "dyad": "format-spec", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["文", "文"], "shortcut": " o n"}, {"glyph": "⌷", "name": "squad", "kind": "function", "monad": "materialise", "dyad": "index", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["索", "索"], "shortcut": " q \\"}, {"glyph": "⌹", "name": "domino", "kind": "function", "monad": "matrix-inverse", "dyad": "matrix-divide", "monad_rank": "2", "dyad_ranks": "∞ 2", "hanzi": ["解逆", "解逆"], "shortcut": " q u"}, {"glyph": "#", "name": "hash", "kind": "function", "monad": "runs", "dyad": "replicate", "monad_rank": "∞", "dyad_ranks": "1 ∞", "hanzi": ["复", "複"], "shortcut": ""}, {"glyph": "↕", "name": "up-down-arrow", "kind": "function", "monad": "pairs", "dyad": "windows", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["窗", "窗"], "shortcut": " K"}, {"glyph": "⍭", "name": "stile-tilde", "kind": "function", "monad": "prime", "dyad": "prime-mode", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["素", "素"], "shortcut": " \\"}, {"glyph": "⨸", "name": "circle-divide", "kind": "function", "monad": "factors", "dyad": "factor-spec", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["因", "因"], "shortcut": " o u"}, {"glyph": "⌻", "name": "quad-jot", "kind": "function", "monad": "roots", "dyad": "polyval", "monad_rank": "1", "dyad_ranks": "1 0", "hanzi": ["零值", "零值"], "shortcut": " q t"}, {"glyph": "⍸", "name": "iota-underbar", "kind": "function", "monad": "where", "dyad": "interval-index", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["处间", "處間"], "shortcut": " - i"}, {"glyph": "⍷", "name": "epsilon-underbar", "kind": "function", "monad": "groups", "dyad": "find", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["寻群", "尋群"], "shortcut": " - e"}, {"glyph": "⊢", "name": "right-tack", "kind": "function", "monad": "same", "dyad": "right", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["右", "右"], "shortcut": " '"}, {"glyph": "⊣", "name": "left-tack", "kind": "function", "monad": "same-left", "dyad": "left", "monad_rank": "∞", "dyad_ranks": "∞ ∞", "hanzi": ["左", "左"], "shortcut": " ;"}, {"glyph": "¿", "name": "inverted-question", "kind": "function", "monad": "roll", "dyad": "deal", "monad_rank": "0", "dyad_ranks": "0 0", "hanzi": ["掷抽", "擲抽"], "shortcut": " /"}, {"glyph": "¨", "name": "diaeresis", "kind": "monadic-operator", "monad": "each", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["遍", "遍"], "shortcut": " 1"}, {"glyph": "ᵇ", "name": "superscript-b", "kind": "monadic-operator", "monad": "bitwise", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["按", "按"], "shortcut": " 6 b"}, {"glyph": "⍨", "name": "tilde-diaeresis", "kind": "monadic-operator", "monad": "self", "dyad": "commute", "monad_rank": "", "dyad_ranks": "", "hanzi": ["己换", "己換"], "shortcut": " 1 `"}, {"glyph": "↣", "name": "right-tail-arrow", "kind": "dyadic-operator", "monad": "before", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["先", "先"], "shortcut": " ."}, {"glyph": "⍤", "name": "jot-diaeresis", "kind": "dyadic-operator", "monad": "rank", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["秩", "秩"], "shortcut": " 1 t"}, {"glyph": "∘", "name": "jot", "kind": "dyadic-operator", "monad": "atop", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["承", "承"], "shortcut": " t"}, {"glyph": "⍠", "name": "quad-colon", "kind": "dyadic-operator", "monad": "axis", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["轴", "軸"], "shortcut": " q ;"}, {"glyph": "⍥", "name": "circle-diaeresis", "kind": "dyadic-operator", "monad": "over", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["经", "經"], "shortcut": " 1 o"}, {"glyph": "↢", "name": "left-tail-arrow", "kind": "dyadic-operator", "monad": "after", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["后", "後"], "shortcut": " ,"}, {"glyph": ".", "name": "dot", "kind": "dyadic-operator", "monad": "determinant", "dyad": "inner-product", "monad_rank": "", "dyad_ranks": "", "hanzi": ["内", "內"], "shortcut": ""}, {"glyph": "⊗", "name": "circle-times", "kind": "monadic-operator", "monad": "outer-product", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["表", "表"], "shortcut": " o m"}, {"glyph": "⌸", "name": "quad-equal", "kind": "monadic-operator", "monad": "key", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["组", "組"], "shortcut": " q ="}, {"glyph": "⍣", "name": "star-diaeresis", "kind": "dyadic-operator", "monad": "power", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["次止", "次止"], "shortcut": " 1 8"}, {"glyph": "⇄", "name": "right-left-arrows", "kind": "monadic-operator", "monad": "optimize", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["优", "優"], "shortcut": " 4"}, {"glyph": "⊘", "name": "circle-slash", "kind": "dyadic-operator", "monad": "valences", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["兼", "兼"], "shortcut": " o /"}, {"glyph": "@", "name": "at", "kind": "dyadic-operator", "monad": "under", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["于", "於"], "shortcut": ""}, {"glyph": "∂", "name": "partial", "kind": "monadic-operator", "monad": "derivative", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["导梯", "導梯"], "shortcut": " f"}, {"glyph": "⍚", "name": "diamond-underbar", "kind": "dyadic-operator", "monad": "agenda", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["择", "擇"], "shortcut": " - `"}, {"glyph": "⌺", "name": "quad-diamond", "kind": "dyadic-operator", "monad": "stencil", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["邻", "鄰"], "shortcut": " q `"}, {"glyph": "/", "name": "slash", "kind": "monadic-operator", "monad": "reduce", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["总", "總"], "shortcut": ""}, {"glyph": "⌿", "name": "slash-bar", "kind": "monadic-operator", "monad": "reduce-first", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["汇", "匯"], "shortcut": " - /"}, {"glyph": "\\", "name": "backslash", "kind": "monadic-operator", "monad": "scan", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["累", "累"], "shortcut": ""}, {"glyph": "⍀", "name": "backslash-bar", "kind": "monadic-operator", "monad": "scan-first", "dyad": "", "monad_rank": "", "dyad_ranks": "", "hanzi": ["续", "續"], "shortcut": " - \\"}],{"alt_aliases": {"£": "#"}, "unshifted": {"!": "1", "@": "2", "#": "3", "$": "4", "%": "5", "^": "6", "&": "7", "*": "8", "(": "9", ")": "0", "~": "`", "_": "-", "|": "\\", ":": ";"}, "optional_shift": {"!": "1", "@": "2", "#": "3", "$": "4", "%": "5", "^": "6", "&": "7", "*": "8", "(": "9", "_": "-"}, "option": {"`": "⋄", "1": {"state": "diaeresis"}, "2": "⌽", "3": "√", "4": "⇄", "5": {"state": "subscript"}, "6": {"state": "superscript"}, "7": "∆", "8": "∞", "9": "∨", "0": "∧", ")": "⍬", "!": "¹", "@": "²", "#": "³", "$": "⁴", "%": "⁵", "^": "⁶", "&": "⁷", "*": "⁸", "(": "⁹", "_": "⁻", "-": {"state": "bar"}, "=": "≡", "q": {"state": "quad"}, "w": "⍵", "e": "∊", "r": "⍴", "t": "∘", "y": "•", "u": "÷", "i": "⍳", "o": {"state": "circle"}, "p": "π", "+": "≠", "\\": {"state": "stile"}, "a": "⍺", "s": "⌈", "d": "⌊", "f": "∂", "g": "∇", "h": "←", "j": "↓", "k": "↑", "K": "↕", "l": "↦", ";": "⊣", ":": "⁝", "'": "⊢", "z": "⊂", "x": "⊃", "c": "∩", "v": "∪", "b": "⊥", "n": "⊤", "m": "×", ",": "↢", ".": "↣", "<": "≤", ">": "≥", "/": "¿", "?": "≢"}, "states": {"diaeresis": {"terminator": "¨", "keys": {"t": "⍤", "o": "⍥", "*": "⍣", "~": "⍨", "g": "⍢", "8": "⍣", "`": "⍨"}}, "superscript": {"terminator": "⁶", "keys": {"0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹", ")": "⁰", "!": "¹", "@": "²", "#": "³", "$": "⁴", "%": "⁵", "^": "⁶", "&": "⁷", "*": "⁸", "(": "⁹", "-": {"state": "superscript-minus"}, "b": "ᵇ", "t": "ᵀ", "u": "ᵘ"}}, "superscript-minus": {"terminator": "⁻", "keys": {"0": "⁻⁰", "1": "⁻¹", "2": "⁻²", "3": "⁻³", "4": "⁻⁴", "5": "⁻⁵", "6": "⁻⁶", "7": "⁻⁷", "8": "⁻⁸", "9": "⁻⁹", ")": "⁻⁰", "!": "⁻¹", "@": "⁻²", "#": "⁻³", "$": "⁻⁴", "%": "⁻⁵", "^": "⁻⁶", "&": "⁻⁷", "*": "⁻⁸", "(": "⁻⁹"}}, "subscript": {"terminator": "₅", "keys": {"0": "₀", "1": "₁", "2": "₂", "3": "₃", "4": "₄", "5": "₅", "6": "₆", "7": "₇", "8": "₈", "9": "₉", ")": "₀", "!": "₁", "@": "₂", "#": "₃", "$": "₄", "%": "₅", "^": "₆", "&": "₇", "*": "₈", "(": "₉", "x": "ₓ", "j": "ⱼ", "e": "ₑ", "r": "ᵣ", "h": "ₕ", "s": "ₛ", "p": "ₚ", "-": {"state": "subscript-minus"}}}, "subscript-minus": {"terminator": "₋", "keys": {"0": "₋₀", "1": "₋₁", "2": "₋₂", "3": "₋₃", "4": "₋₄", "5": "₋₅", "6": "₋₆", "7": "₋₇", "8": "₋₈", "9": "₋₉", ")": "₋₀", "!": "₋₁", "@": "₋₂", "#": "₋₃", "$": "₋₄", "%": "₋₅", "^": "₋₆", "&": "₋₇", "*": "₋₈", "(": "₋₉"}}, "bar": {"terminator": "¯", "keys": {",": "⍪", "\\": "⍀", "/": "⌿", "a": "⍶", "w": "⍹", "7": "⍙", "`": "⍚", "0": "⊼", "9": "⊽", "e": "⍷", "i": "⍸", "z": "⊆"}}, "quad": {"terminator": "⎕", "keys": {"t": "⌻", ":": "⍠", "=": "⌸", "u": "⌹", "|": "⌷", "`": "⌺", ";": "⍠", "\\": "⌷"}}, "circle": {"terminator": "○", "keys": {"-": "⊖", "\\": "⍉", "/": "⊘", "*": "⍟", "m": "⊗", "u": "⨸", "8": "⍟", "c": "⍝", "b": "⍎", "n": "⍕"}}, "stile": {"terminator": "⍭", "keys": {"7": "⍋", "g": "⍒"}}}},{"⍳": [{"label": "One input · zero-based indices", "code": "⍳4"}, {"label": "Two inputs · index of", "code": "\"abc\"⍳\"cabz\""}], "↦": [{"label": "One input · range from one", "code": "↦4"}, {"label": "Two inputs · inclusive range", "code": "0↦4"}], "=": [{"label": "One input · classify equal items", "code": "=4 7 4 9"}, {"label": "Two inputs · compare each item", "code": "1 2 3 = 1 9 3"}], "≠": [{"label": "One input · first occurrences", "code": "≠4 7 4 9"}, {"label": "Two inputs · not equal", "code": "1 2 3 ≠ 1 9 3"}], "≡": [{"label": "One input · nesting depth", "code": "≡1 2 3"}, {"label": "Two inputs · whole-array match", "code": "1 2 3 ≡ 1 2 3"}], "≢": [{"label": "One input · count items", "code": "≢2 4 9"}, {"label": "Two inputs · whole-array mismatch", "code": "1 2 3 ≢ 1 2"}], "⍴": [{"label": "One input · shape", "code": "⍴1 2 3"}, {"label": "Two inputs · reshape", "code": "2 3⍴⍳6"}], "×": [{"label": "One input · sign", "code": "×¯3 0 4"}, {"label": "Two inputs · multiply", "code": "3×1 2 3"}], "÷": [{"label": "One input · reciprocal", "code": "÷1 2 4"}, {"label": "Two inputs · divide", "code": "12÷3"}], "+": [{"label": "Two inputs · add", "code": "1 2 3 + 10"}], "-": [{"label": "One input · negate", "code": "-1 2 3"}, {"label": "Two inputs · subtract", "code": "10-3"}], "/": [{"label": "Reduce · sum a list", "code": "+/2 4 9"}, {"label": "Reduce · product", "code": "×/1 2 3 4"}], "\\": [{"label": "Scan · running sum", "code": "+\\1 2 3 4"}], "⌽": [{"label": "One input · reverse", "code": "⌽1 2 3"}, {"label": "Two inputs · rotate", "code": "1⌽1 2 3"}], "↑": [{"label": "One input · first", "code": "↑10 20 30"}, {"label": "Two inputs · take", "code": "2↑10 20 30"}], "↓": [{"label": "Two inputs · drop", "code": "1↓10 20 30"}], "⎕": [{"label": "Display a result", "code": "⎕←1 2 3"}], "⍟": [{"label": "One input · natural logarithm", "code": "⍟1 2 4"}, {"label": "Two inputs · logarithm base two", "code": "2⍟8"}], "√": [{"label": "One input · square root", "code": "√1 4 9"}, {"label": "Two inputs · cube root", "code": "3√27"}]});
 };if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
 })();

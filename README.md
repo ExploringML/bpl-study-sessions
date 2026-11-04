@@ -1,8 +1,10 @@
 # BPL Study Sessions for SolveIt
 
-Ten study dialogues following [Jeremy Howard's APL study group](https://www.youtube.com/playlist?list=PLfYUBJiXbdtSgU6S_3l6pX-4hQYKNJZFU), adapted while learning [BasedPL](https://answerdotai.github.io/basedpl/), with a shared glyph toolbar for SolveIt's editor.
+Twelve study dialogues following [Jeremy Howard's APL study group](https://www.youtube.com/playlist?list=PLfYUBJiXbdtSgU6S_3l6pX-4hQYKNJZFU), adapted while learning [BasedPL](https://answerdotai.github.io/basedpl/), with a shared glyph toolbar for SolveIt's editor.
 
 The [Scratchpad](Scratchpad.ipynb) contains additional BPL experiments and a walkthrough of means with the Under operator.
+
+[Study Session 11](Study%20Session%2011.ipynb) and [Study Session 12](Study%20Session%2012.ipynb) continue the worked examples. [BPL Dots](BPL%20Dots.ipynb) is a self-contained dialogue for displaying arrays as static or animated dots: run its setup cell, then use `%%bpl --dots` or `%%bpl --adots`. Animated cells use their own browser workspace and need internet access to load BPL.
 
 These are learning notebooks: examples include experiments and comparisons between APL and BPL. Run them in lesson order; some cells deliberately redefine functions or demonstrate different behaviour.
 
@@ -149,48 +151,44 @@ Publication checks (22 October 2026): all 11 notebooks passed format validation.
 
 ## Expression Explorer
 
-Click **↳** beside a `%%bpl` code cell to explore it. If the cell contains several
-expressions, choose one from the dropdown.
+Run a `%%bpl` cell, then click **↳** beside it. Read the whole-expression overview first. If the cell contains several expressions, choose one from the dropdown.
 
-- **Parts:** select a coloured glyph or its annotation to read what it does.
-  Use the small arrows to see further annotations in longer expressions.
-- **Grouping:** match the coloured source to the groups below, including the
-  name and assignment arrow. **Source** and **Highlight groups** only change the
-  display.
-- **Walk Through:** use **Next step** to follow the values. Run the cell after
-  defining its inputs so the inspector can record them.
+- **Parts:** select a complete section of the expression, then use **Explore inside** to see its smaller sections. The breadcrumbs take you back out. **Glyph reference** explains individual symbols.
+- **Focus:** move the selection window across the expression and drag either edge to resize it. The start and end sliders also work with the keyboard. **Snap to complete section** selects the surrounding BPL section when your selection is only a fragment.
+- **Grouping:** matching colours connect the source to its functions, arguments and operands. Select a group to inspect it. The disclosure below shows BPL's fully bracketed expression.
+- **Walk Through:** follow the native intermediate values and shapes. Expand **Inside this operation** to inspect inner steps. Printed output is shown separately from the returned value.
+- **Compare:** edit a copy of the cell and click **Compare expressions**. Both versions use the saved starting inputs; the lesson cell and its variables stay unchanged.
 
-The Craft starts the inspector automatically. To refresh it in an open dialogue,
-run:
+Click **Explain in context** for short explanations of the whole expression and its meaningful sections. This uses the dialogue's existing SolveIt model. BPL still supplies the structure and values; model-written explanations are labelled **SolveIt**. No separate model API key is needed. The temporary prompt is removed after the browser confirms saving the notes. If generation fails, the prompt remains so you can inspect the error.
+
+The Craft starts the explorer automatically. In an already running study dialogue, use its small refresh cell:
 
 ```python
-setup_bpl()
-await setup_bpl_explorer()
+await reload_bpl_explorer()
 ```
 
-Then rerun the BPL cell you want to explore. Refreshing clears recorded inputs.
-Try the DNA difference function, `,⌸ a`, `{≢ ⍵}⌸ a` with `a` set to `"banana"`, or
-`+/ c =⊗ a`.
+Then rerun the BPL cell you want to inspect. If an already open browser page still shows the previous interface, reload the page. Refreshing the inspector clears its saved captures, but keeps the lesson variables. Contextual notes are saved in that browser for the inspected capture; a new capture may need a new explanation.
 
-Parts uses BPL's native parser. Supported grouping views use BPL's assembled
-function tree, with source spans checked against it. Walkthroughs recompute
-selected pure BPL operations from inputs recorded for that cell and source; they
-are not complete evaluator traces. Opening the panel does not rerun the notebook
-cell. Unsupported expressions explicitly say which view is unavailable. No LLM
-is involved.
+Try `3 4{⎕←⍺ ⍵ ⋄ ⍺=⍵}3 5`: open the function body to see the printing and comparison statements. In **Compare**, change `=` to `≡` to compare element-wise equality with whole-array matching.
 
-The implementation targets the installed BasedPL 0.1.72 interfaces, including
-private function-inspection APIs. A newer release may require compatibility
-updates. Recordings stay in the current kernel and are cleared on restart.
+### Where the Information Comes From
 
-All explorer code lives in the Craft files: its Python setup is a marked cell in
-`CRAFT.ipynb`, and its interface and scoped styles are a marked block in
-`CRAFT.js`. There are no additional explorer source files to install.
+BPL's native parser supplies syntax and source positions. Its `]dissect` command supplies the fully bracketed expression, and native function inspection supplies the operands of derived functions. The explorer matches these structures back to the source; it does not use an LLM or a second set of precedence rules.
 
-To remove it, delete the cell marked `BEGIN BPL EXPRESSION EXPLORER SETUP` and the
-complete JavaScript block between `BEGIN BPL EXPRESSION EXPLORER V2` and its
-matching `END` marker. Remove any `setup_bpl_explorer()` calls, then restart the
-dialogue kernel and reload the page. The palette and output scrolling remain
-separate.
+The walkthrough reproduces operations with the cell's saved inputs in a separate BPL process and checks the final result against the saved run. This isolation is necessary because BPL workspace handles in one Python process share a session. Opening the panel does not rerun the notebook cell or change its variables.
 
-Run `python tests/test_expression_explorer.py` to check the explorer implementation extracted directly from `CRAFT.ipynb`. All 12 regression tests passed with BPL 0.1.72 on 23 October 2026.
+The displayed steps explain the language-level calculation. They are **not a debugger trace** of BPL's internal, potentially optimised execution. Key, Rank and Each use the native operators to obtain the groups or cells passed to their operands. Other expanded cases include composition, forks, Over, numeric Power, invertible numeric Under, small reductions, outer products and simple dfns.
+
+The audit also examined `workspace.inspect`, `•explain` and the Rust recording structures. `inspect` provides function source and help; `•explain` describes optimisation. The richer Rust recording structures are not exposed as a general Python tracing API. See the [native dissection implementation](https://github.com/AnswerDotAI/basedpl/blob/main/src/eval/dissect.rs) and [BPL's Python interface](https://answerdotai.github.io/basedpl/python.html).
+
+### Limits and Maintenance
+
+Input requests, random operations and external effects are not replayed. Explicit display statements such as `⎕←` can be replayed in isolation, with their printed output kept separate from the returned result. Large arrays, long computations and deep expansions have limits. When an inner operation cannot be expanded, its verified inputs and result remain available; the explorer does not invent missing steps. A mismatch with the saved result suppresses intermediate values and asks you to rerun the cell.
+
+Captures stay in the current kernel, with the latest 32 cell/source captures retained. Restarting or refreshing the inspector clears them. Native inspection uses some private BPL interfaces, so new BPL releases may need compatibility updates. The separate replay process currently requires SolveIt's Linux host.
+
+All runtime code lives in the Craft files: one marked Python cell in `CRAFT.ipynb`, and one marked JavaScript block in `CRAFT.js`, and scoped styles in a marked block in `CRAFT.css`. There are no additional explorer runtime files to install.
+
+To remove it, delete the cell marked `BEGIN BPL EXPRESSION EXPLORER SETUP` and the complete JavaScript block between `BEGIN BPL EXPRESSION EXPLORER V2` and its matching `END` marker. Remove the matching `BEGIN BPL EXPRESSION EXPLORER` CSS block and any `setup_bpl_explorer()` or `reload_bpl_explorer()` calls, then restart the dialogue kernel and reload the page. The palette and output scrolling remain separate.
+
+The native regression checks passed with BPL 0.1.73 on 24 October 2026. The unified explorer was also tested in Study Session 11, including contextual explanations, saved-note acknowledgement, temporary-prompt cleanup, section selection, printed output and comparison.
