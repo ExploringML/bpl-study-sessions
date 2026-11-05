@@ -6,7 +6,7 @@ I started this project to learn BasedPL (BPL) by working through the fast.ai APL
 
 SolveIt is Answer.AI's online workspace for coding and learning with AI. A dialog is a notebook that holds your notes, code and results together.
 
-Visit the SolveIt homepage to check whether registration is open or join the mailing list for updates. Use Sign up to create an account when registration is open, or Sign in to access an existing workspace. [SolveIt homepage](https://solve.it.com/) · [Sign up](https://solve.it.com/signup) · [Sign in](https://solve.it.com/signin)
+[SolveIt homepage](https://solve.it.com/) · [Sign up for SolveIt](https://solve.it.com/signup)
 
 ## Install in SolveIt
 
