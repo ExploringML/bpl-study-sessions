@@ -28,22 +28,9 @@ The [Scratchpad](Scratchpad.ipynb) contains additional BPL experiments and a wal
 
 [BPL Dots](BPL%20Dots.ipynb) is a self-contained dialog for displaying arrays as static or animated dots: run its setup cell, then use `%%bpl --dots` or `%%bpl --adots`. Animated cells use their own browser workspace and need internet access to load BPL.
 
-## Glyph Coverage
-
-Checked against **BPL 0.1.61 installed in SolveIt**: **151 insertable entries** cover all 99 entries in `symbols` and every additional insertion from `layout.json`, including the original toolbar's menu combinations. The loader reads both sources from the installed package.
-
-| Group | Entries | Includes |
-|---|---:|---|
-| Core symbols | 99 | Functions, operators and other catalogue symbols |
-| Superscripts | 23 | `⁰`–`⁹`, `⁻`, `ᵀ`, `ᵘ`, and `⁻⁰`–`⁻⁹` |
-| Subscripts | 25 | `₀`–`₉`, `₋`, `ₓ`, `ⱼ`, `ₑ`, `ᵣ`, and `₋₀`–`₋₉` |
-| Other characters | 4 | `∆`, `⍙`, `^` and `_` |
-
-**Additional characters** combines the last three groups: 30 special characters, 20 two-character combinations and two ordinary keyboard characters. For example, `⁻¹` inserts two characters together; it is not another individual glyph. The help panel identifies these combinations. `^` and `_` are grouped under Other characters, though they came from the original superscript and subscript menus.
-
-Superscripts and subscripts are BPL syntax: `x²` squares a value, `f²` repeats a function twice, and `v₁` selects index 1. See the [official reference](https://answerdotai.github.io/basedpl/scripts.html). `^` is retained for keyboard-menu parity; BPL powers use `*` or superscript digits.
-
 ## Quick Start
+
+The toolbar gets its glyphs from the installed BPL package. [Official BPL glyph reference](https://answerdotai.github.io/basedpl/glyphs.html)
 
 1. Open a dialog. The toolbar loads automatically; run `setup_bpl()` if you need to refresh it.
 2. The strip starts with **Core symbols**. Click a glyph to insert it at the cursor, replacing any selected text.
@@ -59,7 +46,7 @@ Open the glyph browser with the book icon, then search by character, name or mea
 
 Filters start with **All**, **Core symbols**, **Additional characters**, **Favourites** and **Recently used**. These are followed by **Numbers**, **Compare**, **Range & index**, **Arrays**, **Functions**, **Writing code**, **Superscripts**, **Subscripts** and **Other characters**. Categories overlap: `²` appears under Numbers and Functions, while `₋₁` appears under Range & index and Arrays. Each setup starts on Core symbols.
 
-Search applies within the selected filter. The header shows `All entries · 151`, a category and count, or the match count. Clear search and choose All to restore the complete list.
+Search applies within the selected filter. The header shows the number of entries in the current category or the number of search matches. Clear search and choose All to restore the complete list.
 
 In **All**, the main strip shows the core glyphs plus three menus: **² Superscripts**, **₂ Subscripts** and **∆ Other characters**. Additional characters shows just those menus. They open upwards when there is room; selecting an entry inserts it and closes the menu. Escape returns focus to its menu button. Click elsewhere to dismiss it.
 
@@ -143,17 +130,13 @@ When changing the shared setup, stage the relevant `CRAFT.*` files and README to
 
 Other users can update their copy with `git pull --ff-only` when their working tree is clean. Keep personal work committed or backed up before updating. Reload a dialog after pulling browser changes; a new dialog kernel picks up the current Craft Python code.
 
-## Validation and Credits
-
-Migration checks covered all six session kernels using BPL 0.1.61, a sum evaluating to 6, automatic toolbar loading, all 151 entries, Code-only magic insertion, plain insertion in Note, Windows Alt+M, backtick `noteq` completion and Ctrl+Shift+8. Lesson cells and their saved outputs were compared against the pre-migration backup. Upgrade checks also ran all 104 %%bpl cells from Sessions 3-6 in isolated processes without exceptions. Sessions 1-2 have no %%bpl cells. Saved lesson outputs were preserved; these checks do not assert every numerical result or rerun every Python/APL cell. All six isolated dialog copies loaded the updated toolbar and Browse panel without browser errors. The 34 custom practice examples also ran without exceptions. Mac hardware testing remains outstanding.
+## Credits
 
 BasedPL is developed by Answer.AI and contributors under Apache-2.0. The keyboard integration adapts its browser input code and the APL language bar by Nikolay G. Nikolov and Adam Brudzevski; full attribution and licence texts are retained in the opening comment of CRAFT.js. The study material follows Jeremy Howard's linked course; it is not an official course distribution.
 
 A snippet library and separate playground remain future ideas.
 
-Latest-release update checks (22 October 2026): Craft startup, its keyboard patches and browser bootstrap generation passed in a fresh BPL 0.1.67 process. Sum, geometric mean and axis-catenate checks passed. The installer checks for the newest compatible stable release rather than retaining that test version.
-
-Publication checks (22 October 2026): all 11 notebooks passed format validation. All 44 BPL cells in Session 9 and 13 in Scratchpad ran successfully in isolated BPL 0.1.67 processes; the Craft Python cells compiled.
+[Validation History](VALIDATION.md) records the migration, publication and Expression Explorer checks.
 
 ## Expression Explorer
 
@@ -196,5 +179,3 @@ Captures stay in the current kernel, with the latest 32 cell/source captures ret
 All runtime code lives in the Craft files: one marked Python cell in `CRAFT.ipynb`, and one marked JavaScript block in `CRAFT.js`, and scoped styles in a marked block in `CRAFT.css`. There are no additional explorer runtime files to install.
 
 To remove it, delete the cell marked `BEGIN BPL EXPRESSION EXPLORER SETUP` and the complete JavaScript block between `BEGIN BPL EXPRESSION EXPLORER V2` and its matching `END` marker. Remove the matching `BEGIN BPL EXPRESSION EXPLORER` CSS block and any `setup_bpl_explorer()` or `reload_bpl_explorer()` calls, then restart the dialog kernel and reload the page. The palette and output scrolling remain separate.
-
-The native regression checks passed with BPL 0.1.73 on 24 October 2026. The unified explorer was also tested in Study Session 11, including contextual explanations, saved-note acknowledgement, temporary-prompt cleanup, section selection, printed output and comparison.
