@@ -1,26 +1,32 @@
 # BPL Study Sessions for SolveIt
 
-Twelve study dialogues following [Jeremy Howard's APL study group](https://www.youtube.com/playlist?list=PLfYUBJiXbdtSgU6S_3l6pX-4hQYKNJZFU), adapted while learning [BasedPL](https://answerdotai.github.io/basedpl/), with a shared glyph toolbar for SolveIt's editor.
+I started this project to learn BasedPL (BPL) by working through the fast.ai APL Study Group videos in SolveIt. The series has 17 videos, and the goal is one dialog per video, with runnable BPL examples and notes. The dialogs share a toolbar for entering BPL symbols. Run the cells in order so later examples have the definitions they need. [APL Study Group playlist](https://www.youtube.com/playlist?list=PLfYUBJiXbdtSgU6S_3l6pX-4hQYKNJZFU) · [BasedPL documentation](https://answerdotai.github.io/basedpl/)
 
-The [Scratchpad](Scratchpad.ipynb) contains additional BPL experiments and a walkthrough of means with the Under operator.
+## About SolveIt
 
-[Study Session 11](Study%20Session%2011.ipynb) and [Study Session 12](Study%20Session%2012.ipynb) continue the worked examples. [BPL Dots](BPL%20Dots.ipynb) is a self-contained dialogue for displaying arrays as static or animated dots: run its setup cell, then use `%%bpl --dots` or `%%bpl --adots`. Animated cells use their own browser workspace and need internet access to load BPL.
+SolveIt is Answer.AI's online workspace for coding and learning with AI. A dialog is a notebook that holds your notes, code and results together.
 
-These are learning notebooks: examples include experiments and comparisons between APL and BPL. Run them in lesson order; some cells deliberately redefine functions or demonstrate different behaviour.
+Visit the SolveIt homepage to check whether registration is open or join the mailing list for updates. Use Sign up to create an account when registration is open, or Sign in to access an existing workspace. [SolveIt homepage](https://solve.it.com/) · [Sign up](https://solve.it.com/signup) · [Sign in](https://solve.it.com/signin)
 
 ## Install in SolveIt
 
-Clone this repository into any folder on your SolveIt instance:
+Open the terminal in your SolveIt workspace and clone this repository into the folder where you want to keep the sessions.
 
 ```bash
 git clone https://github.com/ExploringML/bpl-study-sessions.git
 ```
 
-Open any Study Session dialogue from the cloned folder. Keep the three CRAFT files together alongside the sessions. SolveIt loads them automatically for the folder and its subfolders. On each new kernel startup, CRAFT.ipynb checks PyPI and upgrades basedpl to the latest compatible stable release with pip install --upgrade. No release number is pinned. The update helper and package setup live in CRAFT.ipynb; no requirements file is needed. An internet connection is required for the update check.
+Open any Study Session dialog from the cloned folder. Keep the three CRAFT files together alongside the sessions. SolveIt loads them automatically for the folder and its subfolders. On each new kernel startup, CRAFT.ipynb checks PyPI and upgrades basedpl to the latest compatible stable release with pip install --upgrade. No release number is pinned. The update helper and package setup live in CRAFT.ipynb; no requirements file is needed. An internet connection is required for the update check.
 
-Run check_bpl_versions() in a Python cell to list installed and available releases without changing packages, or ensure_latest_bpl() to check and install updates. If an upgrade changes a package already loaded in a kernel, restart that dialogue kernel and rerun: reinstalling a native library does not replace the loaded code. Session 9 reports both running and installed versions. Craft regenerates the keyboard and browser bootstrap from the installed package on startup. If an upstream browser API changes, the keyboard integration reports which patch needs updating.
+Run check_bpl_versions() in a Python cell to list installed and available releases without changing packages, or ensure_latest_bpl() to check and install updates. If an upgrade changes a package already loaded in a kernel, restart that dialog kernel and rerun: reinstalling a native library does not replace the loaded code. Session 9 reports both running and installed versions. Craft regenerates the keyboard and browser bootstrap from the installed package on startup. If an upstream browser API changes, the keyboard integration reports which patch needs updating.
 
 The toolbar works in Code, Note, Prompt and Raw. No template or hidden helper folder is required. Duplicate a completed session in the same folder to begin the next lesson; its new kernel inherits the same Craft setup.
+
+## Extra Examples
+
+The [Scratchpad](Scratchpad.ipynb) contains additional BPL experiments and a walkthrough of means with the Under operator.
+
+[BPL Dots](BPL%20Dots.ipynb) is a self-contained dialog for displaying arrays as static or animated dots: run its setup cell, then use `%%bpl --dots` or `%%bpl --adots`. Animated cells use their own browser workspace and need internet access to load BPL.
 
 ## Glyph Coverage
 
@@ -39,7 +45,7 @@ Superscripts and subscripts are BPL syntax: `x²` squares a value, `f²` repeats
 
 ## Quick Start
 
-1. Open a dialogue. The toolbar loads automatically; run `setup_bpl()` if you need to refresh it.
+1. Open a dialog. The toolbar loads automatically; run `setup_bpl()` if you need to refresh it.
 2. The strip starts with **Core symbols**. Click a glyph to insert it at the cursor, replacing any selected text.
 3. In Code, click the small **BPL** button beside Filter to add `%%bpl` before typing. Glyph insertion also adds it when needed. Note, Prompt and Raw get plain text.
 4. Use the filter icon to choose a category, or the book icon to browse and search.
@@ -75,7 +81,7 @@ Descriptions show one-input and two-input meanings for functions, or the kind an
 
 **Recently used** keeps the last 20 different entries inserted through the toolbar, newest first. Using one again moves it to the front. Inserting an example records its associated entry; hovering, pinning and typing directly do not add anything. Undoing an insertion does not remove it from this history. **Clear history** in Browse empties the list.
 
-Favourites and recent entries use this browser profile's local storage for the SolveIt site, shared across dialogues on that site. They survive reloads but do not sync to other browsers or devices; clearing site data removes them. Only entry strings are stored, not editor contents. If browser storage is unavailable, they last for the current palette session.
+Favourites and recent entries use this browser profile's local storage for the SolveIt site, shared across dialogs on that site. They survive reloads but do not sync to other browsers or devices; clearing site data removes them. Only entry strings are stored, not editor contents. If browser storage is unavailable, they last for the current palette session.
 
 Storage keys: `solveit.bpl.favourites.v1` and `solveit.bpl.recent.v1`.
 
@@ -108,9 +114,9 @@ Tab moves through controls; Enter or Space activates a button. Focusing a Browse
 | `CRAFT.js` | Palette, catalogue builder and generated browser startup data |
 | `CRAFT.css` | Toolbar and Browse layout, colours and sizing |
 
-The former `examples.json` is the editable `bpl_examples` dictionary in the Craft dialogue. The former `keyboard.py` is `_bpl_keyboard()`. The catalogue builder is the first function in `CRAFT.js`. There are no reads from `.bpl-palette` or machine-specific absolute paths.
+The former `examples.json` is the editable `bpl_examples` dictionary in the Craft dialog. The former `keyboard.py` is `_bpl_keyboard()`. The catalogue builder is the first function in `CRAFT.js`. There are no reads from `.bpl-palette` or machine-specific absolute paths.
 
-Browser startup data is generated so the toolbar appears immediately on opening or reloading, including before a code cell runs. After changing the examples or keyboard function in the Craft dialogue, run the changed definition cells, then `rebuild_bpl_browser()`. Reload open study dialogues to load the rebuilt JavaScript. `setup_bpl()` refreshes the current dialogue; it does not reset lesson variables.
+Browser startup data is generated so the toolbar appears immediately on opening or reloading, including before a code cell runs. After changing the examples or keyboard function in the Craft dialog, run the changed definition cells, then `rebuild_bpl_browser()`. Reload open study dialogs to load the rebuilt JavaScript. `setup_bpl()` refreshes the current dialog; it does not reset lesson variables.
 
 For main-strip sizes, edit the defaults near the start of `window.bplCraftPalette` in `CRAFT.js` and the `size` dictionary in `setup_bpl()`:
 
@@ -135,11 +141,11 @@ git push
 
 When changing the shared setup, stage the relevant `CRAFT.*` files and README too. Notebook files can contain saved outputs and attachments: review `git diff --stat` and the files you are publishing. Temporary checks and backups are excluded by `.gitignore`.
 
-Other users can update their copy with `git pull --ff-only` when their working tree is clean. Keep personal work committed or backed up before updating. Reload a dialogue after pulling browser changes; a new dialogue kernel picks up the current Craft Python code.
+Other users can update their copy with `git pull --ff-only` when their working tree is clean. Keep personal work committed or backed up before updating. Reload a dialog after pulling browser changes; a new dialog kernel picks up the current Craft Python code.
 
 ## Validation and Credits
 
-Migration checks covered all six session kernels using BPL 0.1.61, a sum evaluating to 6, automatic toolbar loading, all 151 entries, Code-only magic insertion, plain insertion in Note, Windows Alt+M, backtick `noteq` completion and Ctrl+Shift+8. Lesson cells and their saved outputs were compared against the pre-migration backup. Upgrade checks also ran all 104 %%bpl cells from Sessions 3-6 in isolated processes without exceptions. Sessions 1-2 have no %%bpl cells. Saved lesson outputs were preserved; these checks do not assert every numerical result or rerun every Python/APL cell. All six isolated dialogue copies loaded the updated toolbar and Browse panel without browser errors. The 34 custom practice examples also ran without exceptions. Mac hardware testing remains outstanding.
+Migration checks covered all six session kernels using BPL 0.1.61, a sum evaluating to 6, automatic toolbar loading, all 151 entries, Code-only magic insertion, plain insertion in Note, Windows Alt+M, backtick `noteq` completion and Ctrl+Shift+8. Lesson cells and their saved outputs were compared against the pre-migration backup. Upgrade checks also ran all 104 %%bpl cells from Sessions 3-6 in isolated processes without exceptions. Sessions 1-2 have no %%bpl cells. Saved lesson outputs were preserved; these checks do not assert every numerical result or rerun every Python/APL cell. All six isolated dialog copies loaded the updated toolbar and Browse panel without browser errors. The 34 custom practice examples also ran without exceptions. Mac hardware testing remains outstanding.
 
 BasedPL is developed by Answer.AI and contributors under Apache-2.0. The keyboard integration adapts its browser input code and the APL language bar by Nikolay G. Nikolov and Adam Brudzevski; full attribution and licence texts are retained in the opening comment of CRAFT.js. The study material follows Jeremy Howard's linked course; it is not an official course distribution.
 
@@ -159,9 +165,9 @@ Run a `%%bpl` cell, then click **↳** beside it. Read the whole-expression over
 - **Walk Through:** follow the native intermediate values and shapes. Expand **Inside this operation** to inspect inner steps. Printed output is shown separately from the returned value.
 - **Compare:** edit a copy of the cell and click **Compare expressions**. Both versions use the saved starting inputs; the lesson cell and its variables stay unchanged.
 
-Click **Explain in context** for short explanations of the whole expression and its meaningful sections. This uses the dialogue's existing SolveIt model. BPL still supplies the structure and values; model-written explanations are labelled **SolveIt**. No separate model API key is needed. The temporary prompt is removed after the browser confirms saving the notes. If generation fails, the prompt remains so you can inspect the error.
+Click **Explain in context** for short explanations of the whole expression and its meaningful sections. This uses the dialog's existing SolveIt model. BPL still supplies the structure and values; model-written explanations are labelled **SolveIt**. No separate model API key is needed. The temporary prompt is removed after the browser confirms saving the notes. If generation fails, the prompt remains so you can inspect the error.
 
-The Craft starts the explorer automatically. In an already running study dialogue, use its small refresh cell:
+The Craft starts the explorer automatically. In an already running study dialog, use its small refresh cell:
 
 ```python
 await reload_bpl_explorer()
@@ -189,6 +195,6 @@ Captures stay in the current kernel, with the latest 32 cell/source captures ret
 
 All runtime code lives in the Craft files: one marked Python cell in `CRAFT.ipynb`, and one marked JavaScript block in `CRAFT.js`, and scoped styles in a marked block in `CRAFT.css`. There are no additional explorer runtime files to install.
 
-To remove it, delete the cell marked `BEGIN BPL EXPRESSION EXPLORER SETUP` and the complete JavaScript block between `BEGIN BPL EXPRESSION EXPLORER V2` and its matching `END` marker. Remove the matching `BEGIN BPL EXPRESSION EXPLORER` CSS block and any `setup_bpl_explorer()` or `reload_bpl_explorer()` calls, then restart the dialogue kernel and reload the page. The palette and output scrolling remain separate.
+To remove it, delete the cell marked `BEGIN BPL EXPRESSION EXPLORER SETUP` and the complete JavaScript block between `BEGIN BPL EXPRESSION EXPLORER V2` and its matching `END` marker. Remove the matching `BEGIN BPL EXPRESSION EXPLORER` CSS block and any `setup_bpl_explorer()` or `reload_bpl_explorer()` calls, then restart the dialog kernel and reload the page. The palette and output scrolling remain separate.
 
 The native regression checks passed with BPL 0.1.73 on 24 October 2026. The unified explorer was also tested in Study Session 11, including contextual explanations, saved-note acknowledgement, temporary-prompt cleanup, section selection, printed output and comparison.
