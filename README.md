@@ -1,6 +1,6 @@
 # BPL Study Sessions for SolveIt
 
-I started this project to learn BasedPL (BPL) by working through the fast.ai APL Study Group videos in SolveIt. The series has 17 videos, and the goal is one dialog per video, with runnable BPL examples and notes. The dialogs share a toolbar for entering BPL symbols. Run the cells in order so later examples have the definitions they need. [APL Study Group playlist](https://www.youtube.com/playlist?list=PLfYUBJiXbdtSgU6S_3l6pX-4hQYKNJZFU) · [BasedPL documentation](https://answerdotai.github.io/basedpl/)
+I started this project to learn BasedPL (BPL) by working through the fast.ai APL Study Group videos in SolveIt. This repository contains the complete set of 17 study session dialogs, one per video, with runnable BPL examples and notes. The dialogs share a toolbar for entering BPL symbols. Run the cells in order so later examples have the definitions they need. [APL Study Group playlist](https://www.youtube.com/playlist?list=PLfYUBJiXbdtSgU6S_3l6pX-4hQYKNJZFU) · [BasedPL documentation](https://answerdotai.github.io/basedpl/)
 
 ## About SolveIt
 
@@ -20,7 +20,7 @@ Open any Study Session dialog from the cloned folder. Keep the three CRAFT files
 
 Run check_bpl_versions() in a Python cell to list installed and available releases without changing packages, or ensure_latest_bpl() to check and install updates. If an upgrade changes a package already loaded in a kernel, restart that dialog kernel and rerun: reinstalling a native library does not replace the loaded code. Session 9 reports both running and installed versions. Craft regenerates the keyboard and browser bootstrap from the installed package on startup. If an upstream browser API changes, the keyboard integration reports which patch needs updating.
 
-The toolbar works in Code, Note, Prompt and Raw. No template or hidden helper folder is required. Duplicate a completed session in the same folder to begin the next lesson; its new kernel inherits the same Craft setup.
+The toolbar works in Code, Note, Prompt and Raw. No template or hidden helper folder is required.
 
 ## Extra Examples
 
@@ -113,16 +113,14 @@ size = dict(fontSize=19, buttonWidth=21, buttonHeight=26, gap=0.5)
 
 All values are pixels. Wider combinations use at least 32px; menu launchers span two columns. Browse uses uniform 40×40px buttons with 21px glyphs, controlled in `CRAFT.css`. Reload after changing CSS or JavaScript.
 
-## Adding Sessions and Publishing Updates
-
-Duplicate a study session within this folder, rename it, and keep the three Craft files alongside it. A template is intentionally not included. The copied setup cells are short checks and a `setup_bpl()` refresh call; they contain no toolbar implementation.
+## Publishing Updates
 
 From the repository folder's terminal, review and publish your changes:
 
 ```bash
 git status
 git add "Study Session 10.ipynb"
-git commit -m "Add study session 10"
+git commit -m "Update Study Session 10"
 git push
 ```
 
