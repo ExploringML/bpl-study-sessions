@@ -134,8 +134,6 @@ BasedPL is developed by Answer.AI and contributors under Apache-2.0. The keyboar
 
 A snippet library and separate playground remain future ideas.
 
-[Validation History](VALIDATION.md) records the migration, publication and Expression Explorer checks.
-
 ## Expression Explorer
 
 Run a `%%bpl` cell, then click **↳** beside it. Read the whole-expression overview first. If the cell contains several expressions, choose one from the dropdown.
